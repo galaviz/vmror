@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>Estimado Administrador VM,</p>
+
+    <p>El <%=Time.now%> se realizó una donación a través del Programa “Pay-It-Forward”. Enseguida los detalles:</p>
+
+<strong>Nombre del usuario donador:</strong> <%=@user.nombre%> <%=@user.apellido%><br>
+<strong>Código VM del usuario donador: </strong> <%=@user.clave_referencia%><br>
+<strong>Código VM del usuario recipiente:</strong> <%=@codigo_vm%><br>
+<strong>Créditos VM:</strong><%=@creditos_vm%><br>
+<strong>Total:</strong>$<%=@amount%>MN<br>
+
+Saludos!
+
+  </body>
+</html>

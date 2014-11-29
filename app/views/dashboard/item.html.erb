@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Verde Monarca">
+    <meta name="keywords" content="energia,renovable,mexico,energetico,solar,green,energy,latino,america,latinoamerica">
+    <meta name="author" content="Maurizio Calo">
+    <link href="assets/img/favicon.png" rel="shortcut icon" >
+    <title>Verde Monarca</title>
+    <%= stylesheet_link_tag "bootstrap.min" %>
+    <%= stylesheet_link_tag "client-portal" %>
+    <%= stylesheet_link_tag "responsive" %>
+    <%= stylesheet_link_tag "animate.min" %>
+    <%= stylesheet_link_tag "colorpickr" %>
+    <%= stylesheet_link_tag "linecons" %>
+    <%= stylesheet_link_tag "social-icons" %>
+    <%= stylesheet_link_tag "font-awesome.min" %>
+    <%= stylesheet_link_tag "bootstrapValidator.min" %>
+    <!-- Web Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <%= javascript_include_tag "modernizr.custom" %>
+  </head>
+
+  <body data-spy="scroll" data-offset="0" data-target=".portal-sidebar">
+
+    <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "tienda"})%>
+    <div class="main-dashboard-content">
+      <div class="container">
+        <div class="col-sm-3 portal-sidebar">
+          <ul class="nav nav-list portal-sidenav affix cl-effect-13">
+            <li class="active"><a href="#iluminacion" class="smoothScroll">Iluminación</a></li>
+
+          </ul>
+        </div>
+
+        <div class="col-sm-6">
+          <h2 class="text-center theme-color">Tienda Verde</h2>
+          <section id="iluminacion" name="iluminacion"></section>
+          <div class="iluminacion">
+              <div class="row">
+                <h2 class="text-center platinum-color"><%=@item.name%></h2>
+                <hr>
+              </div><!-- /row -->
+              <div class="row store-item-description-and-images">
+                <div class="col-sm-3">
+                    <img class="store-item-image" src="<%=@item.image_url%>"></img><br>
+                </div>
+                <div class="col-sm-9">
+                  <div class="row store-item-logos-row">
+                    <img class="store-item-energy-star-logo" src="http://blog.dtappliance.com/wp-content/uploads/2014/05/energy-star-logo.png"></img>
+                    <img class="store-item-brand-logo" src="<%=@item.brand_image_url%>"></img>
+                  </div>
+                  <p class="store-item-description text-justify" style="font-size:10 !important;"><%=@item.description%></p>
+                </div>
+              </div>
+            </div>
+            <div class="row store-item-add-to-cart">
+              <form role="form" class="form-inline pull-right" action="<%=url_for controller: 'dashboard', action: 'add_to_cart'%>">
+                <input type="hidden" name="item_id" value="<%=@item_id%>">
+                Cantidad: <input type="number" min=0 name="quantity" value=1>
+                <button type="submit" class="btn btn-theme">Añadir al Carrito</button>
+              </form>
+            </div>
+
+          </div>
+
+        </div>
+        <div class="col-sm-3 portal-right-sidebar">
+          <div class="item">
+            <h3 class="<%=@color_classes[@user_tier]%>">VM <%=@user_tier%></h3>
+            <h1 class="text-center theme-color bold"><%=@user.puntos_vm%></h1>
+            <h4 class="text-center theme-color bold">Puntos VM</h4>
+          </div>
+          <div class="item">
+            <h1 class="text-center theme-color bold"><%=@user.creditos_vm%></h1>
+            <h4 class="text-center theme-color bold">Créditos VM</h4>
+          </div>
+        </div>
+      </div><!--/container-->
+    </div>
+
+    <%= render(:partial => "shared/footer")%>
+    <!-- jQuery  -->
+    <%= javascript_include_tag "jquery.min" %>
+    <%= javascript_include_tag "bootstrap.min" %>
+    <%= javascript_include_tag "detectmobilebrowser" %>
+    <%= javascript_include_tag "smoothscroll" %>
+    <%= javascript_include_tag "bootstrapValidator.min" %>
+    <%= javascript_include_tag "jquery.inview.min" %>
+    <%= javascript_include_tag "jquery.easing.1.3" %>
+    <%= javascript_include_tag "animations" %>
+    <%= javascript_include_tag "animations" %>
+    <%= javascript_include_tag "jquery.formatter.min" %>
+    <%= javascript_include_tag "legacy" %>
+
+  </body>
+</html>

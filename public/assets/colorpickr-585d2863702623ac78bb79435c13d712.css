@@ -1,0 +1,124 @@
+.config-wrapper {
+	position: fixed;
+	top: 200px;
+	left: 0;
+}
+
+.config-wrapper-inner {
+	position: relative;
+}
+
+.config-trigger {
+	display: block;
+	position: absolute;
+	right: -36px;
+	width: 36px;
+	height: 36px;
+	background: #222222;
+	color: #fff;
+	text-align: center;
+	-webkit-border-top-left-radius: 0;
+	-webkit-border-bottom-left-radius: 0;
+	-webkit-border-bottom-right-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+	-moz-border-radius-topleft: 0;
+	-moz-border-radius-bottomleft: 0;
+	-moz-border-radius-bottomright: 4px;
+	-moz-border-radius-topright: 4px;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 4px;
+	border-top-right-radius: 4px;
+	-moz-background-clip: padding;
+	-webkit-background-clip: padding-box;
+	background-clip: padding-box;
+}
+
+.config-trigger:hover {
+	background: #000;
+}
+
+.config-trigger .fa {
+	font-size: 22px;
+	padding-top: 8px;
+	display: block;
+	color: #fff;
+}
+
+.config-panel {
+	width: 190px;
+	display: none;
+	background: #222222;
+	color: #fff;
+	padding: 15px;
+	-webkit-border-top-left-radius: 0;
+	-webkit-border-bottom-left-radius: 0;
+	-webkit-border-bottom-right-radius: 4px;
+	-webkit-border-top-right-radius: 0;
+	-moz-border-radius-topleft: 0;
+	-moz-border-radius-bottomleft: 0;
+	-moz-border-radius-bottomright: 4px;
+	-moz-border-radius-topright: 0;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 4px;
+	border-top-right-radius: 0;
+	-moz-background-clip: padding;
+	-webkit-background-clip: padding-box;
+	background-clip: padding-box;
+}
+
+.config-panel h5 {
+	color: #fff;
+	padding-top: 10px;
+}
+
+.config-panel #color-options {
+	*margin-bottom: 15px;
+}
+
+.config-panel #color-options li a {
+	display: block;
+	width: 20px;
+	height: 20px;
+	border: 2px solid transparent;
+}
+
+.config-panel #color-options li a:hover {
+	-webkit-opacity: 0.9;
+	-moz-opacity: 0.9;
+	opacity: 0.9;
+	border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.config-panel #color-options li.active a {
+	border: 2px solid #fff;
+}
+
+/* Color Options - (change to your own custom colors) */
+.config-panel #color-options li.teal a {
+	background-color: #06979e;
+}
+
+.config-panel #color-options li.blue a {
+	background-color: #59abe3;
+}
+
+.config-panel #color-options li.red a {
+	background-color: #ea3a3a;
+}
+
+.config-panel #color-options li.green a {
+	background-color: #37ba67;
+}
+
+.config-panel .close {
+	position: absolute;
+	left: 5px;
+	top: 5px;
+	color: #fff;
+}
+
+.config-panel .close .fa {
+	color: #fff;
+}

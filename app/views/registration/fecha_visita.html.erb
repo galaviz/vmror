@@ -1,0 +1,79 @@
+<!-- Form Part 4: Pick a date !-->
+<div class="item">
+  <div class="body-wrapper">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-12 col-sm-12 animated" data-animtype="flipInY"
+                   data-animrepeat="0"
+                   data-speed="1s"
+                   data-delay="0.5s">
+                  <h2 class="h2-section-title">Visita de Servicio al Cliente</h2>
+
+                  <div class="i-section-title">
+                      <i class="icon-users-outline">
+
+                      </i>
+                  </div>
+
+                  <div class="space-sep20"></div>
+              </div>
+          </div>
+
+          <div class="row">
+
+              <div class="col-md-6 col-sm-6 centered">
+                  <div class="classic-form">
+                      <p style="text-align:justify">Ya casi terminamos! Uno de nuestros especialistas te visitará a tu casa para corroborar todos los detalles y asegurarnos de que la propuesta que se te presente sea la óptima para ti! Por favor escoge enseguida la fecha y horario para la visita de nuestro técnico:</p>
+                      <form class="form-horizontal" role="form" id="registration-form-date" action="./post_fecha_visita">
+                        <div class="form-group">
+                          <label for="fecha-visita" class="col-sm-4 control-label">Fecha de Visita</label>
+                          <div class="col-sm-8">
+                            <div style="position:relative;"><input type="text" class="form-control" name="fecha-visita" id="fecha-visita" placeholder="Haz Click para Seleccionar la Fecha" value="<%=@user.fecha_visita%>"></div>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="hora-visita" class="col-sm-4 control-label">Hora de Visita</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" name="hora-visita" id="hora-visita" value="<%=@user.hora_visita%>" placeholder="Haz Click para Seleccionar la Hora">
+                          </div>
+                        </div>
+                        <p style="text-align:justify">No pudiste encontrar un horario que se acomode con tu agenda? No te preocupes! Por favor llámanos al (818) 340 8279 y nos aseguraremos de que uno de nuestros técnicos te visita en el horario ideal para ti!</p>
+                        </br>
+                        <a href="./propuesta"><button type="button" class="btn btn-theme">Atr&aacute;s</button></a>
+                        <button type="submit" class="btn btn-theme">Siguiente</button>
+                        </br>
+                        </br>
+                        </br>
+                        </br>
+                      </form>
+                  </div>
+              </div>
+
+          </div> <!-- /row -->
+      </div> <!-- /container -->
+  </div> <!-- /wrapper-->
+</div>
+<!--/pick-a-date-->
+
+
+<%= javascript_include_tag "jquery.min" %>
+
+<script>
+  $(document).ready(function() {
+    $('#fecha-visita').pickadate({
+        monthsFull: ["Enero", "Febrero", "Marzo", "Abril","Mayo","Junio","Julio","Agosto","Setiembre","Octubre","Noviembre","Diciembre"],
+        weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+        showWeekdaysFull: false,
+        today: 'Hoy',
+        clear: 'Borrar',
+        close: 'Cerrar'
+    });
+    $('#hora-visita').pickatime({
+        format: 'H:i A',
+        min: [8,0],
+        max: [17,0],
+        interval: 45
+    });
+  });
+</script>

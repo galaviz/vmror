@@ -1,0 +1,187 @@
+<!-- Form Part 1: User Info !-->
+<div class="item active">
+  <div class="body-wrapper">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-12 col-sm-12 animated" data-animtype="flipInY"
+                   data-animrepeat="0"
+                   data-speed="1s"
+                   data-delay="0.5s">
+                  <h2 class="h2-section-title">Información del Usuario (<%=if @user.is_residential then "Residencial" else "Comercial" end%>)</h2>
+
+                  <div class="i-section-title">
+                      <i class="icon-users-outline">
+
+                      </i>
+                  </div>
+
+                  <div class="space-sep20"></div>
+              </div>
+          </div>
+
+          <div class="row">
+
+              <div class="col-md-6 col-sm-6 centered">
+                  <div class="classic-form">
+                      <form class="form-horizontal" role="form" id="registration-form-user" action="./post_user_info">
+                        <% unless @user.is_residential%>
+                        <div class="form-group">
+                          <label for="empresa" class="col-sm-4 control-label">Empresa</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" name="empresa" value=
+                            "<%=@user.empresa%>" placeholder="Empresa">
+                          </div>
+                        </div>
+                        <%end%>
+                        <div class="form-group">
+                          <label for="nombre" class="col-sm-4 control-label">Nombre</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" name="nombre" value=
+                            "<%=@user.nombre%>" placeholder="Nombre">
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="apellido" class="col-sm-4 control-label">Apellido</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" name="apellido" value=
+                            "<%=@user.apellido%>" placeholder="Apellido">
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="email" class="col-sm-4 control-label">Email</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" name="email" value="<%=@user.email%>" placeholder="Email">
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="telefono" class="col-sm-4 control-label">Teléfono</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control"name="telefono" id="telefono" value="<%=@user.telefono%>" placeholder="Teléfono">
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="celular" class="col-sm-4 control-label">Celular</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" name="celular" id="celular" value="<%=@user.celular%>" placeholder="Celular">
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="pais" class="col-sm-4 control-label">País</label>
+                          <div class="col-sm-8">
+                            <select class="form-control" name="pais">
+                              <option>México</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="estado" class="col-sm-4 control-label">Estado</label>
+                          <div class="col-sm-8">
+                            <select class="form-control" name="estado">
+                              <option>Nuevo Le&oacute;n</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="municipio" class="col-sm-4 control-label">Municipio</label>
+                          <div class="col-sm-8">
+                            <select class="form-control" name="municipio">
+                              <option>Abasolo</option>
+                              <option>Agualeguas</option>
+                              <option>Los Aldamas</option>
+                              <option>Allende</option>
+                              <option>Anáhuac</option>
+                              <option>Apodaca</option>
+                              <option>Aramberri</option>
+                              <option>Benito Juárez</option>
+                              <option>Bustamante</option>
+                              <option>Cadereyta Jiménez</option>
+                              <option>El Carmen</option>
+                              <option>Cerralvo</option>
+                              <option>Ciénega de Flores</option>
+                              <option>China</option>
+                              <option>Doctor Arroyo</option>
+                              <option>Doctor Coss</option>
+                              <option>Doctor González</option>
+                              <option>Galeana</option>
+                              <option>García</option>
+                              <option>General Bravo</option>
+                              <option>General Escobedo</option>
+                              <option>General Terán</option>
+                              <option>General Treviño</option>
+                              <option>General Zaragoza</option>
+                              <option>General Zuazua</option>
+                              <option>Guadalupe</option>
+                              <option>Los Herreras</option>
+                              <option>Hidalgo</option>
+                              <option>Higueras</option>
+                              <option>Hualahuises</option>
+                              <option>Iturbide</option>
+                              <option>Lampazos de Naranjo</option>
+                              <option>Linares</option>
+                              <option>Marín</option>
+                              <option>Melchor Ocampo</option>
+                              <option>Mier y Noriega</option>
+                              <option>Mina</option>
+                              <option>Montemorelos</option>
+                              <option>Monterrey</option>
+                              <option>Parás</option>
+                              <option>Pesquería</option>
+                              <option>Los Ramones</option>
+                              <option>Rayones</option>
+                              <option>Sabinas Hidalgo</option>
+                              <option>Salinas Victoria</option>
+                              <option>San Nicolás de los Garza</option>
+                              <option>San Pedro Garza García</option>
+                              <option>Santa Catarina</option>
+                              <option>Santiago</option>
+                              <option>Vallecillo</option>
+                              <option>Villaldama</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="calle" class="col-sm-4 control-label">Calle</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" name="calle" placeholder="Calle" value="<%=@user.calle%>">
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="numero" class="col-sm-4 control-label">Número</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" name="numero" placeholder="Número" value="<%=@user.numero_direccion%>">
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="colonia" class="col-sm-4 control-label">Colonia</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" name="colonia" placeholder="Colonia" value="<%=@user.colonia%>">
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="codigo-postal" class="col-sm-4 control-label">Código Postal</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" id="codigo-postal" name="codigo-postal" placeholder="Código Postal" value="<%=@user.codigo_postal%>">
+                          </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-theme">Siguiente</button>
+                      </form>
+                  </div>
+              </div>
+
+          </div> <!-- /row -->
+      </div> <!-- /container -->
+  </div> <!-- /wrapper-->
+</div>
+<!--/User-info-->

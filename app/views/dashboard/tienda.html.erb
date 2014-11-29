@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Verde Monarca">
+    <meta name="keywords" content="energia,renovable,mexico,energetico,solar,green,energy,latino,america,latinoamerica">
+    <meta name="author" content="Maurizio Calo">
+    <link href="assets/img/favicon.png" rel="shortcut icon" >
+    <title>Verde Monarca</title>
+    <%= stylesheet_link_tag "bootstrap.min" %>
+    <%= stylesheet_link_tag "client-portal" %>
+    <%= stylesheet_link_tag "responsive" %>
+    <%= stylesheet_link_tag "animate.min" %>
+    <%= stylesheet_link_tag "colorpickr" %>
+    <%= stylesheet_link_tag "linecons" %>
+    <%= stylesheet_link_tag "social-icons" %>
+    <%= stylesheet_link_tag "font-awesome.min" %>
+    <%= stylesheet_link_tag "bootstrapValidator.min" %>
+    <!-- Web Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <%= javascript_include_tag "modernizr.custom" %>
+  </head>
+
+  <body data-spy="scroll" data-offset="0" data-target=".portal-sidebar">
+
+    <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "tienda"})%>
+    <div class="main-dashboard-content">
+      <div class="container">
+        <div class="col-sm-3 portal-sidebar">
+          <ul class="nav nav-list portal-sidenav affix cl-effect-13">
+            <li class="active"><a href="#iluminacion" class="smoothScroll">Iluminación</a></li>
+
+          </ul>
+        </div>
+
+        <div class="col-sm-6">
+          <h2 class="text-center theme-color">Tienda Verde</h2>
+          <section id="iluminacion" name="iluminacion"></section>
+          <div class="iluminacion">
+              <div class="row">
+                <h2 class="text-center platinum-color">Iluminación LED</h2>
+                <hr>
+              </div><!-- /row -->
+              <div class="row">
+                <%@items.each do |item|%>
+                <div class="col-sm-4">
+                  <div class="item-tienda">
+                    <a href="<%=url_for controller: 'dashboard', action: 'item', id: item.id%>"><img height=180 src="<%=item.image_url%>"></a><br>
+                    <a href="<%=url_for controller: 'dashboard', action: 'item', id: item.id%>" class="item-name"><%=item.name%></a><br>
+                    <strong>Watts:</strong> <%=item.watts%><br>
+                    <strong>Lúmenes:</strong> <%=item.lumenes%><br>
+                    <strong>Vida:</strong> <%=item.vida%><br>
+                    <strong>Precio:</strong> $<%=item.precio%>MN<br>
+                    <br>
+                  </div>
+                </div>
+                <%end%>
+              </div>
+              <br><br><br>
+              <br>
+          </div>
+
+        </div>
+        <br><br>
+        <div class="col-sm-3 portal-right-sidebar">
+          <div class="item">
+            <h4 class="text-center theme-color bold"><a href="./carrito">Carrito de Compras</a></h4>
+            <h1 class="text-center theme-color bold"><a href="./carrito"><%=@num_items_in_cart%> artículo<%unless @num_items_in_cart==1%>s<%end%> </a></h1>
+            <h4 class="text-center theme-color bold"><a href="./carrito">Comprar ($<%=number_with_precision(@cart_total, :precision => 2, :delimiter => ',')
+%> MN)</a></h4>
+          </div>
+          <div class="item">
+            <h3 class="<%=@color_classes[@user_tier]%>">VM <%=@user_tier%></h3>
+            <h1 class="text-center theme-color bold"><%=@user.puntos_vm%></h1>
+            <h4 class="text-center theme-color bold">Puntos VM</h4>
+          </div>
+        </div>
+      </div><!--/container-->
+    </div>
+
+    <%= render(:partial => "shared/footer")%>
+    <!-- jQuery  -->
+    <%= javascript_include_tag "jquery.min" %>
+    <%= javascript_include_tag "bootstrap.min" %>
+    <%= javascript_include_tag "detectmobilebrowser" %>
+    <%= javascript_include_tag "smoothscroll" %>
+    <%= javascript_include_tag "bootstrapValidator.min" %>
+    <%= javascript_include_tag "jquery.inview.min" %>
+    <%= javascript_include_tag "jquery.easing.1.3" %>
+    <%= javascript_include_tag "animations" %>
+    <%= javascript_include_tag "animations" %>
+    <%= javascript_include_tag "jquery.formatter.min" %>
+    <%= javascript_include_tag "legacy" %>
+
+  </body>
+</html>

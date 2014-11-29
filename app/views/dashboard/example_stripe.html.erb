@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Verde Monarca">
+    <meta name="keywords" content="energia,renovable,mexico,energetico,solar,green,energy,latino,america,latinoamerica">
+    <meta name="author" content="Maurizio Calo">
+    <link href="assets/img/favicon.png" rel="shortcut icon" >
+    <title>Verde Monarca</title>
+    <%= stylesheet_link_tag "bootstrap.min" %>
+    <%= stylesheet_link_tag "client-portal" %>
+    <%= stylesheet_link_tag "responsive" %>
+    <%= stylesheet_link_tag "animate.min" %>
+    <%= stylesheet_link_tag "colorpickr" %>
+    <%= stylesheet_link_tag "linecons" %>
+    <%= stylesheet_link_tag "social-icons" %>
+    <%= stylesheet_link_tag "font-awesome.min" %>
+    <%= stylesheet_link_tag "bootstrapValidator.min" %>
+    <!-- Web Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <%= javascript_include_tag "modernizr.custom" %>
+  </head>
+
+  <body data-spy="scroll" data-offset="0" data-target=".portal-sidebar">
+
+    <!-- Top navbar -->
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <%=link_to image_tag("Logo_Verde_Monarca.png", :border => 0), {:action => 'index', :controller => 'main'}, :class => 'navbar-brand smoothScroll'%>
+        </div>
+
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav cl-effect-13">
+            <li><a href="./index" class="smoothScroll">Tablero de Energía</a></li>
+          </ul>
+          <ul class="nav navbar-nav cl-effect-13">
+            <li class="active"><a href="./puntos" class="smoothScroll">Créditos y Puntos VM</a></li>
+          </ul>
+
+          <ul class="nav navbar-nav cl-effect-13">
+            <li><a href="./tienda" class="smoothScroll">Tienda Verde</a></li>
+          </ul>
+
+          <ul class="nav navbar-nav cl-effect-13">
+            <li><a href="./fundacion" class="smoothScroll">Fundación VM</a></li>
+          </ul>
+
+          <!-- Sign In / Sign Up -->
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown"><%=link_to("LOGOUT", {:action => 'logout', :controller => 'main'})%></li>
+          </ul>
+        </div><!--/nav-collapse -->
+      </div><!-- /container -->
+    </div><!-- /top-navbar -->
+
+    <div class="main-dashboard-content">
+      <div class="container">
+        <div class="col-sm-3 portal-sidebar">
+          <ul class="nav nav-list portal-sidenav affix cl-effect-13">
+            <li class="active"><a href="#descripcion" class="smoothScroll">Descripción</a></li>
+            <li class=""><a href="#mas-informacion" class="smoothScroll">¿Como Se Premian?</a></li>
+          </ul>
+        </div>
+
+        <div class="col-sm-6">
+          <section id="descripcion" name="descripcion"></section>
+          <div class="descripcion">
+              <div class="row">
+                <h2 class="text-center">Descripción</h2>
+                <hr>
+              </div><!-- /row -->
+              <div class="row">
+                <p class="text-justify">Muy pronto podrás controlar tu consumo energético (iluminación, aires acondicionados, etc.) para lograr importantes ahorros energéticos, utilizando el <strong class="theme-color">Wiser Home Control!</strong></p>
+              </div>
+              <br><br><br>
+              <br>
+          </div><!-- /consumo-energetico -->
+
+          <section id="mas-informacion" name="mas-informacion"></section>
+          <div class="mas-informacion">
+              <div class="row">
+                <h2 class="text-center">¿Como Se Premian?</h2>
+                <hr>
+              </div><!-- /row -->
+              <div class="row">
+                <form action="./process_payment" method="POST">
+                  <script
+                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                    data-key="pk_test_KKPPZQWQUL4ygPop5p6QCrz5"
+                    data-amount="2000"
+                    data-name="Demo Site"
+                    data-description="2 widgets ($20.00)"
+                    data-currency="MXN"
+                    data-email="<%=@user.email%>"
+                    data-label="Pagar con tarjeta"
+                    data-image="">
+                  </script>
+                  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                </form>
+              </div>
+              <br><br><br>
+              <br>
+          </div><!-- /generacion-solar -->
+
+        </div>
+        <div class="col-sm-3 portal-right-sidebar">
+          <div class="item">
+            <h3>TIPS</h3>
+            Te recomendamos que cambies tu focos para lograr ahorros de hasta 30% en iluminacion ya que la mayoria de tu consumo viene de ello.
+          </div>
+          <div class="item">
+            <h3>PROMOCIONES</h3>
+            Descuento del 30% en focos ahorradores LED.
+            Compra en la <a href="store.html"><strong>TIENDA VERDE</strong></a>
+          </div>
+        </div>
+      </div><!--/container-->
+    </div>
+
+    <%= render(:partial => "shared/footer")%>
+    <!-- jQuery  -->
+    <%= javascript_include_tag "jquery.min" %>
+    <%= javascript_include_tag "bootstrap.min" %>
+    <%= javascript_include_tag "detectmobilebrowser" %>
+    <%= javascript_include_tag "smoothscroll" %>
+    <%= javascript_include_tag "bootstrapValidator.min" %>
+    <%= javascript_include_tag "jquery.inview.min" %>
+    <%= javascript_include_tag "jquery.easing.1.3" %>
+    <%= javascript_include_tag "animations" %>
+    <%= javascript_include_tag "animations" %>
+    <%= javascript_include_tag "jquery.formatter.min" %>
+    <%= javascript_include_tag "legacy" %>
+
+  </body>
+</html>

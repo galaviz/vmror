@@ -1,0 +1,38 @@
+    <!-- Top navbar -->
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <%=link_to image_tag("Logo_Verde_Monarca.png", :border => 0), {:action => 'index', :controller => 'main'}, :class => 'navbar-brand smoothScroll'%>
+        </div>
+
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav cl-effect-13">
+            <li <%if active_tab == "monitoreo"%> class="active"<%end%>><a href="<%=url_for controller: 'dashboard', action: 'monitoreo'%>" class="smoothScroll">Tablero de Energía</a></li>
+          </ul>
+          <ul class="nav navbar-nav cl-effect-13">
+            <li <%if active_tab == "puntos"%> class="active"<%end%>><a href="<%=url_for controller: 'dashboard', action: 'puntos'%>" class="smoothScroll">Créditos y Puntos VM</a></li>
+          </ul>
+
+          <ul class="nav navbar-nav cl-effect-13">
+            <li <%if active_tab == "tienda"%> class="active"<%end%>><a href="<%=url_for controller: 'dashboard', action: 'tienda'%>" class="smoothScroll">Tienda Verde</a></li>
+          </ul>
+
+          <ul class="nav navbar-nav cl-effect-13">
+            <li <%if active_tab == "fundacion"%> class="active"<%end%>><a href="<%=url_for controller: 'dashboard', action: 'fundacion'%>" class="smoothScroll">Fundación VM</a></li>
+          </ul>
+
+          <ul class="nav navbar-nav cl-effect-13">
+            <li <%if active_tab == "pay_it_forward"%> class="active"<%end%>><a href="<%=url_for controller: 'dashboard', action: 'pay_it_forward'%>" class="smoothScroll">Pay-It-Forward</a></li>
+          </ul>
+          <!-- Sign In / Sign Up -->
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown"><%=link_to("LOGOUT", {:action => 'logout', :controller => 'main'})%></li>
+          </ul>
+        </div><!--/nav-collapse -->
+      </div><!-- /container -->
+    </div><!-- /top-navbar -->

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Verde Monarca">
+    <meta name="keywords" content="energia,renovable,mexico,energetico,solar,green,energy,latino,america,latinoamerica">
+    <meta name="author" content="Maurizio Calo">
+    <link href="assets/img/favicon.png" rel="shortcut icon" >
+    <title>Verde Monarca</title>
+    <%= stylesheet_link_tag "bootstrap.min" %>
+    <%= stylesheet_link_tag "client-portal" %>
+    <%= stylesheet_link_tag "responsive" %>
+    <%= stylesheet_link_tag "animate.min" %>
+    <%= stylesheet_link_tag "colorpickr" %>
+    <%= stylesheet_link_tag "linecons" %>
+    <%= stylesheet_link_tag "social-icons" %>
+    <%= stylesheet_link_tag "font-awesome.min" %>
+    <%= stylesheet_link_tag "bootstrapValidator.min" %>
+    <!-- Web Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <%= javascript_include_tag "modernizr.custom" %>
+  </head>
+
+  <body data-spy="scroll" data-offset="0" data-target=".portal-sidebar">
+
+    <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "puntos"})%>
+
+    <div class="main-dashboard-content">
+      <div class="container">
+        <div class="col-sm-3 portal-sidebar">
+          <ul class="nav nav-list portal-sidenav affix cl-effect-13">
+            <li class="active"><a href="#descripcion" class="smoothScroll">Descripción</a></li>
+            <li class=""><a href="#mas-informacion" class="smoothScroll">¿Como Se Premian?</a></li>
+          </ul>
+        </div>
+
+        <div class="col-sm-6">
+          <section id="descripcion" name="descripcion"></section>
+          <div class="descripcion">
+              <div class="row">
+                <h2 class="text-center">Descripción</h2>
+                <hr>
+              </div><!-- /row -->
+              <div class="row">
+                <p class="text-justify"> Los <strong class="theme-color">Créditos VM y Puntos VM</strong> son una excelente manera de incentivar a nuestros miembros a adoptar un estilo de vida pro-activa hacia la sustentabilidad.</p>
+                <p class="text-justify"> <strong class="theme-color">Créditos VM:</strong> Podrán utilizarse como dinero virtual para comprar artículos de eficiencia y ahorro energético en la Tienda Verde, para realizar donaciones a la fundación Verde Monarca, y/o para patrocinar la instalación parcial o total de sistemas solares de miembros de bajos recursos y/o de tus amigos (Programa "Pay-It-Forward").</p>
+                <p class="text-justify"> <strong class="theme-color">Puntos VM:</strong> Determinan el nivel de usuario y sus beneficios como miembro de Verde Monarca.</p>
+                <ul>
+                  <li><strong class="bronze-color">VM Bronce:</strong> &gt;100 puntos VM (nivel base de inscripción)</li>
+                  <li><strong class="silver-color">VM Plata:</strong> &gt;1,000 puntos VM</li>
+                  <li><strong class="gold-color">VM Oro:</strong> &gt;5,000 puntos VM</li>
+                  <li><strong class="platinum-color">VM Platino:</strong> &gt;50,000 puntos VM</li>
+                  <li><strong class="theme-color">VM Verde:</strong> &gt;100,000 puntos VM</li>
+                </ul>
+              </div>
+              <br><br><br>
+              <br>
+          </div><!-- /consumo-energetico -->
+
+          <section id="mas-informacion" name="mas-informacion"></section>
+          <div class="mas-informacion">
+              <div class="row">
+                <h2 class="text-center">¿Como Se Premian?</h2>
+                <hr>
+              </div><!-- /row -->
+              <div class="row">
+                <p class="text-justify"> Para fomentar el ahorro energético de los miembros Verde Monarca, se te premiarán <strong class="theme-color">10 créditos VM y 10 puntos VM</strong> por cada 1% de ahorro energético. El ahorro energético se calculará basado en tu consumo energético del mes actual en comparación al mismo mes del año anterior. Por ejemplo:</p>
+                <ul>
+                  <li><strong class="bold">Consumo Sept-13:</strong> 1,700 kWh</li>
+                  <li><strong class="bold">Consumo Sept-14:</strong> 1,600 kWh</li>
+                  <li><strong class="bold">Ahorro Energético:</strong> 5.9%</li>
+                  <li><strong class="bold">Premiación:</strong> 59 créditos VM y 59 puntos VM</li>
+                </ul>
+                <br><br>
+
+                <h4 class="bold">Invitación de nuevos miembros Verde Monarca</h4>
+                <p class="text-justify"> Para fomentar una sociedad interactiva y unida, por cada persona a quien invites a unirse a Verde Monarca y quien resulte miembro VM, se te premiarán <strong class="theme-color">500 créditos VM y 500 puntos VM</strong>. ¡No se te olvide proporcionarle tu clave de referencia a tu amigo/a!</p>
+                <ul>
+                  <li><strong class="bold">Clave de Referencia:</strong> <%=@user.clave_referencia%></li>
+                </ul>
+                <br><br>
+
+                <h4 class="bold">Donaciones al Programa "Pay-It-Forward" y Fundación Verde Monarca</h4>
+                <p class="text-justify"> Para fomentar el altruismo sustentable, las donaciones a la Fundación Verde Monarca, la cual tiene el fin de impulsar proyectos sociales de energía renvable en comunidades marginadas y de bajos recursos, y las donaciones al Programa "Pay-It-Forward", en el cual podrás patrocinar de manera parcial o total la instalación de un sistema solar para algún miembro de bajos recursos y/o para algún amigo/a, se te premiarán <strong class="theme-color">100 puntos VM por cada $1,000 MN donados</strong> (en forma de dinero o de créditos VM). Ahora con tus ahorros económicos podrás crear un mejor mundo, un mundo sustentable!</p>
+              </div>
+              <br><br><br>
+              <br>
+          </div><!-- /generacion-solar -->
+
+        </div>
+        <div class="col-sm-3 portal-right-sidebar">
+          <div class="item">
+            <h3 class="<%=@color_classes[@user_tier]%>">VM <%=@user_tier%></h3>
+            <h1 class="text-center theme-color bold"><%=@user.puntos_vm%></h1>
+            <h4 class="text-center theme-color bold">Puntos VM</h4>
+          </div>
+          <div class="item">
+            <h1 class="text-center theme-color bold"><%=@user.creditos_vm%></h1>
+            <h4 class="text-center theme-color bold">Créditos VM</h4>
+          </div>
+        </div>
+      </div><!--/container-->
+    </div>
+
+    <%= render(:partial => "shared/footer")%>
+    <!-- jQuery  -->
+    <%= javascript_include_tag "jquery.min" %>
+    <%= javascript_include_tag "bootstrap.min" %>
+    <%= javascript_include_tag "detectmobilebrowser" %>
+    <%= javascript_include_tag "smoothscroll" %>
+    <%= javascript_include_tag "bootstrapValidator.min" %>
+    <%= javascript_include_tag "jquery.inview.min" %>
+    <%= javascript_include_tag "jquery.easing.1.3" %>
+    <%= javascript_include_tag "animations" %>
+    <%= javascript_include_tag "animations" %>
+    <%= javascript_include_tag "jquery.formatter.min" %>
+    <%= javascript_include_tag "legacy" %>
+
+  </body>
+</html>

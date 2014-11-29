@@ -1,0 +1,82 @@
+<div class="item" id="user-confirmation">
+    <div class="body-wrapper">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-12 col-sm-12 animated" data-animtype="flipInY"
+                   data-animrepeat="0"
+                   data-speed="1s"
+                   data-delay="0.5s">
+                  <h2 class="h2-section-title">Confirmación de Información</h2>
+
+                  <div class="i-section-title">
+                      <i class="icon-users-outline">
+
+                      </i>
+                  </div>
+
+                  <div class="space-sep20"></div>
+              </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 col-sm-6 centered">
+                <div class="classic-form">
+                  <h3>Información del Usuario:</h3>
+                  <table align="center" id="user-info-table">
+                    <tr>
+                      <td><h4 style='margin-top:20px;'>Resumen de Usuario</h4></td><td></td>
+                    </tr>
+                    <tr><td><span class='bold'>Tipo de Membresía:</span></td><td><%=@user.tipo_membresia%><%= unless @user.is_residential then "%" end%></td></tr>
+                    <% unless @user.is_residential%>
+                      <tr><td><span class='bold'>Empresa:</span></td><td><%=@user.empresa%></td></tr>
+                    <%end%>
+                    <tr><td><span class='bold'>Nombre:</span></td><td><%=@user.nombre%></td></tr>
+                    <tr><td><span class='bold'>Apellido:</span></td><td><%=@user.apellido%></td></tr>
+                    <tr><td><span class='bold'>Email:</span></td><td><%=@user.email%></td></tr>
+                    <tr><td><span class='bold'>Telefono:</span></td><td><%=@user.telefono%></td></tr>
+                    <tr><td><span class='bold'>Celular:</span></td><td><%=@user.celular%></td></tr>
+                    <tr><td><span class='bold'>Estado:</span></td><td><%=@user.estado%></td></tr>
+                    <tr><td><span class='bold'>Municipio:</span></td><td><%=@user.municipio%></td></tr>
+                    <tr><td><span class='bold'>Calle:</span></td><td><%=@user.calle%></td></tr>
+                    <tr><td><span class='bold'>Número:</span></td><td><%=@user.numero_direccion%></td></tr>
+                    <tr><td><span class='bold'>Colonia:</span></td><td><%=@user.colonia%></td></tr>
+                    <tr><td><span class='bold'>Código Postal:</span></td><td><%=@user.codigo_postal%></td></tr>
+                    <tr><td><span class='bold'>Clave Referencia:</span></td><td><%=@user.clave_referencia%></td></tr>
+
+                    <tr>
+                      <td><h4 style='margin-top:20px;'>Resumen Energético</h4></td><td></td>
+                    </tr>
+                    <tr><td><span class='bold'>RPU:</span></td><td><%=@user.rpu%></td></tr>
+                    <tr><td><span class='bold'>Tarifa:</span></td><td><%=@user.tarifa%></td></tr>
+                    <tr><td><span class='bold'>Consumo Anual (kWh):</span></td><td><%=@user.consumo_total%></td></tr>
+                    <tr><td><span class='bold'>Importe Anual:</span></td><td><%=@user.importe_total%></td></tr>
+                    <tr><td><span class='bold'>Cargo Fijo:</span></td><td><%=@user.cargo_fijo%></td></tr>
+                    <tr><td><span class='bold'>Energía:</span></td><td><%=@user.energia%></td></tr>
+
+
+                    <tr>
+                      <td><h4 style='margin-top:20px;'>Resumen de Propuesta</h4></td><td></td>
+                    </tr>
+                    <tr><td><span class='bold'>Tamaño:</span></td><td><%= number_with_precision(@propuesta[@user.tipo_membresia]["tamano"], :precision => 1, :delimiter => ',') %> kWp</td></tr>
+                    <tr><td><span class='bold'>Producción Anual (Estimada):</span></td><td><%= number_with_precision(@propuesta[@user.tipo_membresia]["produccion_anual"], :precision => 0, :delimiter => ',') %> kWh</td></tr>
+                    <tr><td><span class='bold'>Ahorro Económico:</span></td><td>$<%= number_with_precision(@propuesta[@user.tipo_membresia]["ahorro_economico"], :precision => 2, :delimiter => ',') %> MN</td></tr>
+                    <tr><td><span class='bold'>Payback (Años):</span></td><td><%= number_with_precision(@propuesta[@user.tipo_membresia]["payback"], :precision => 1, :delimiter => ',') %></td></tr>
+                    <tr><td><span class='bold'>TIR:</span></td><td><%= number_with_precision(@propuesta[@user.tipo_membresia]["tir"], :precision => 1, :delimiter => ',') %>%</td></tr>
+                    <tr><td><span class='bold'>Total:</span></td><td>$<%= number_with_precision(@user.total_a_pagar, :precision => 2, :delimiter => ',') %> USD</td></tr>
+                    <tr>
+                      <td><h4 style='margin-top:20px;'>Resumen de Visita y Pago</h4></td><td></td>
+                    </tr>
+                    <tr><td><span class='bold'>Fecha de Visita:</span></td><td><%=@user.fecha_visita%></td></tr>
+                    <tr><td><span class='bold'>Hora de Visita:</span></td><td><%=@user.hora_visita%></td></tr>
+                    <tr><td><span class='bold'>Modo de Pago:</span></td><td><%=@user.forma_pago%></td></tr>
+                  </table>
+                  <br>
+                  <br>
+                </div>
+            </div>
+          </div> <!-- /row -->
+      </div> <!-- /container -->
+  </div> <!-- /wrapper-->
+
+
+</div>

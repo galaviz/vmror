@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Verde Monarca">
+    <meta name="keywords" content="energia,renovable,mexico,energetico,solar,green,energy,latino,america,latinoamerica">
+    <meta name="author" content="Maurizio Calo">
+    <link href="assets/img/favicon.png" rel="shortcut icon" >
+    <title>Verde Monarca</title>
+    <%= stylesheet_link_tag "bootstrap.min" %>
+    <%= stylesheet_link_tag "style" %>
+    <%= stylesheet_link_tag "responsive" %>
+    <%= stylesheet_link_tag "animate.min" %>
+    <%= stylesheet_link_tag "colorpickr" %>
+    <%= stylesheet_link_tag "linecons" %>
+    <%= stylesheet_link_tag "social-icons" %>
+    <%= stylesheet_link_tag "font-awesome.min" %>
+    <%= stylesheet_link_tag "bootstrapValidator.min" %>
+    <!-- Web Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <%= javascript_include_tag "modernizr.custom" %>
+  </head>
+
+  <body data-spy="scroll" data-offset="0" data-target=".navbar">
+
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand smoothScroll" href="#home"><%= image_tag "Logo_Verde_Monarca.png" %></a>
+        </div>
+
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav cl-effect-13">
+            <li><a href="#about" class="smoothScroll">QUIÉNES SOMOS</a>
+          </ul>
+
+          <ul class="nav navbar-nav cl-effect-13">
+            <li><a href="#mision" class="smoothScroll">MISIÓN</a>
+          </ul>
+
+          <ul class="nav navbar-nav cl-effect-13">
+            <li><a href="#residences" class="smoothScroll">Para Residencias</a>
+          </ul>
+
+          <ul class="nav navbar-nav cl-effect-13">
+            <li><a href="#businesses" class="smoothScroll">Para Comercios</a>
+          </ul>
+
+          <!-- Sign In / Sign Up -->
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown"><a href="#signin" data-toggle="modal" data-target="#registration-modal"> MI PORTAL</a></li>
+          </ul>
+        </div><!--/nav-collapse -->
+      </div><!-- /container -->
+    </div><!-- /fixed-navbar -->
+
+
+    <!-- Sign In / Sign Up Modal -->
+    <div class="modal fade bs-modal-sm" id="registration-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <br>
+          <div class="modal-header">
+            Iniciar Sesi&oacute;n
+          </div>
+          <div class="modal-body">
+            <div id="myTabContent" class="tab-content">
+              <!-- Sign In Form -->
+              <div class="tab-pane fade active in" id="signin">
+                <form class="form-horizontal" action="<%=url_for controller: 'main', action: 'login'%>" method="get">
+                  <fieldset>
+                    <!-- Text input-->
+                    <div class="control-group">
+                      <label class="control-label" for="Email">Email:</label>
+                      <div class="controls">
+                        <input id="sign-in-mail" name="email" class="form-control" type="text" placeholder="email" class="input-large" required="">
+                      </div>
+                    </div>
+
+                    <!-- Password input-->
+                    <div class="control-group">
+                      <label class="control-label" for="passwordinput">Password:</label>
+                      <div class="controls">
+                        <input required="" id="passwordinput" name="passwordinput" class="form-control" type="password" placeholder="********" class="input-medium">
+                      </div>
+                    </div>
+
+                    <!-- Multiple Checkboxes (inline) -->
+<!--                    <div class="control-group">
+                      <label class="control-label" for="rememberme"></label>
+                      <div class="controls">
+                        <label class="checkbox inline" for="rememberme-0">
+                          <input type="checkbox" name="rememberme" id="rememberme-0" value="Remember me">
+                          Recuerdame
+                        </label>
+                      </div>
+                    </div>
+ -->
+                    <!-- Button -->
+                    <div class="control-group">
+                      <label class="control-label" for="signin"></label>
+                      <div class="controls">
+                        <button id="signin" name="signin" class="btn btn-theme btn-block">Iniciar Sesión</button>
+                      </div>
+                    </div>
+                  </fieldset>
+                </form>
+              </div><!-- /signin -->
+
+            </div><!-- /tab-content -->
+          </div><!-- /modal-body -->
+
+          <div class="modal-footer">
+            <center>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </center>
+          </div>
+        </div><!-- /modal-content -->
+      </div><!-- /modal-dialog -->
+    </div><!-- /modal -->
+
+
+    <!-- Header Wrap -->
+    <section id="home" name="home"></section>
+    <div class="headerwrap">
+      <div class="container">
+        <div class="row text-center">
+          <div class="col-lg-12">
+            <br></br>
+            <h1 class="headline">Energía Solar. Para Todos.</h1>
+            <br></br>
+            <br></br>
+            <a href="./registration/tipo_de_cliente" class="smoothScroll"><button id="signup-button-main" class="btn btn-xl btn-theme smoothScroll">&Uacute;nete Hoy A Verde Monarca</button></a>
+            <br></br>
+            <br></br>
+          </div>
+
+        </div>
+      </div> <!-- /container -->
+    </div><!-- /headerwrap -->
+
+    <!-- Second Headline -->
+    <div class="second-headline-container">
+      <div class="container">
+        <div class="row text-center">
+          <div class="container">
+            <div class="row text-center">
+            <h2>Ahorra hasta el <strong>90%</strong> en tu recibo de luz en menos de 15 minutos</h2>
+            <hr>
+            <br>
+            <br>
+              <div class="col-lg-8 col-lg-offset-2">
+                <licon class="li_banknote"></licon>
+                <h4>Con Verde Monarca ahorrar es increíblemente sencillo y rentable, obteniendo una tasa interna de retorno (TIR) arriba del 20% en tu inversión.</h4>
+              </div>
+              <br>
+              <br>
+              <br>
+            </div><!-- /row -->
+          </div><!-- /container -->
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </div><!-- /second headline-->
+
+        <!-- Intro Wrap -->
+    <section id="about" name="about"></section>
+    <div class="about">
+      <div class="container">
+        <div class="row text-center">
+          <h2>¿Quiénes Somos?</h2>
+          <hr>
+          <br>
+          <br>
+          <div class="col-md-3">
+            <%= image_tag "Mexico.jpg" %>
+            <h3>Cien Por Ciento Mexicanos</h3>
+            <p><strong>Verde Monarca, S.A.P.I. de C.V.</strong> es una empresa <strong>100&#37; mexicana</strong>, con sede en San Pedro Garza García, Nuevo León, México.</p>
+          </div>
+          <div class="col-md-3">
+            <%= image_tag "fonlin.png" %>
+            <h3>Validados por el FONLIN</h3>
+            <p>Empresa validada por el <strong>Fondo de Innovación de Nuevo León (FONLIN).</strong></p>
+          </div>
+          <div class="col-md-3">
+            <%= image_tag "s2e.jpg" %>
+            <h3>Filial de S2E Technologies, Inc.</h3>
+            <p>Somos filial de <strong>S2E Technologies, Inc.</strong> con sede en Ontario, Canadá, líder mundial en el desarrollo de tecnologías y proyectos dentro del ramo de la industria de energía renovable, con enfoque en la energía solar.</p>
+          </div>
+          <div class="col-md-3">
+            <%= image_tag "experts.jpg" %>
+            <h3>Altamente Experimentados</h3>
+            <p>Contamos con más de <strong>40 años combinados de experiencia</strong> en la industria solar fotovoltaica. Hemos desarrollado <strong>más de 750 MW y 2,000 millones de dólares de proyectos solares en el mundo</strong>, habiendo generado <strong>más de 1,000 empleos directos.</strong></p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+      <div class="background-image-container">
+      </div>
+      <section id="mision" name="mision"></section>
+      <div class="container">
+        <div class="row text-center">
+          <h2>Misión</h2>
+          <hr>
+          <br>
+          <br>
+          <div class="col-md-4">
+            <%= image_tag("hammock.svg",:class => "svg") %>
+            <p> Permitir que todos los mexicanos tengan acceso a energía solar (100% renovable) de manera <strong>rápida, sencilla y al menor costo del mercado.</strong></p>
+          </div>
+          <div class="col-md-4">
+            <%= image_tag("dollar.svg",:class => "svg") %>
+            <p>Siempre ofrecer <strong>los precios más competitivos y los mejores componentes con las mejores garantías,</strong> a raíz de nuestras alianzas internacionales y nuestras economías de escala.</p>
+          </div>
+          <div class="col-md-4">
+            <%= image_tag("renewable_energy.svg",:class => "svg") %>
+            <p>Permitir a nuestros usuarios tomar <strong>decisiones precisas y a tiempo</strong> para <strong>sustituir su uso de energía fósil y contaminante por energía renovable e incrementar su ahorro energético.</strong></p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </div><!-- /introwrap -->
+
+
+    <!-- Residences Wrap -->
+    <section id="residences" name="residences"></section>
+    <div class="residenceswrap">
+      <div class="container">
+        <div class="row">
+          <h2 class="text-center">Para Residencias</h2>
+          <hr>
+          <br>
+          <br>
+          <div class="col-md-6">
+            <%= image_tag "Residential_Solar.jpg"%>
+          </div>
+          <div class="col-md-6">
+              <p>Interesado en ahorros de hasta el 90% en tu recibo de luz y retornos de inversión (TIR) arriba del 20%? <a href="./registration/begin_registration?is_residential=true"> Únete </a> a Verde Monarca. Te tomará menos de 15 minutos.</p>
+              <br>
+              <p>Los sistemas solares residenciales (3-10 kWp) representan una atractiva y segura oportunidad para reducir tu recibo de luz, sobre todo para aquellos con tarifa Doméstica de Alto Consumo (DAC). Con sistemas desde $80,000 MN pesos podrás recuperar tu inversión en un promedio de 3 años y disfrutarás de energía más barata y 100% renovable por más de 25 años.</p>
+              <a href="./registration/begin_registration?is_residential=true" type="button" class="btn btn-lg btn-theme smoothScroll">Registrarse</a>
+
+          </div>
+        </div><!-- /row -->
+        <br><br><br>
+        <br>
+      </div><!-- /container -->
+    </div><!-- /residenceswrap -->
+
+
+    <section id="businesses" name="businesses"></section>
+    <div class="businesseswrap">
+      <div class="container">
+        <div class="row">
+          <h2 class="text-center">Para Comercios</h2>
+          <hr>
+          <br>
+          <br>
+          <div class="col-md-6">
+            <p>Interesado en ahorros de hasta el 80% en tu recibo de luz y retornos de inversión (TIR) arriba del 15%? <a href="./registration/begin_registration"> Únete </a> a Verde Monarca. Te tomará menos de 15 minutos.</p>
+            <br>
+            <p>Los sistemas solares comerciales (10-500 kWp) representan una atractiva y segura inversión, deducible hasta en un 100% en el primer año, la cual además de resultar en ahorros significativos en el recibo de luz de tu empresa también impulsarán tu imagen ante tus clientes al demostrar tu responsabilidad ambiental. De manera visiblemente cautivadora, atraerás a más clientes!</p>
+            <a href="./registration/begin_registration" type="button" class="btn btn-lg btn-theme smoothScroll">Registrarse</a>
+
+          </div>
+          <div class="col-md-6">
+            <%= image_tag "Solar_City_Skyline.jpg" %>
+          </div>
+          </div><!-- /row -->
+        <br><br><br>
+        <br>
+      </div><!-- /container -->
+    </div><!-- /businesseswrap -->
+
+
+
+
+    <!-- Divider 2 Section -->
+    <div class="divider02">
+      <div class="container text-center">
+        <h3>&Uacute;nete Hoy a Verde Monarca</h3>
+        <a href="./registration/tipo_de_cliente" type="button" class="btn btn-lg btn-theme2 smoothScroll">Registrarse</a>
+      </div>
+    </div><!-- /divider02 -->
+
+
+
+    <%= render(:partial => "shared/footer")%>
+    <!-- jQuery  -->
+    <%= javascript_include_tag "jquery.min" %>
+    <%= javascript_include_tag "bootstrap.min" %>
+    <%= javascript_include_tag "detectmobilebrowser" %>
+    <%= javascript_include_tag "smoothscroll" %>
+    <%= javascript_include_tag "bootstrapValidator.min" %>
+    <%= javascript_include_tag "jquery.inview.min" %>
+    <%= javascript_include_tag "jquery.easing.1.3" %>
+    <%= javascript_include_tag "animations" %>
+    <script>
+      $(document).ready(function() {
+        $('body').scrollTop(0);
+        $('#form-carousel').carousel('pause');
+      });
+
+
+      $('.nav li a').on('click',function(){
+        $('.navbar-collapse').collapse('hide');
+      })
+    </script>
+  </body>
+</html>

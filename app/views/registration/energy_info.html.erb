@@ -1,0 +1,294 @@
+<!-- Form Part 2: Energy Info !-->
+<div class="item">
+  <div class="body-wrapper">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-12 col-sm-12 animated" data-animtype="flipInY"
+                   data-animrepeat="0"
+                   data-speed="1s"
+                   data-delay="0.5s">
+                  <h2 class="h2-section-title">Consumo Energético</h2>
+
+                  <div class="i-section-title">
+                      <i class="icon-users-outline">
+
+                      </i>
+                  </div>
+
+                  <div class="space-sep20"></div>
+              </div>
+          </div>
+
+          <div class="row">
+
+              <div class="col-md-8 col-sm-8 centered">
+                  <div class="classic-form">
+                      <form class="form-horizontal" role="form" id="registration-form-energy" action="./post_energy_info">
+                          <div class="form-group has-feedback" id="rpu-form-group">
+                              <label for="rpu" class="col-sm-3 control-label">RPU</label>
+                              <div class="col-sm-9">
+                                  <input type="text" class="form-control" id="rpu" name="rpu" placeholder="Número de servicio (12 digitos)" value="<%=@user.rpu%>">
+                                  <i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-rpu"></i>
+                                  <small class="help-block" id="rpu-help-block">El RPU no es valido o no existe en nuestra base de datos</small>
+                              </div>
+                          </div>
+
+                          <div class="form-group">
+                              <div class="col-sm-offset-3 col-sm-9">
+                                  <div class="checkbox">
+                                      <label>
+                                          <div class="text-justify"><input type="checkbox" id="energy-info-auth" checked="true">  Autorizas a Verde Monarca a obtener tu información de consumo energético para presentarte una propuesta en menos de 5 segundos? (Puedes desmarcar e ingresar información manualmente)</div>
+                                      </label>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div id="manual-info" style="display:none;">
+
+                            <div class="form-group" id="tarifa-form-group">
+                                <label for="tarifa" class="col-sm-3 control-label">Tarifa</label>
+                                <div class="col-sm-9">
+                                  <div class="pull-left">
+                                    <div class="btn-group">
+                                      <select class="form-control" name="tarifa" id="tarifa">
+                                        <%if @user.is_residential%>
+                                          <option>DAC</option>
+                                        <%else%>
+                                          <option>OM</option>
+                                          <option>HM</option>
+                                        <%end%>
+                                      </select>
+                                    </div>
+                                    <i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-tarifa"></i>
+                                  </div>
+                                </div>
+                            </div>
+                            <%if @user.is_residential%>
+                            <div class="form-group has-feedback">
+                                <label class="col-sm-3 control-label">Cargo Fijo (de un mes): </label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control" id="cargo-fijo" name="cargo-fijo" value="<%=@user.cargo_fijo%>" placeholder="Cargo Fijo (MN)">
+                                  <i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-fixed-charge"></i>
+                                </div>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <label class="col-sm-3 control-label">Energia (de un mes) </label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control" id="energia" name="energia" value="<%=@user.energia%>" placeholder="Energia (de un mes) (MN)">
+                                  <i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-energy-subtotal"></i>
+                                </div>
+                            </div>
+                            <%else%>
+                              <div class="form-group has-feedback">
+                                  <label class="col-sm-3 control-label">Demanda Facturable (de un mes) </label>
+                                  <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="cargo-fijo" name="cargo-fijo" value="<%=@user.cargo_fijo%>" placeholder="Demanda Facturada (MN)">
+                                    <i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-fixed-charge"></i>
+                                  </div>
+                              </div>
+                              <div class="form-group has-feedback">
+                                  <label class="col-sm-3 control-label">Subtotal (de un mes) </label>
+                                  <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="energia" name="energia" value="<%=@user.energia%>" placeholder="Subtotal (de un mes) (MN)">
+                                    <i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-energy-subtotal"></i>
+                                  </div>
+                              </div>
+                            <%end%>
+                            <div class="form-group has-feedback">
+                                <label class="col-sm-3 control-label">Depuración </label>
+                                <div class="col-sm-9 control-label" id="depuracion" style="text-align:left;">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Consumo en el último año (12 meses) </label>
+                                <%unless @user.is_residential%>
+                                <div class="col-sm-9 control-label" style="text-align:center;">Nota: Es importante que en su recibo habrá dos valores para el mes de Abril (Abr) y el mes de Octubre (Oct)</div>
+                                <%end%>
+                            </div>
+                            <%@months.each do |month|%>
+                              <div class="form-group has-feedback month-row">
+                                <label for="'<%=month%>'" class="col-sm-3 control-label"><%=month%></label>
+                                <div class="col-sm-4">
+                                  <input type="text" class="form-control monthly-consumption" name="<%=month%>" placeholder="Consumo (kWh)"><%if month == @months[0]%><i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-consumption-summary"></i><%end%>
+                                </div>
+                                <div class="col-sm-5">
+                                  <input type="text" class="form-control monthly-import" name="<%=month%>" placeholder="<%=if @user.is_residential then 'Importe ($MN)' else 'Precio Medio ($MN)' end%>"><%if month == @months[0]%><i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-consumption-summary"></i><%end%>
+                                </div>
+                              </div>
+                            <%end%>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Subotal: </label>
+                                <div class="control-label col-sm-5 col-sm-offset-4" id="import-subtotal" name="import-subtotal">0</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">IVA (16%): </label>
+                                <div class="control-label col-sm-5 col-sm-offset-4" id="import-iva" name="import-iva">0</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Total: </label>
+                                <div class="control-label col-sm-4" id="consumo-total" name="consumo-total"><%=@user.consumo_total%></div>
+                                <div class="control-label col-sm-5" id="import-total" name="import-total"><%=@user.importe_total%></div>
+                            </div>
+                            <!--hidden fields-->
+                            <input style='display:none' name='consumo-total' id="consumo-total-hidden" value="<%=@user.consumo_total%>">
+                            <input style='display:none' name='import-total' id="import-total-hidden" value="<%=@user.importe_total%>">
+                            <!--/hidden fields-->
+                          </div> <!--/manual info-->
+                          <a href="./user_info"><button type="button" class="btn btn-theme">Atr&aacute;s</button></a>
+                          <button type="submit" class="btn btn-theme" id="energy-info-next-button">Siguiente</button>
+
+                      </form>
+                  </div>
+              </div>
+
+          </div> <!-- /row -->
+      </div> <!-- /container -->
+  </div> <!-- /wrapper-->
+</div>
+<!--/Energy-info-->
+<%= javascript_include_tag "jquery.min" %>
+<script>
+$(document).ready(function() {
+  $('#manual-info').hide();
+  $('#energy-info-next-button').prop('disabled', true);
+  $('#rpu-help-block').hide();
+
+  $("#rpu").on('input propertychange paste', function() {
+    if ($("#energy-info-auth").is(':checked')) {
+      validateRpuField();
+    }
+  });
+
+  $("#energy-info-auth").click(function(){
+    if ($("#energy-info-auth").is(':checked')) {
+      validateRpuField();
+      $('#manual-info').fadeOut();
+    } else {
+      $('#manual-info').fadeIn();
+      $('#energy-info-next-button').prop('disabled', false);
+      $('#rpu-form-group').removeClass('has-error');
+      $('#rpu-help-block').hide();
+    }
+  });
+
+  $(".monthly-consumption").on('input propertychange paste', function() {
+    var sum = 0;
+    $('.monthly-consumption').each(function() {
+        val = parseInt($(this).val());
+        if (!isNaN(val)) {
+          sum += val;
+        }
+    });
+    $('#consumo-total').html(numberWithCommas(sum) + " kWh");
+    $('#consumo-total-hidden').val(sum);
+  });
+
+  <%if @user.is_residential%>
+    $(".monthly-import").on('input propertychange paste', function() {
+      var sum = 0;
+      $('.monthly-import').each(function() {
+          val = parseFloat($(this).val());
+          if (!isNaN(val)) {
+            sum += val;
+          }
+      });
+      var subtotal = sum / 1.16;
+      var iva = subtotal * 0.16;
+      var total = sum;
+      $('#import-subtotal').html('$' + numberWithCommas(subtotal.toFixed(2)) + " MN");
+      $('#import-iva').html('$' + numberWithCommas(iva.toFixed(2)) + " MN");
+      $('#import-total').html('$' + numberWithCommas(total.toFixed(2)) + " MN");
+      $('#import-total-hidden').val(total);
+    });
+  <%else%>
+    $(".month-row").on('input propertychange paste', function() {
+      var sum = 0;
+      $('.month-row').each(function() {
+          var consumo = parseFloat($(this).find(".monthly-consumption").val());
+          var precioMedio = parseFloat($(this).find(".monthly-import").val());
+          val = consumo * precioMedio;
+          if (!isNaN(val)) {
+            sum += val;
+          }
+      });
+      var subtotal = sum;
+      var iva = subtotal * 0.16;
+      var total = subtotal * 1.16;
+      $('#import-subtotal').html('$' + numberWithCommas(subtotal.toFixed(2)) + " MN");
+      $('#import-iva').html('$' + numberWithCommas(iva.toFixed(2)) + " MN");
+      $('#import-total').html('$' + numberWithCommas(total.toFixed(2)) + " MN");
+      $('#import-total-hidden').val(total);
+    });
+  <%end%>
+
+  $("#cargo-fijo, #energia").on('input propertychange paste', function() {
+    computeDepuracion();
+  });
+
+});
+
+/*src: http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript*/
+function numberWithCommas(x) {
+    var parts = x.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+}
+
+function computeDepuracion(){
+  var depuracion = parseFloat($("#cargo-fijo").val().replace(/,/g,'')) / parseFloat($("#energia").val().replace(/,/g,''));
+  var depuracionPercent = 100 * depuracion;
+  if (!isNaN(depuracionPercent)){
+    $("#depuracion").html(depuracionPercent.toFixed(2)+"%")
+  }
+}
+
+function validateRpuField(){
+    var rpu = parseInt($("#rpu").val().replace(/\s/g, ""));
+    console.log(rpu);
+    energyInfoJson = getEnergyInfoFromRPU(rpu);
+    if (energyInfoJson != null){
+      $('#energy-info-next-button').prop('disabled', false);
+      $('#rpu-form-group').addClass('has-success');
+      $('#rpu-form-group').removeClass('has-error');
+      $('#rpu-help-block').hide();
+      $('#cargo-fijo').val(energyInfoJson.cargo_fijo);
+      $('#energia').val(energyInfoJson.energia);
+      $('#consumo-total').html(energyInfoJson.consumo_total);
+      $('#consumo-total-hidden').val(energyInfoJson.consumo_total);
+      $('#import-total').html(energyInfoJson.importe_total);
+      $('#import-total-hidden').val(energyInfoJson.importe_total);
+    } else{
+      $('#rpu-form-group').removeClass('has-success');
+      $('#rpu-form-group').addClass('has-error');
+      $('#energy-info-next-button').prop('disabled', true);
+      $('#consumo-total').html("");
+      $('#import-total').html("");
+      $('#cargo-fijo').html(energyInfoJson.cargo_fijo);
+      $('#energia').html(energyInfoJson.energia);
+      $('#consumo-total-hidden').val(0);
+      $('#import-total-hidden').val(0);
+      $('#rpu-help-block').show();
+    }
+}
+
+// STUB function. TODO: Make an actual call to db
+function getEnergyInfoFromRPU(rpu) {
+  energyInfoJson = {};
+  if (rpu == 376780500123) {
+    energyInfoJson.consumo_total = 13110;
+    energyInfoJson.importe_total = 52834;
+    energyInfoJson.cargo_fijo = 78.40;
+    energyInfoJson.energia = 2564.93;
+    return energyInfoJson;
+  } else if (rpu == 415020400019) {
+    energyInfoJson.consumo_total = 745640;
+    energyInfoJson.importe_total = 1328240.78;
+    energyInfoJson.cargo_fijo = 22097.94;
+    energyInfoJson.energia = 111797.19;
+    return energyInfoJson;
+  } else {
+    return null;
+  }
+}
+</script>
+

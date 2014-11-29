@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+
+<title>class DashboardController - Rails Application Documentation</title>
+
+<link href="./fonts.css" rel="stylesheet">
+<link href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script src="./js/jquery.js"></script>
+<script src="./js/navigation.js"></script>
+<script src="./js/search_index.js"></script>
+<script src="./js/search.js"></script>
+<script src="./js/searcher.js"></script>
+<script src="./js/darkfish.js"></script>
+
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  
+  <p class="link"><a href="ApplicationController.html">ApplicationController</a>
+  
+</div>
+
+    
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-i-add_to_cart">#add_to_cart</a>
+    
+    <li ><a href="#method-i-carrito">#carrito</a>
+    
+    <li ><a href="#method-i-comprar">#comprar</a>
+    
+    <li ><a href="#method-i-fundacion">#fundacion</a>
+    
+    <li ><a href="#method-i-item">#item</a>
+    
+    <li ><a href="#method-i-pay_it_forward">#pay_it_forward</a>
+    
+    <li ><a href="#method-i-post_carrito">#post_carrito</a>
+    
+    <li ><a href="#method-i-post_compra">#post_compra</a>
+    
+    <li ><a href="#method-i-post_fundacion">#post_fundacion</a>
+    
+    <li ><a href="#method-i-post_pay_it_forward">#post_pay_it_forward</a>
+    
+    <li ><a href="#method-i-process_compra">#process_compra</a>
+    
+    <li ><a href="#method-i-process_donation">#process_donation</a>
+    
+    <li ><a href="#method-i-process_pay_it_forward">#process_pay_it_forward</a>
+    
+    <li ><a href="#method-i-process_payment">#process_payment</a>
+    
+    <li ><a href="#method-i-puntos">#puntos</a>
+    
+    <li ><a href="#method-i-tienda">#tienda</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="class-DashboardController">
+  <h1 id="class-DashboardController" class="class">
+    class DashboardController
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-add_to_cart" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">add_to_cart</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="add_to_cart-source">
+            <pre><span class="ruby-comment"># File app/controllers/dashboard_controller.rb, line 198</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">add_to_cart</span>
+  <span class="ruby-identifier">cart</span> = <span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;cart&quot;</span>]
+  <span class="ruby-ivar">@item_id</span> = <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;item_id&quot;</span>].<span class="ruby-identifier">to_i</span>
+  <span class="ruby-ivar">@quantity</span> = <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;quantity&quot;</span>].<span class="ruby-identifier">to_i</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">cart</span>[<span class="ruby-ivar">@item_id</span>]
+    <span class="ruby-identifier">cart</span>[<span class="ruby-ivar">@item_id</span>] = <span class="ruby-value">0</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">cart</span>[<span class="ruby-ivar">@item_id</span>] = <span class="ruby-identifier">cart</span>[<span class="ruby-ivar">@item_id</span>] <span class="ruby-operator">+</span> <span class="ruby-ivar">@quantity</span>
+  <span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;cart&quot;</span>] = <span class="ruby-identifier">cart</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">cart</span>.<span class="ruby-identifier">inspect</span>
+  <span class="ruby-identifier">redirect_to</span>(<span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;tienda&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-carrito" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">carrito</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="carrito-source">
+            <pre><span class="ruby-comment"># File app/controllers/dashboard_controller.rb, line 211</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">carrito</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>] <span class="ruby-keyword">and</span> <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>])
+    <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>])
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">email</span> = <span class="ruby-string">&quot;maurizio@vm.com&quot;</span>
+    <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">clave_referencia</span> = <span class="ruby-string">&quot;PGON1&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">cart</span> = <span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;cart&quot;</span>]
+  <span class="ruby-ivar">@items_and_counts_arr</span> = []
+  <span class="ruby-identifier">cart</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
+    <span class="ruby-ivar">@items_and_counts_arr</span> <span class="ruby-operator">&lt;&lt;</span> {<span class="ruby-string">&#39;item&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Item</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">key</span>), <span class="ruby-string">&#39;quantity&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">cart</span>[<span class="ruby-identifier">key</span>]}
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@user_tier</span> = <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">user_tier</span>
+
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-comprar" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">comprar</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="comprar-source">
+            <pre><span class="ruby-comment"># File app/controllers/dashboard_controller.rb, line 247</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">comprar</span>
+  <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>])
+  <span class="ruby-ivar">@cart</span> = <span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;cart&quot;</span>]
+  <span class="ruby-ivar">@cart_total</span> = <span class="ruby-value">0</span>
+  <span class="ruby-ivar">@num_items_in_cart</span> = <span class="ruby-value">0</span>
+  <span class="ruby-ivar">@cart</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
+    <span class="ruby-ivar">@num_items_in_cart</span> = <span class="ruby-ivar">@num_items_in_cart</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@cart</span>[<span class="ruby-identifier">key</span>]
+    <span class="ruby-ivar">@cart_total</span> = <span class="ruby-ivar">@cart_total</span> <span class="ruby-operator">+</span>  (<span class="ruby-ivar">@cart</span>[<span class="ruby-identifier">key</span>] <span class="ruby-operator">*</span> <span class="ruby-constant">Item</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">key</span>).<span class="ruby-identifier">precio</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-fundacion" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">fundacion</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="fundacion-source">
+            <pre><span class="ruby-comment"># File app/controllers/dashboard_controller.rb, line 108</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">fundacion</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>] <span class="ruby-keyword">and</span> <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>])
+    <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>])
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">email</span> = <span class="ruby-string">&quot;maurizio@vm.com&quot;</span>
+    <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">clave_referencia</span> = <span class="ruby-string">&quot;PGON1&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@user_tier</span> = <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">user_tier</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-item" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">item</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="item-source">
+            <pre><span class="ruby-comment"># File app/controllers/dashboard_controller.rb, line 183</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">item</span>
+  <span class="ruby-ivar">@item_id</span> = <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;id&quot;</span>]
+  <span class="ruby-ivar">@item</span> = <span class="ruby-constant">Item</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-ivar">@item_id</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>] <span class="ruby-keyword">and</span> <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>])
+    <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>])
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">email</span> = <span class="ruby-string">&quot;maurizio@vm.com&quot;</span>
+    <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">clave_referencia</span> = <span class="ruby-string">&quot;PGON1&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">puntos_vm</span> = <span class="ruby-value">100</span>
+  <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">creditos_vm</span> = <span class="ruby-value">100</span>
+  <span class="ruby-ivar">@user_tier</span> = <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">user_tier</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-pay_it_forward" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">pay_it_forward</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="pay_it_forward-source">
+            <pre><span class="ruby-comment"># File app/controllers/dashboard_controller.rb, line 147</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">pay_it_forward</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>] <span class="ruby-keyword">and</span> <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>])
+    <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>])
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">email</span> = <span class="ruby-string">&quot;maurizio@vm.com&quot;</span>
+    <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">clave_referencia</span> = <span class="ruby-string">&quot;PGON1&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@user_tier</span> = <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">user_tier</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-post_carrito" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">post_carrito</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>params passed in to this function are
+{action=&gt;“whatever”,controller,=&gt;“whatever”, “item1”=&gt;quantity1,
+.. “itemN” =&gt; quantityN}</p>
+          
+          
+
+          
+          <div class="method-source-code" id="post_carrito-source">
+            <pre><span class="ruby-comment"># File app/controllers/dashboard_controller.rb, line 229</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">post_carrito</span>
+  <span class="ruby-identifier">cart</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">inspect</span>
+  <span class="ruby-identifier">params</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">key</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">3</span>]<span class="ruby-operator">==</span><span class="ruby-string">&quot;item&quot;</span>
+      <span class="ruby-identifier">item_id</span> = <span class="ruby-identifier">key</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp">/\d/</span>).<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;&#39;</span>).<span class="ruby-identifier">to_i</span>
+      <span class="ruby-identifier">cart</span>[<span class="ruby-identifier">item_id</span>] = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">key</span>].<span class="ruby-identifier">to_i</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;cart&quot;</span>] = <span class="ruby-identifier">cart</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">cart</span>.<span class="ruby-identifier">inspect</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;comprar&quot;</span>]
+    <span class="ruby-identifier">redirect_to</span>(<span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;comprar&quot;</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">redirect_to</span>(<span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;carrito&quot;</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-post_compra" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">post_compra</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="post_compra-source">
+            <pre><span class="ruby-comment"># File app/controllers/dashboard_controller.rb, line 292</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">post_compra</span>
+  <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>])
+  <span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;cart&quot;</span>] = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-post_fundacion" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">post_fundacion</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="post_fundacion-source">
+            <pre><span class="ruby-comment"># File app/controllers/dashboard_controller.rb, line 119</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">post_fundacion</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>] <span class="ruby-keyword">and</span> <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>])
+    <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>])
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">email</span> = <span class="ruby-string">&quot;maurizio@vm.com&quot;</span>
+    <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">clave_referencia</span> = <span class="ruby-string">&quot;PGON1&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@user_tier</span> = <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">user_tier</span>
+  <span class="ruby-ivar">@creditos_vm</span> = <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;creditos_vm&quot;</span>]
+  <span class="ruby-ivar">@amount</span> = <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;amount&quot;</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-post_pay_it_forward" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">post_pay_it_forward</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="post_pay_it_forward-source">
+            <pre><span class="ruby-comment"># File app/controllers/dashboard_controller.rb, line 132</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">post_pay_it_forward</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>] <span class="ruby-keyword">and</span> <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>])
+    <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>])
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">email</span> = <span class="ruby-string">&quot;maurizio@vm.com&quot;</span>
+    <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">clave_referencia</span> = <span class="ruby-string">&quot;PGON1&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@user_tier</span> = <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">user_tier</span>
+  <span class="ruby-ivar">@creditos_vm</span> = <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;creditos_vm&quot;</span>]
+  <span class="ruby-ivar">@amount</span> = <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;amount&quot;</span>]
+  <span class="ruby-ivar">@titular</span> = <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;titular&quot;</span>]
+  <span class="ruby-ivar">@codigo_vm</span> = <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;codigo_vm&quot;</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-process_compra" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">process_compra</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="process_compra-source">
+            <pre><span class="ruby-comment"># File app/controllers/dashboard_controller.rb, line 258</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">process_compra</span>
+  <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>])
+  <span class="ruby-ivar">@cart</span> = <span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;cart&quot;</span>]
+  <span class="ruby-comment"># Set your secret key: remember to change this to your live secret key in production</span>
+  <span class="ruby-comment"># See your keys here https://dashboard.stripe.com/account</span>
+  <span class="ruby-constant">Stripe</span>.<span class="ruby-identifier">api_key</span> = <span class="ruby-string">&quot;sk_test_WsASCDydj4600M6xEyEclCsU&quot;</span>
+  <span class="ruby-comment"># Stripe.api_key = &quot;sk_live_oxmNmon9IbVu2xBV3xj2YRAn&quot; #TODO: Set environment variable for this</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;params is&quot;</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">inspect</span>
+  <span class="ruby-comment"># Amount in cents</span>
+  <span class="ruby-ivar">@amount</span> = (<span class="ruby-identifier">params</span>[<span class="ruby-value">:amount</span>].<span class="ruby-identifier">to_f</span> <span class="ruby-operator">*</span> <span class="ruby-value">100</span>).<span class="ruby-identifier">to_i</span>
+
+  <span class="ruby-identifier">customer</span> = <span class="ruby-constant">Stripe</span><span class="ruby-operator">::</span><span class="ruby-constant">Customer</span>.<span class="ruby-identifier">create</span>(
+    <span class="ruby-value">:email</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">email</span>,
+    <span class="ruby-value">:card</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:stripeToken</span>]
+  )
+
+  <span class="ruby-identifier">charge</span> = <span class="ruby-constant">Stripe</span><span class="ruby-operator">::</span><span class="ruby-constant">Charge</span>.<span class="ruby-identifier">create</span>(
+    <span class="ruby-value">:customer</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">customer</span>.<span class="ruby-identifier">id</span>,
+    <span class="ruby-value">:amount</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@amount</span>,
+    <span class="ruby-value">:description</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Verde Monarca&#39;</span>,
+    <span class="ruby-value">:currency</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;mxn&#39;</span>
+  )
+  <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">stripe_id</span> = <span class="ruby-identifier">customer</span>.<span class="ruby-identifier">id</span>
+  <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">save</span>()
+  <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">inspect</span>
+  <span class="ruby-constant">UserMailer</span>.<span class="ruby-identifier">send_purchase_confirmation_email_to_user</span>(<span class="ruby-ivar">@user</span>, <span class="ruby-ivar">@cart</span>).<span class="ruby-identifier">deliver</span>
+  <span class="ruby-constant">UserMailer</span>.<span class="ruby-identifier">send_purchase_confirmation_email_to_admin</span>(<span class="ruby-ivar">@user</span>, <span class="ruby-ivar">@cart</span>).<span class="ruby-identifier">deliver</span>
+  <span class="ruby-identifier">redirect_to</span>(<span class="ruby-value">:action=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;post_compra&quot;</span>)
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Stripe</span><span class="ruby-operator">::</span><span class="ruby-constant">CardError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">flash</span>[<span class="ruby-value">:error</span>] = <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>
+    <span class="ruby-identifier">redirect_to</span>(<span class="ruby-value">:action=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;comprar&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-process_donation" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">process_donation</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="process_donation-source">
+            <pre><span class="ruby-comment"># File app/controllers/dashboard_controller.rb, line 34</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">process_donation</span>
+  <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>])
+  <span class="ruby-comment"># Set your secret key: remember to change this to your live secret key in production</span>
+  <span class="ruby-comment"># See your keys here https://dashboard.stripe.com/account</span>
+  <span class="ruby-comment">#Stripe.api_key = &quot;sk_test_WsASCDydj4600M6xEyEclCsU&quot;</span>
+  <span class="ruby-constant">Stripe</span>.<span class="ruby-identifier">api_key</span> = <span class="ruby-string">&quot;sk_live_oxmNmon9IbVu2xBV3xj2YRAn&quot;</span> <span class="ruby-comment">#TODO: Set environment variable for this</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;params is&quot;</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">inspect</span>
+  <span class="ruby-comment"># Amount in cents</span>
+  <span class="ruby-ivar">@amount</span> = (<span class="ruby-identifier">params</span>[<span class="ruby-value">:amount</span>].<span class="ruby-identifier">to_f</span> <span class="ruby-operator">*</span> <span class="ruby-value">100</span>).<span class="ruby-identifier">to_i</span>
+
+  <span class="ruby-identifier">customer</span> = <span class="ruby-constant">Stripe</span><span class="ruby-operator">::</span><span class="ruby-constant">Customer</span>.<span class="ruby-identifier">create</span>(
+    <span class="ruby-value">:email</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">email</span>,
+    <span class="ruby-value">:card</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:stripeToken</span>]
+  )
+
+  <span class="ruby-identifier">charge</span> = <span class="ruby-constant">Stripe</span><span class="ruby-operator">::</span><span class="ruby-constant">Charge</span>.<span class="ruby-identifier">create</span>(
+    <span class="ruby-value">:customer</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">customer</span>.<span class="ruby-identifier">id</span>,
+    <span class="ruby-value">:amount</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@amount</span>,
+    <span class="ruby-value">:description</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Verde Monarca&#39;</span>,
+    <span class="ruby-value">:currency</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;mxn&#39;</span>
+  )
+  <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">stripe_id</span> = <span class="ruby-identifier">customer</span>.<span class="ruby-identifier">id</span>
+  <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">save</span>()
+  <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">inspect</span>
+  <span class="ruby-identifier">redirect_to</span>(<span class="ruby-value">:action=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;post_fundacion&quot;</span>, <span class="ruby-value">:amount</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:amount</span>], <span class="ruby-value">:creditos_vm</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:creditos_vm</span>])
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Stripe</span><span class="ruby-operator">::</span><span class="ruby-constant">CardError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">flash</span>[<span class="ruby-value">:error</span>] = <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>
+    <span class="ruby-identifier">redirect_to</span>(<span class="ruby-value">:action=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;fundacion&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-process_pay_it_forward" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">process_pay_it_forward</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="process_pay_it_forward-source">
+            <pre><span class="ruby-comment"># File app/controllers/dashboard_controller.rb, line 65</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">process_pay_it_forward</span>
+  <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>])
+  <span class="ruby-comment"># Set your secret key: remember to change this to your live secret key in production</span>
+  <span class="ruby-comment"># See your keys here https://dashboard.stripe.com/account</span>
+  <span class="ruby-comment">#Stripe.api_key = &quot;sk_test_WsASCDydj4600M6xEyEclCsU&quot;</span>
+  <span class="ruby-constant">Stripe</span>.<span class="ruby-identifier">api_key</span> = <span class="ruby-string">&quot;sk_live_oxmNmon9IbVu2xBV3xj2YRAn&quot;</span> <span class="ruby-comment">#TODO: Set environment variable for this</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;params is&quot;</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">inspect</span>
+  <span class="ruby-comment"># Amount in cents</span>
+  <span class="ruby-ivar">@amount</span> = (<span class="ruby-identifier">params</span>[<span class="ruby-value">:amount</span>].<span class="ruby-identifier">to_f</span> <span class="ruby-operator">*</span> <span class="ruby-value">100</span>).<span class="ruby-identifier">to_i</span>
+
+  <span class="ruby-identifier">customer</span> = <span class="ruby-constant">Stripe</span><span class="ruby-operator">::</span><span class="ruby-constant">Customer</span>.<span class="ruby-identifier">create</span>(
+    <span class="ruby-value">:email</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">email</span>,
+    <span class="ruby-value">:card</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:stripeToken</span>]
+  )
+
+  <span class="ruby-identifier">charge</span> = <span class="ruby-constant">Stripe</span><span class="ruby-operator">::</span><span class="ruby-constant">Charge</span>.<span class="ruby-identifier">create</span>(
+    <span class="ruby-value">:customer</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">customer</span>.<span class="ruby-identifier">id</span>,
+    <span class="ruby-value">:amount</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@amount</span>,
+    <span class="ruby-value">:description</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Verde Monarca&#39;</span>,
+    <span class="ruby-value">:currency</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;mxn&#39;</span>
+  )
+  <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">stripe_id</span> = <span class="ruby-identifier">customer</span>.<span class="ruby-identifier">id</span>
+  <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">save</span>()
+  <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">inspect</span>
+  <span class="ruby-constant">UserMailer</span>.<span class="ruby-identifier">send_donation_confirmation_email</span>(<span class="ruby-ivar">@user</span>, <span class="ruby-identifier">params</span>[<span class="ruby-value">:amount</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:creditos_vm</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:codigo_vm</span>]).<span class="ruby-identifier">deliver</span>
+  <span class="ruby-identifier">redirect_to</span>(<span class="ruby-value">:action=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;post_pay_it_forward&quot;</span>, <span class="ruby-value">:amount</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:amount</span>], <span class="ruby-value">:creditos_vm</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:creditos_vm</span>], <span class="ruby-value">:codigo_vm</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:codigo_vm</span>], <span class="ruby-value">:titular</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:titular</span>])
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Stripe</span><span class="ruby-operator">::</span><span class="ruby-constant">CardError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">flash</span>[<span class="ruby-value">:error</span>] = <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>
+    <span class="ruby-identifier">redirect_to</span>(<span class="ruby-value">:action=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;pay_it_forward&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-process_payment" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">process_payment</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="process_payment-source">
+            <pre><span class="ruby-comment"># File app/controllers/dashboard_controller.rb, line 2</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">process_payment</span>
+  <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>])
+  <span class="ruby-comment"># Set your secret key: remember to change this to your live secret key in production</span>
+  <span class="ruby-comment"># See your keys here https://dashboard.stripe.com/account</span>
+  <span class="ruby-comment">#Stripe.api_key = &quot;sk_test_WsASCDydj4600M6xEyEclCsU&quot;</span>
+  <span class="ruby-constant">Stripe</span>.<span class="ruby-identifier">api_key</span> = <span class="ruby-string">&quot;sk_live_oxmNmon9IbVu2xBV3xj2YRAn&quot;</span> <span class="ruby-comment">#TODO: Set environment variable for this</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;params is&quot;</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">inspect</span>
+  <span class="ruby-comment"># Amount in cents</span>
+  <span class="ruby-ivar">@amount</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:amount</span>].<span class="ruby-identifier">to_f</span> <span class="ruby-operator">*</span> <span class="ruby-value">100</span>
+
+  <span class="ruby-identifier">customer</span> = <span class="ruby-constant">Stripe</span><span class="ruby-operator">::</span><span class="ruby-constant">Customer</span>.<span class="ruby-identifier">create</span>(
+    <span class="ruby-value">:email</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">email</span>,
+    <span class="ruby-value">:card</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:stripeToken</span>]
+  )
+
+  <span class="ruby-identifier">charge</span> = <span class="ruby-constant">Stripe</span><span class="ruby-operator">::</span><span class="ruby-constant">Charge</span>.<span class="ruby-identifier">create</span>(
+    <span class="ruby-value">:customer</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">customer</span>.<span class="ruby-identifier">id</span>,
+    <span class="ruby-value">:amount</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@amount</span>,
+    <span class="ruby-value">:description</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Verde Monarca&#39;</span>,
+    <span class="ruby-value">:currency</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;mxn&#39;</span>
+  )
+  <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">stripe_id</span> = <span class="ruby-identifier">customer</span>.<span class="ruby-identifier">id</span>
+  <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">save</span>()
+  <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">inspect</span>
+  <span class="ruby-identifier">redirect_to</span>(<span class="ruby-value">:action=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">params</span>[<span class="ruby-value">:redirect_action</span>])
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Stripe</span><span class="ruby-operator">::</span><span class="ruby-constant">CardError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">flash</span>[<span class="ruby-value">:error</span>] = <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>
+    <span class="ruby-identifier">redirect_to</span>(<span class="ruby-value">:action=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">params</span>[<span class="ruby-value">:redirect_action</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-puntos" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">puntos</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="puntos-source">
+            <pre><span class="ruby-comment"># File app/controllers/dashboard_controller.rb, line 97</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">puntos</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>] <span class="ruby-keyword">and</span> <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>])
+    <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>])
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">email</span> = <span class="ruby-string">&quot;maurizio@vm.com&quot;</span>
+    <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">clave_referencia</span> = <span class="ruby-string">&quot;PGON1&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@user_tier</span> = <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">user_tier</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-tienda" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">tienda</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="tienda-source">
+            <pre><span class="ruby-comment"># File app/controllers/dashboard_controller.rb, line 158</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">tienda</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;cart&quot;</span>].<span class="ruby-identifier">inspect</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>] <span class="ruby-keyword">and</span> <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>])
+    <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;user_id&quot;</span>])
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">email</span> = <span class="ruby-string">&quot;maurizio@vm.com&quot;</span>
+    <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">clave_referencia</span> = <span class="ruby-string">&quot;PGON1&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;cart&quot;</span>]
+    <span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;cart&quot;</span>] = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">puntos_vm</span> = <span class="ruby-value">100</span>
+  <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">creditos_vm</span> = <span class="ruby-value">100</span>
+  <span class="ruby-ivar">@user_tier</span> = <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">user_tier</span>
+  <span class="ruby-ivar">@cart</span> = <span class="ruby-identifier">session</span>[<span class="ruby-string">&quot;cart&quot;</span>]
+  <span class="ruby-ivar">@num_items_in_cart</span> = <span class="ruby-value">0</span>
+  <span class="ruby-ivar">@cart_total</span> = <span class="ruby-value">0</span>
+  <span class="ruby-ivar">@cart</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
+    <span class="ruby-ivar">@num_items_in_cart</span> = <span class="ruby-ivar">@num_items_in_cart</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@cart</span>[<span class="ruby-identifier">key</span>]
+    <span class="ruby-ivar">@cart_total</span> = <span class="ruby-ivar">@cart_total</span> <span class="ruby-operator">+</span>  (<span class="ruby-ivar">@cart</span>[<span class="ruby-identifier">key</span>] <span class="ruby-operator">*</span> <span class="ruby-constant">Item</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">key</span>).<span class="ruby-identifier">precio</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@items</span> = <span class="ruby-constant">Item</span>.<span class="ruby-identifier">all</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.2.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

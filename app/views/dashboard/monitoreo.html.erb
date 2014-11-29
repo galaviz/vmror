@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Verde Monarca">
+    <meta name="keywords" content="energia,renovable,mexico,energetico,solar,green,energy,latino,america,latinoamerica">
+    <meta name="author" content="Maurizio Calo">
+    <link href="assets/img/favicon.png" rel="shortcut icon" >
+    <title>Verde Monarca</title>
+    <%= stylesheet_link_tag "bootstrap.min" %>
+    <%= stylesheet_link_tag "client-portal" %>
+    <%= stylesheet_link_tag "responsive" %>
+    <%= stylesheet_link_tag "animate.min" %>
+    <%= stylesheet_link_tag "colorpickr" %>
+    <%= stylesheet_link_tag "linecons" %>
+    <%= stylesheet_link_tag "social-icons" %>
+    <%= stylesheet_link_tag "font-awesome.min" %>
+    <%= stylesheet_link_tag "bootstrapValidator.min" %>
+    <!-- Web Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <%= javascript_include_tag "modernizr.custom" %>
+  </head>
+
+  <body data-spy="scroll" data-offset="0" data-target=".portal-sidebar">
+
+    <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "monitoreo"})%>
+
+    <div class="main-dashboard-content">
+      <div class="container">
+        <div class="col-sm-3 portal-sidebar">
+          <ul class="nav nav-list portal-sidenav affix cl-effect-13">
+            <li class="active"><a href="#consumo-energetico" class="smoothScroll">Consumo Energético</a></li>
+            <li class=""><a href="#generacion-solar" class="smoothScroll">Generación Solar</a></li>
+            <li class=""><a href="#balance-neto" class="smoothScroll">Balance Neto</a></li>
+            <li class=""><a href="#control-energetico" class="smoothScroll">Control Energético</a></li>
+          </ul>
+        </div>
+
+        <div class="col-sm-6">
+          <section id="consumo-energetico" name="consumo-energetico"></section>
+          <div class="consumo-energetico">
+              <div class="row">
+                <h2 class="text-center">Consumo Energético</h2>
+                <hr>
+              </div><!-- /row -->
+              <br>
+              <div class="text-center">
+                <div class="btn-group chart-btn-group" data-toggle="buttons-radio">
+                  <button type="button" class="btn btn-theme" id="daily-consumption-button">Día</button>
+                  <button type="button active" class="btn btn-theme" id="monthly-consumption-button">Mes</button>
+                  <button type="button" class="btn btn-theme" id="yearly-consumption-button">Año</button>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-sm-12">
+                  <a style="top:40%;" class="chart-control left">&lt;</a>
+                  <div id="consumption-chart"></div>
+                  <a class="chart-control right">&gt;</a>
+                </div>
+              </div>
+              <br><br><br>
+              <br>
+          </div><!-- /consumo-energetico -->
+
+          <section id="generacion-solar" name="generacion-solar"></section>
+          <div class="generacion-solar">
+              <div class="row">
+                <h2 class="text-center">Generación Solar</h2>
+                <hr>
+              </div><!-- /row -->
+              <br>
+              <div class="text-center">
+                <div class="btn-group chart-btn-group" data-toggle="buttons-radio">
+                  <button type="button" class="btn btn-theme" id="daily-solar-generation-button">Día</button>
+                  <button type="button active" class="btn btn-theme" id="monthly-solar-generation-button">Mes</button>
+                  <button type="button" class="btn btn-theme" id="yearly-solar-generation-button">Año</button>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-sm-12" id="solar-generation-chart"></div>
+              </div>
+              <br><br><br>
+              <br>
+          </div><!-- /generacion-solar -->
+
+          <section id="balance-neto" name="balance-neto"></section>
+          <div class="balance-neto">
+              <div class="row">
+                <h2 class="text-center">Balance Neto</h2>
+                <hr>
+              </div><!-- /row -->
+              <br>
+              <div class="text-center">
+                <div class="btn-group chart-btn-group" data-toggle="buttons-radio">
+                  <button type="button" class="btn btn-theme" id="daily-balance-button">Día</button>
+                  <button type="button active" class="btn btn-theme" id="monthly-balance-button">Mes</button>
+                  <button type="button" class="btn btn-theme" id="yearly-balance-button">Año</button>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-sm-12" id="balance-chart"></div>
+              </div>
+              <br><br><br>
+              <br>
+          </div><!-- /balance-neto -->
+
+          <section id="control-energetico" name="control-energetico"></section>
+          <div class="control-energetico">
+              <div class="row">
+                <h2 class="text-center">Control Energético</h2>
+                <hr>
+              </div><!-- /row -->
+              <div class="row">
+                <p class="text-center">Muy pronto podrás controlar tu consumo energético (iluminación, aires acondicionados, etc.) para lograr importantes ahorros energéticos, utilizando el <strong class="theme-color">Wiser Home Control!</strong></p>
+              </div>
+              <br><br><br>
+              <div class="row">
+                <div class="col-sm-10 col-sm-offset-2">
+                  <embed src="https://www.youtube.com/embed/dZzYoUYbBR8" height="315px"></embed>
+                </div>
+              </div>
+              <br>
+              <br><br><br>
+          </div><!-- /control-energetico -->
+
+        </div>
+        <div class="col-sm-3 portal-right-sidebar">
+          <div class="item">
+            <h3 class="theme-color">TIPS</h3>
+            Te recomendamos que cambies tu focos para lograr ahorros de hasta 30% en iluminacion ya que la mayoria de tu consumo viene de ello.
+          </div>
+          <div class="item">
+            <h3 class="theme-color">PROMOCIONES</h3>
+            Descuento del 30% en focos ahorradores LED.
+            Compra en la <a href="store.html"><strong>TIENDA VERDE</strong></a>
+          </div>
+        </div>
+      </div><!--/container-->
+    </div>
+
+    <%= render(:partial => "shared/footer")%>
+    <!-- jQuery  -->
+    <%= javascript_include_tag "jquery.min" %>
+    <%= javascript_include_tag "bootstrap.min" %>
+    <%= javascript_include_tag "detectmobilebrowser" %>
+    <%= javascript_include_tag "smoothscroll" %>
+    <%= javascript_include_tag "bootstrapValidator.min" %>
+    <%= javascript_include_tag "jquery.inview.min" %>
+    <%= javascript_include_tag "jquery.easing.1.3" %>
+    <%= javascript_include_tag "animations" %>
+    <%= javascript_include_tag "animations" %>
+    <%= javascript_include_tag "jquery.formatter.min" %>
+    <%= javascript_include_tag "legacy" %>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+    <script>
+
+      $(document).ready(function() {
+        $('body').scrollTop(0);
+        $('.chart-btn-group').button();
+
+        currentDate = new Date();
+        var consumptionData = createFakeMonthData(currentDate.getMonth(),currentDate.getFullYear());
+        var consumptionSeries = {name: 'Consumo Energetico', data: consumptionData, color:"#3D9970"};
+        var solarGenerationData = generateFakeTimeSeriesData(25,5);
+        var solarGenerationSeries = {name: 'Generación Solar', data: solarGenerationData};
+
+        //createChart("consumption-chart",[consumptionSeries],"Consumo Energético");
+        createMonthlyChart("consumption-chart", currentDate);
+        createMonthlyChart("solar-generation-chart", currentDate);
+        createMonthlyChart("balance-chart", currentDate);
+        // createChart("solar-generation-chart",[solarGenerationSeries],"Generación Solar");
+        // createChart("balance-chart",[consumptionSeries, solarGenerationSeries],"Balance Neto");
+      });
+
+      $("#daily-consumption-button").click(function() {
+        createDailyChart("consumption-chart", currentDate)
+      });
+
+      $("#monthly-consumption-button").click(function() {
+        createMonthlyChart("consumption-chart", currentDate)
+      });
+
+      $("#yearly-consumption-button").click(function() {
+        createYearlyChart("consumption-chart", currentDate)
+      });
+
+      $("#daily-solar-generation-button").click(function() {
+        createDailyChart("solar-generation-chart", currentDate)
+      });
+
+      $("#monthly-solar-generation-button").click(function() {
+        createMonthlyChart("solar-generation-chart", currentDate)
+      });
+
+      $("#yearly-solar-generation-button").click(function() {
+        createYearlyChart("solar-generation-chart", currentDate)
+      });
+
+      $("#daily-balance-button").click(function() {
+        createDailyChart("balance-chart", currentDate)
+      });
+
+      $("#monthly-balance-button").click(function() {
+        createMonthlyChart("balance-chart", currentDate)
+      });
+
+      $("#yearly-balance-button").click(function() {
+        createYearlyChart("balance-chart", currentDate)
+      });
+
+      function createDailyChart(chartId, chartDate) {
+        $('#'+chartId).highcharts({
+          chart: {
+              zoomType: 'x'
+          },
+          title: {
+              text: chartDate.getDate() + "/" + (chartDate.getMonth() + 1) + "/" + chartDate.getFullYear()
+          },
+          xAxis: {
+              type: 'datetime',
+              // range: 1 * 24 * 3600 * 1000 // one day
+              min: Date.UTC(chartDate.getFullYear(), chartDate.getMonth() , chartDate.getDate()),
+              max: Date.UTC(chartDate.getFullYear(), chartDate.getMonth() , chartDate.getDate() + 1)
+          },
+          yAxis: {
+              title: {
+                  text: 'Energía (kWh)'
+              }
+          },
+          legend: {
+              enabled: false
+          },
+          plotOptions: {
+              area: {
+                  fillColor: {
+                      linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1},
+                      stops: [
+                          [0, Highcharts.getOptions().colors[0]],
+                          [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                      ]
+                  },
+                  marker: {
+                      radius: 2
+                  },
+                  lineWidth: 1,
+                  states: {
+                      hover: {
+                          lineWidth: 1
+                      }
+                  },
+                  threshold: null
+              }
+          },
+
+          series: [{
+              type: 'area',
+              name: 'Consumo (kWh)',
+              pointInterval: 3600,
+              pointStart: Date.UTC(chartDate.getFullYear(), chartDate.getMonth() , chartDate.getDate()),
+              data: generateFakeTimeSeriesData(65,5)
+          }]
+        });
+      }
+
+      function createMonthlyChart(chartId, chartDate) {
+        var MONTHS = ["Enero", "Febrero", "Marzo", "Abril","Mayo","Junio","Julio","Agosto","Setiembre","Octubre","Noviembre","Diciembre"];
+        $('#'+chartId).highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: MONTHS[chartDate.getMonth()]
+            },
+            legend: {
+                enabled: false,
+            },
+            xAxis: {
+                type: 'category'
+            },
+            yAxis: {
+                title: {
+                    text: 'Energía (kWh)'
+                }
+            },
+            // tooltip: {
+            //     headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            //     pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            //         '<td style="padding:0"><b>{point.y:.0f} %</b></td></tr>',
+            //     footerFormat: '</table>',
+            //     shared: true,
+            //     useHTML: true
+            // },
+
+            series: [{
+                name: 'Consumo por día',
+                colorByPoint: false,
+                data: createFakeMonthData(chartDate.getMonth(), chartDate.getFullYear())
+            }],
+            plotOptions: {
+                series: {
+                    cursor: 'pointer',
+                    point: {
+                        events: {
+                            click: function() {
+                                console.log(this);
+                                var dayOfMonth = this.name;
+                                currentDate = new Date(chartDate.getFullYear(), chartDate.getMonth() , dayOfMonth);
+                                createDailyChart(chartId, currentDate);
+                            }
+                        }
+                    },
+                    dataLabels: {
+                        enabled: false,
+                        style: {
+                            fontWeight: 'bold'
+                        },
+                        formatter: function() {
+                            return this.y +' kWh';
+                        }
+                    }
+                }
+            }
+        });
+      }
+
+      function createYearlyChart(chartId, chartDate) {
+        var MONTHS = ["Enero", "Febrero", "Marzo", "Abril","Mayo","Junio","Julio","Agosto","Setiembre","Octubre","Noviembre","Diciembre"];
+        $('#'+chartId).highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: chartDate.getFullYear()
+            },
+            legend: {
+                enabled: false,
+            },
+            xAxis: {
+                type: 'category'
+            },
+            yAxis: {
+                title: {
+                    text: 'Energía (kWh)'
+                }
+            },
+            // tooltip: {
+            //     headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            //     pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            //         '<td style="padding:0"><b>{point.y:.0f} %</b></td></tr>',
+            //     footerFormat: '</table>',
+            //     shared: true,
+            //     useHTML: true
+            // },
+
+            series: [{
+                name: 'Consumo por mes',
+                colorByPoint: false,
+                data: createFakeYearlyData()
+            }],
+            plotOptions: {
+                series: {
+                    cursor: 'pointer',
+                    point: {
+                        events: {
+                            click: function() {
+                                console.log(this);
+                                var monthOfYear = MONTHS.indexOf(this.name);
+                                currentDate = new Date(chartDate.getFullYear(), monthOfYear , 1);
+                                createMonthlyChart(chartId, currentDate);
+                            }
+                        }
+                    },
+                    dataLabels: {
+                        enabled: false,
+                        style: {
+                            fontWeight: 'bold'
+                        },
+                        formatter: function() {
+                            return this.y +' kWh';
+                        }
+                    }
+                }
+            }
+        });
+      }
+
+      function createFakeMonthData(month, year) {
+        series = [];
+        var numDaysInMonth = daysInMonth(month, year);
+        for (var i=1; i<= numDaysInMonth; i++){
+          series.push({name:i.toString(),y:2000 + 180*(2*Math.random()-1),drilldown:i.toString()});
+        }
+        return series;
+      }
+
+      function createFakeYearlyData(month, year) {
+        var MONTHS = ["Enero", "Febrero", "Marzo", "Abril","Mayo","Junio","Julio","Agosto","Setiembre","Octubre","Noviembre","Diciembre"];
+        series = [];
+        for (var i=0; i < 12; i++){
+          series.push({name:MONTHS[i],y:24000 + 2200*(2*Math.random()-1),drilldown:i.toString()});
+        }
+        return series;
+      }
+
+      function createFakeDrilldownData(){
+        series = [];
+        for (var i = 1; i <= 31; i++) {
+          series.push({id:i.toString(),data: [['hello',1],['world',2]]});
+        }
+        return series;
+      }
+
+      // Month is 0 based
+      function daysInMonth(month,year) {
+        return new Date(year, month + 1, 0).getDate();
+      }
+
+
+      /* Mock data in http://www.highcharts.com/samples/data/usdeur.js
+      Format: [ [Date.UTC(2012,1,2), y] ] (array of 2-D key-value pairs)*/
+      function generateFakeTimeSeriesData(mean, std) {
+        var NUM_DAYS_IN_MONTH = [];
+        var data = [];
+        for (var year = 2014; year <= 2014; year++) {
+          for (var month = 0; month < 12; month++) {
+            if (year ==2015 && month == 9){
+              break;
+            }
+
+            for (var day = 1; day <= daysInMonth(month, year); day++) {
+              for (var hour = 0; hour <= 23; hour++) {
+                for (var minute =0; minute <= 60; minute += 20) {
+                  data.push([Date.UTC(year,month,day, hour, minute), mean + std*(2*Math.random()-1)]);
+                }
+              }
+            }
+          }
+        }
+        return data;
+      }
+
+    </script>
+  </body>
+</html>

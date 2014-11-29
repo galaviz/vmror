@@ -1,0 +1,131 @@
+<div class="item">
+  <div class="body-wrapper">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-12 col-sm-12 animated" data-animtype="flipInY"
+                   data-animrepeat="0"
+                   data-speed="1s"
+                   data-delay="0.5s">
+                  <h2 class="h2-section-title">Contratación y Forma de Pago</h2>
+
+                  <div class="i-section-title">
+                      <i class="icon-users-outline">
+
+                      </i>
+                  </div>
+
+                  <div class="space-sep20"></div>
+              </div>
+          </div>
+
+          <div class="row">
+
+              <div class="col-md-6 col-sm-6 centered">
+                  <div class="classic-form">
+                      <p style="text-align:justify">Por favor escoge la forma de pago qué más te favorezca:</p>
+                      <form class="form-horizontal" role="form" id="registration-form-payment" action="./post_forma_pago">
+                        <div class="form-group">
+                          <label class="radio">
+                            <input type="radio" class="payment-selection" name="payment-selection" id="contado" value="Pago de Contado"><div style="text-align:left;">Pago de Contado</div>
+                            <div class="payment-info" style="font-weight:10;">
+                              <div class="row">
+                                Descripcion: <span class="normal-font-weight"> 70% de anticipo y 30% al finalizar la instalación de tu sistema solar</span>
+                              </div>
+                              <div class="row">
+                                <span class="bold">Descuento: </span> <span class="payment-discount normal-font-weight">13%</span>
+                              </div>
+                              <div class="row">
+                                <span class="bold">Subtotal: </span> <span class="normal-font-weight payment-subtotal">$<%= number_with_precision(@subtotal, :precision => 2, :delimiter => ',') %> USD</span>
+                              </div>
+                              <div class="row">
+                                <span class="bold">IVA (16%): </span><span class="normal-font-weight payment-iva"> $<%= number_with_precision(@iva, :precision => 2, :delimiter => ',') %> USD</span>
+                              </div>
+                              <div class="row">
+                                <span class="bold">Total: </span> <span class="payment-total normal-font-weight">$<%= number_with_precision(@total, :precision => 2, :delimiter => ',') %> USD</span>
+                              </div>
+                            </div>
+                          </label>
+                          <label class="radio">
+                            <input type="radio" class="payment-selection" name="payment-selection" id="tarjeta" value="Tarjeta de Credito" disabled=""><div style="text-align:left;">Tarjeta de crédito (mensualidades sin intereses) <span class="theme-color"> ¡Pronto!</span></div>
+                            <div class="payment-info">
+                              <br>
+<!--                               <form class="text-center" action="./process_payment?redirect_action=fundacion&amp;amount=50" method="POST">
+                              <script
+                                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                data-key="pk_live_TZMVzigJsplccEBJVDYNjcGQ"
+                                data-amount="50"
+                                data-name="Verde Monarca"
+                                data-description="Será encriptada en el sistema"
+                                data-currency="USD"
+                                data-email="<%=@user.email%>"
+                                data-label="Ingresar Tarjeta de Crédito"
+                                data-image="">
+                              </script>
+                              <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                              </form>
+                              <br>
+                              <br>
+                              <p class="normal-font-weight">(Será encriptada en el sistema y no se le cobrará hasta que usted autorize)</p> -->
+                            </div>
+
+                          </label>
+                          <label class="radio">
+                            <input type="radio" class="payment-selection" name="payment-selection" id="financiamiento-verde-monarca" value="Financiamiento Verde Monarca" disabled><div style="text-align:left;">Financiamiento Verde Monarca (mensualidades sin intereses)<span class="theme-color"> ¡Pronto!</span></div>
+                            <div class="payment-info">
+                              <div class="row">
+                                <span class="bold">Descripción: </span> <span class="normal-font-weight">Ahora ofrecemos financiamiento para que instales tu sistema solar sin necesidad de invertir ni un solo peso! Tu sistema solar se financia de tus ahorros mensuales.</span>
+                              </div>
+                              <div class="row">
+                                <span class="bold">Tasa de Interes: </span> <span class="normal-font-weight">10%</span>
+                              </div>
+                              <div class="row">
+                                <span class="bold">Promedio de Ahorros Mensuales: </span><span class="normal-font-weight"> 2,194.00 MN</span>
+                              </div>
+                              <div class="row">
+                                <span class="bold"> Mensualidad (aprox. el 50% de tus ahorros hasta que se pague el sistema con su tasa de interés):</span><span class="normal-font-weight"> $1,097 MN</span>
+                              </div>
+
+                              <div class="row">
+                                <span class="bold">Domicialización: </span> [Preliminar]
+                              </div>
+                            </div>
+                          </label>
+                        </div>
+
+                        <a href="./fecha_visita"><button type="button" class="btn btn-theme">Atr&aacute;s</button></a>
+                        <button type="submit" class="btn btn-theme">Siguiente</button>
+
+                      </form>
+                  </div>
+              </div>
+
+          </div> <!-- /row -->
+      </div> <!-- /container -->
+  </div> <!-- /wrapper-->
+</div>
+
+
+<%= javascript_include_tag "jquery.min" %>
+
+<script>
+  $(document).ready(function() {
+    hidePaymentModeInfo();
+
+    $(".payment-selection").click(function() {
+      hidePaymentModeInfo();
+      $(this).siblings(".payment-info").show();
+      // registrationModel.selectedPaymentMode = $(this).attr('value');
+      // registrationModel.paymentTotal = registrationModel.subtotal * 1.16;
+      // $(".payment-iva").text("$" + numberWithCommas((registrationModel.subtotal * 0.16).toFixed(2))+" USD");
+      // $(".payment-subtotal").text("$" + numberWithCommas(registrationModel.subtotal.toFixed(2)) + " USD");
+      // $(".payment-total").text("$" + numberWithCommas(registrationModel.paymentTotal.toFixed(2)) + " USD");
+    });
+
+    function hidePaymentModeInfo() {
+      $(".payment-info").each(function() {
+        $(this).hide();
+      });
+  }
+  });
+
+</script>

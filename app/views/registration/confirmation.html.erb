@@ -1,0 +1,315 @@
+<div class="item" id="user-confirmation">
+    <div class="body-wrapper">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-12 col-sm-12 animated" data-animtype="flipInY"
+                   data-animrepeat="0"
+                   data-speed="1s"
+                   data-delay="0.5s">
+                  <h2 class="h2-section-title">Confirmación de Información</h2>
+
+                  <div class="i-section-title">
+                      <i class="icon-users-outline">
+
+                      </i>
+                  </div>
+
+                  <div class="space-sep20"></div>
+              </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 col-sm-6 centered">
+                <div class="classic-form">
+                  <h3>Información del Usuario:</h3>
+                  <table align="center" id="user-info-table">
+                    <tr>
+                      <td><h4 style='margin-top:20px;'>Resumen de Usuario</h4></td><td></td>
+                    </tr>
+                    <tr><td><span class='bold'>Tipo de Membresía:</span></td><td><%=@user.tipo_membresia%><%= unless @user.is_residential then "%" end%></td></tr>
+                    <% unless @user.is_residential%>
+                      <tr><td><span class='bold'>Empresa:</span></td><td><%=@user.empresa%></td></tr>
+                    <%end%>
+                    <tr><td><span class='bold'>Nombre:</span></td><td><%=@user.nombre%></td></tr>
+                    <tr><td><span class='bold'>Apellido:</span></td><td><%=@user.apellido%></td></tr>
+                    <tr><td><span class='bold'>Email:</span></td><td><%=@user.email%></td></tr>
+                    <tr><td><span class='bold'>Teléfono:</span></td><td><%=@user.telefono%></td></tr>
+                    <tr><td><span class='bold'>Celular:</span></td><td><%=@user.celular%></td></tr>
+                    <tr><td><span class='bold'>Estado:</span></td><td><%=@user.estado%></td></tr>
+                    <tr><td><span class='bold'>Municipio:</span></td><td><%=@user.municipio%></td></tr>
+                    <tr><td><span class='bold'>Calle:</span></td><td><%=@user.calle%></td></tr>
+                    <tr><td><span class='bold'>Número:</span></td><td><%=@user.numero_direccion%></td></tr>
+                    <tr><td><span class='bold'>Colonia:</span></td><td><%=@user.colonia%></td></tr>
+                    <tr><td><span class='bold'>Código Postal:</span></td><td><%=@user.codigo_postal%></td></tr>
+
+                    <tr>
+                      <td><h4 style='margin-top:20px;'>Resumen Energético</h4></td><td></td>
+                    </tr>
+                    <tr><td><span class='bold'>RPU:</span></td><td><%=@user.rpu%></td></tr>
+                    <tr><td><span class='bold'>Tarifa:</span></td><td><%=@user.tarifa%></td></tr>
+                    <tr><td><span class='bold'>Consumo Anual (kWh):</span></td><td><%=@user.consumo_total%></td></tr>
+                    <tr><td><span class='bold'>Importe Anual:</span></td><td><%=@user.importe_total%></td></tr>
+                    <tr><td><span class='bold'>Cargo Fijo:</span></td><td><%=@user.cargo_fijo%></td></tr>
+                    <tr><td><span class='bold'>Energía:</span></td><td><%=@user.energia%></td></tr>
+
+
+                    <tr>
+                      <td><h4 style='margin-top:20px;'>Resumen de Propuesta</h4></td><td></td>
+                    </tr>
+                    <tr><td><span class='bold'>Tamaño:</span></td><td><%= number_with_precision(@propuesta[@user.tipo_membresia]["tamano"], :precision => 1, :delimiter => ',') %> kWp</td></tr>
+                    <tr><td><span class='bold'>Producción Anual (Estimada):</span></td><td><%= number_with_precision(@propuesta[@user.tipo_membresia]["produccion_anual"], :precision => 0, :delimiter => ',') %> kWh</td></tr>
+                    <tr><td><span class='bold'>Ahorro Económico:</span></td><td>$<%= number_with_precision(@propuesta[@user.tipo_membresia]["ahorro_economico"], :precision => 2, :delimiter => ',') %> MN</td></tr>
+                    <tr><td><span class='bold'>Payback (Años):</span></td><td><%= number_with_precision(@propuesta[@user.tipo_membresia]["payback"], :precision => 1, :delimiter => ',') %></td></tr>
+                    <tr><td><span class='bold'>TIR:</span></td><td><%= number_with_precision(@propuesta[@user.tipo_membresia]["tir"], :precision => 1, :delimiter => ',') %>%</td></tr>
+                    <tr><td><span class='bold'>Total:</span></td><td>$<%= number_with_precision(@user.total_a_pagar, :precision => 2, :delimiter => ',') %> USD</td></tr>
+                    <tr>
+                      <td><h4 style='margin-top:20px;'>Resumen de Visita y Pago</h4></td><td></td>
+                    </tr>
+                    <tr><td><span class='bold'>Fecha de Visita:</span></td><td><%=@user.fecha_visita%></td></tr>
+                    <tr><td><span class='bold'>Hora de Visita:</span></td><td><%=@user.hora_visita%></td></tr>
+                    <tr><td><span class='bold'>Modo de Pago:</span></td><td><%=@user.forma_pago%></td></tr>
+
+                    <tr>
+                      <td><h4 style='margin-top:20px;'>Firma</h4></td><td></td>
+                    </tr>
+                    <tr><td><input type='checkbox' id='contract-checkbox' name='contract-checkbox'>Acepto el contrato</span></td><td></td></tr>
+                    <tr><td><input type='checkbox' id='contract-checkbox2' name='contract-checkbox2'>Acepto otorgar poder</span></td><td></td></tr>
+                  </table>
+                  <br>
+                  <br>
+                  <a href="./forma_pago"><button type="button" class="btn btn-theme">Atr&aacute;s</button></a>
+                  <a href="./post_confirmation"><button type="submit" class="btn btn-theme">Confirmar</button></a>
+                </div>
+            </div>
+          </div> <!-- /row -->
+      </div> <!-- /container -->
+  </div> <!-- /wrapper-->
+  <br>
+  <h2 class="h2-section-title">Contrato</h2>
+  <hr>
+  <iframe src="" width="100%"
+  style="height:40em" id="contrato-pdf">
+  Tu browser no puede mostrar documentos pdf</iframe>
+  <h2 class="h2-section-title">Otorgación de Poder</h2>
+  <hr>
+  <iframe src="" width="100%"
+  style="height:40em" id="contrato2-pdf">
+  Tu browser no puede mostrar documentos pdf</iframe>
+
+</div>
+
+
+<%= javascript_include_tag "jquery.min" %>
+<%= javascript_include_tag "jspdf" %>
+<%= javascript_include_tag "pdfmake.min" %>
+<%= javascript_include_tag "vfs_fonts" %>
+
+<script>
+  $(document).ready(function(){
+    //createContract(false);
+    createContractUsingPDFMake(false);
+    createContract2(false);
+    $('#contract-checkbox').change(function() {
+        createContractUsingPDFMake($(this).is(":checked"));
+    });
+    $('#contract-checkbox2').change(function() {
+        createContract2($(this).is(":checked"));
+    });
+  });
+
+  /*http://pdfmake.org/#/gettingstarted */
+  function createContractUsingPDFMake(isSigned){
+    var today = new Date();
+    var months = ["Enero", "Febrero", "Marzo", "Abril","Mayo","Junio","Julio","Agosto","Setiembre","Octubre","Noviembre","Diciembre"];
+    var firma = isSigned ? "<%=if @user.is_residential then @user.nombre + ' ' + @user.apellido else @user.empresa end%>" : "";
+    var firmaVM = isSigned ? "David Eduardo Arrambide Montemayor" : "";
+    var docDefinition = {
+       content: [
+         { text: 'EN LA CIUDAD DE <%=@user.municipio.upcase%>, <%=@user.estado.upcase%>, SIENDO EL ' + today.getDate() + ' DE ' + months[today.getMonth()].toUpperCase() + ' DE ' + today.getFullYear() + ', COMPARECEN POR UNA PARTE EL SEÑOR DAVID EDUARDO ARRAMBIDE MONTEMAYOR EN NOMBRE Y REPRESENTACION DE LA EMPRESA VERDE MONARCA S.A.P.I DE C.V. A QUIEN ADELANTE Y PARA EFECTOS DEL PRESENTE CONTRATO SE LE DENOMINARÁ LA “PARTE VENDEDORA”, Y POR OTRA PARTE COMPARECE <%=if @user.is_residential then @user.nombre.upcase + ' ' + @user.apellido.upcase else @user.empresa.upcase end%>A QUIEN EN LO SUCESIVO SE LE DENOMINARÁ LA “PARTE COMPRADORA”, QUIENES MANIFIESTAN QUE OCURREN A CELEBRAR EL PRESENTE CONTRATO MERCANTIL DE COMPRAVENTA CON RESERVA DE DOMINIO, EL CUAL LO IDENTIFICAN ADMINISTRATIVAMENTE, PARA TODOS LOS EFECTOS QUE HAYA LUGAR, CON EL NÚMERO VM1001.\n\n', style: 'header'},
+         {text: 'CLÁUSULAS\n\n', style: 'title'},
+         {
+           text: [
+             { text: 'PRIMERA.- COMPRAVENTA.', style: 'subtitle' },
+             { text: ' Por medio del presente instrumento, la “PARTE VENDEDORA” en términos de los artículos 371, 372, 376, 377 y demás aplicables del Código de Comercio en vigor, vende con reserva de dominio hasta en tanto su precio haya sido pagado, y la “PARTE COMPRADORA” adquiere para sí en los términos del presente instrumento un equipo de energía solar fotovoltaica, según las siguientes especificaciones: \n\n', style: 'paragraph'}
+           ]
+         },
+         {text: 'Tamaño: <%= number_with_precision(@propuesta[@user.tipo_membresia]["tamano"], :precision => 1, :delimiter => ',') %> kWp', style: 'paragraph'},
+         {text: 'Producción anual estimada: <%= number_with_precision(@propuesta[@user.tipo_membresia]["produccion_anual"], :precision => 0, :delimiter => ',') %> kWh\n\n', style: 'paragraph'},
+         {text: 'El precio de venta del equipo referido es la cantidad de $<%= number_with_precision(@propuesta[@user.tipo_membresia]["costo"], :precision => 2, :delimiter => ',') %> dólares más IVA (16%), mismo que incluye el costo de los componentes y de instalación.\n\n', style: 'paragraph'},
+         {
+           text: [
+             { text: 'SEGUNDA.- MODALIDAD, FORMA Y LUGAR DE PAGO.', style: 'subtitle' },
+             { text: ' La compraventa se realizará mediante pago del precio en dos (2) partidas, el setenta por ciento (70%) al momento de la firma del presente instrumento y el treinta por ciento (30%) restante dentro de los primeros cinco (5) días hábiles después de la instalación y puesta en marcha del equipo. Las “PARTE COMPRADORA” conviene en pagar un interés para el caso de mora de un porciento (1%) mensual.\n\n', style: 'paragraph'}
+           ]
+         },
+         {text: 'El lugar de pagó será de las siguientes formas:\n\n', style: 'paragraph'},
+         {text: '- En efectivo o por cheque -', style: 'paragraph'},
+         {text: 'En el siguiente domicilio de la “PARTE VENDEDORA” durante horas hábiles:', style: 'paragraph'},
+         {text: 'Notre Dame #115-A, Colonia Valle de San Ángel, ', style: 'tabbed'},
+         {text: 'San Pedro Garza García, Nuevo León, México C.P. 66290', style: 'tabbed'},
+         {text: 'Titular: Verde Monarca S.A.P.I. de C.V.\n\n', style: 'tabbed'},
+         {text: '- Por transferencia bancaria - ', style: 'paragraph'},
+         {text: 'En las siguientes cuentas de dólares (USD) y pesos (MN) de la “PARTE VENDEDORA”:', style: 'paragraph'},
+         {text: 'En Dólares (USD) ', style: 'tabbed', italics: true},
+         {text: 'Titular: Verde Monarca S.A.P.I. de C.V. ', style: 'tabbed'},
+         {text: 'Banco: BBVA Bancomer ', style: 'tabbed'},
+         {text: 'Sucursal:  ', style: 'tabbed'},
+         {text: 'Cuenta: - ', style: 'tabbed'},
+         {text: 'CLABE: - \n\n', style: 'tabbed'},
+         {text: 'En Pesos (MN) ', style: 'tabbed', italics: true},
+         {text: 'Titular: Verde Monarca S.A.P.I. de C.V. ', style: 'tabbed'},
+         {text: 'Banco: BBVA Bancomer ', style: 'tabbed'},
+         {text: 'Sucursal: ', style: 'tabbed'},
+         {text: 'Cuenta: - ', style: 'tabbed'},
+         {text: 'CLABE: - \n\n', style: 'tabbed'},
+         {
+           text: [
+             { text: 'TERCERA.- ENTREGA.', style: 'subtitle' },
+             { text: ' Ambas partes hacen constar que en este instrumento la “PARTE VENDEDORA” hace entrega virtual a la “PARTE COMPRADORA” del bien objeto de enajenación descrito anteriormente, quedando dicho equipo a su disposición para proceder a su instalación y puesta en marcha en la siguiente dirección:\n\n', style: 'paragraph'}
+           ]
+         },
+         {text: '<%=@user.calle%> #<%=@user.numero_direccion%>, Colonia <%=@user.colonia%>', style: 'tabbed'},
+         {text: '<%=@user.municipio%>, <%=@user.estado%>, México C.P. <%=@user.codigo_postal%>\n\n', style: 'tabbed'},
+         {text: 'Por “puesta en marcha” se entiende que el equipo se encuentre instalado y funcionando, siendo por cuenta y costo de la “PARTE VENDEDORA” realizar los trámites de interconexión ante la Comisión Federal de Electricidad.\n\n', style: 'paragraph'},
+         {
+           text: [
+             { text: 'CUARTA.- INCUMPLIMIENTO. ', style: 'subtitle' },
+             { text: ' El incumplimiento de cualesquiera de las obligaciones contraídas por la “PARTE COMPRADORA” a través del presente instrumento o que deriven de las disposiciones legales que lo rigen, inclusive la falta de pago oportuno de cualquiera de los pagos parciales del precio total que debe pagar conforme al presente contrato, será motivo suficiente para que se dé por vencido anticipadamente el saldo insoluto del precio que se encuentre pendiente de vencer en la fecha del incumplimiento, y consecuentemente la “PARTE VENDEDORA” podrá exigir judicial o extrajudicialmente el pago total del adeudo vencido y vencido anticipadamente, o bien ejercitar la acción de rescisión del presente contrato, señalando de manera enunciativa mas no limitativa las siguientes causales de incumplimiento forzoso con vencimiento anticipado y/o rescisión de contrato:\n\n', style: 'paragraph'}
+           ]
+         },
+         {text: 'A. La falta de pago oportuno por la “PARTE COMPRADORA” de cualquiera de los abonos en modalidad y forma descritos en la cláusula segunda del presente instrumento; y/o,\n', style: 'tabbed'},
+         {text: 'B. La falta de cumplimiento de alguna de las obligaciones derivadas del presente contrato.\n\n', style: 'tabbed'},
+         {
+           text: [
+             { text: 'QUINTA.- INTERÉS MORATORIO. ', style: 'subtitle' },
+             { text: ' Las partes expresamente pactan, para el caso de incumplimiento oportuno de los abonos del precio estipulado, como interés moratorio convencional aquel señalado en la cláusula segunda de este contrato, y será aplicado sobre el importe de cada abono vencido y no liquidado oportunamente, aun cuando la “PARTE VENDEDORA” acepte el pago de los abonos con posterioridad al vencimiento de los mismos, sin que por dicha circunstancia se considere que hubo prorroga, novación o modificación alguna a las obligaciones pactadas en el presente instrumento.:\n\nAsimismo, en caso de que la “PARTE VENDEDORA” opte por ejercitar el cumplimiento forzoso del contrato con vencimiento anticipado, dicho interés moratorio se aplicará sobre el importe del adeudo insoluto y vencido anticipadamente que exista al momento de actualizarse el incumplimiento de pago que dé lugar al vencimiento anticipado.\n\n', style: 'paragraph'}
+           ]
+         },
+         {
+           text: [
+             { text: 'SEXTA.- CESIÓN O GARANTÍA.  ', style: 'subtitle' },
+             { text: ' Ambas partes establecen de común acuerdo y como limitante de la presente compraventa, con renuncia implícita a las disposiciones legales aplicables, que mientras no se cubra la totalidad del precio pactado, la “PARTE COMPRADORA” no podrá enajenar, ceder, traspasar, o dar en garantía a favor de algún tercero el bien objeto de compraventa y/o los derechos y obligaciones derivados del presente instrumento, a menos que exista autorización por escrito de la “PARTE VENDEDORA”, y por el contrario esta última queda autorizada expresamente para ceder, dar en garantía o traspasar los derechos emanados del presente contrato. \n\n', style: 'paragraph'}
+           ]
+         },
+         {
+           text: [
+             { text: 'SÉPTIMA.- DOMICILIOS. ', style: 'subtitle' },
+             { text: ' Para todos los efectos legales a que haya lugar con relación al presente contrato, las partes señalan como sus respectivos domicilios los siguientes::\n\n', style: 'paragraph'}
+           ]
+         },
+        { text: 'Por la “PARTE VENDEDORA” \nNotre Dame #115-A, Colonia Valle de San Ángel,\nSan Pedro Garza García, Nuevo León, México C.P. 66290\nTel. (818) 340 8279\n Email. darrambide@verdemonarca.com\n\n', style: 'paragraph' },
+        { text: 'Por la “PARTE COMPRADORA”',style: 'paragraph' },
+        { text: '<%=@user.calle%> #<%=@user.numero_direccion%>, Colonia <%=@user.colonia%>”',style: 'paragraph' },
+        { text: '<%=@user.municipio%>, <%=@user.estado%>, México C.P. <%=@user.codigo_postal%>',style: 'paragraph' },
+        { text: 'Tel. <%=@user.telefono%>',style: 'paragraph' },
+        { text: 'Email. <%=@user.email%>\n\n',style: 'paragraph' },
+        {
+           text: [
+             { text: 'OCTAVA.- JURISDICCIÓN Y LEY APLICABLE. ', style: 'subtitle' },
+             { text: ' Las partes hacen constar que el presente contrato es de naturaleza mercantil atento a lo establecido por los artículos 75, 1050 y demás aplicables del Código de Comercio en vigor, y expresamente se someten para cualesquier motivo relacionado con interpretación, cumplimiento o controversia derivada del presente contrato a los tribunales con jurisdicción y competencia en la Ciudad de Monterrey, Nuevo León, así como a las leyes mercantiles y a sus ordenamientos aplicables supletoriamente, renunciando a cualquier fuero presente o futuro que pudiera corresponderles en razón de su domicilio. \n\n', style: 'paragraph'}
+           ]
+         },
+
+        {
+          table: {
+            // headers are automatically repeated if the table spans over multiple pages
+            // you can declare how many rows should be treated as headers
+            headerRows: 1,
+            widths: [ 300, 'auto'],
+
+            body: [
+              [ 'Por la "PARTE VENDEDORA”', { text: 'Por la "PARTE COMPRADORA”', alignment: 'right', margin: [0, 0, 0, 40]}],
+              [ '', '' ],
+              [ firmaVM, { text: firma, alignment: 'right'} ],
+              [ '__________________________________', '__________________________________' ],
+              [ 'David Eduardo Arrambide Montemayor', { text: '<%=if @user.is_residential then @user.nombre + ' ' + @user.apellido else @user.empresa end%>', alignment: 'right'}],
+              [ 'Representante Legal',''],
+              [ 'Verde Monarca, S.A.P.I. de C.V.','']
+            ]
+          },
+          layout: 'noBorders'
+        }
+       ],
+        footer: {
+          columns: [
+            { text: 'Verde Monarca, S.A.P.I. de C.V.\n 115-A Notre Dame, San Pedro, NL, MEX 66290', margin: [40, 0, 0, 0], fontSize: 8},
+            { text: 'Tel. (81) 8340-8279\nwww.verdemonarca.com', alignment: 'right', margin: [00, 0, 40, 0], fontSize: 8 }
+          ]
+        },
+       styles: {
+         header: {
+           fontSize: 12,
+           alignment: 'justify'
+         },
+         title: {
+            alignment: 'center',
+            bold: 'true',
+            fontSize: 14
+         },
+         subtitle: {
+           bold: 'true',
+           fontSize: 13
+         },
+         paragraph: {
+           alignment: 'justify'
+         },
+         tabbed: {
+          margin: [20, 0, 40, 0],
+         }
+       }
+     };
+     pdfMake.createPdf(docDefinition);
+     pdfMake.createPdf(docDefinition).getDataUrl(function(outDoc) {
+        $('#contrato-pdf').attr('src', outDoc);
+     });;
+  }
+
+  function createContract2(isSigned){
+      var doc = new jsPDF();
+      doc.setFont("helvetica");
+      doc.setFontSize(12);
+      var textStr = "";
+
+      var today = new Date();
+      var months = ["Enero", "Febrero", "Marzo", "Abril","Mayo","Junio","Julio","Agosto","Setiembre","Octubre","Noviembre","Diciembre"];
+      textStr += "Monterrey, Nuevo Leon a " + today.getDate() + " de " + months[today.getMonth()] + " de "+ today.getFullYear() + "\n";
+      textStr += "\n\nComision Federal de Electricidad\n";
+      textStr += "A quien corresponda:\n\n\n";
+
+      textStr += "Por  medio de  la  presente,  otorgo el  poder para que  a mi nombre y representacion\n";
+      textStr += "la empresa  Verde  Monarca,  en  representacion del Ing.  David  Eduardo  Arrambide\n";
+      textStr += "Montemayor, realice los tramites necesarios ante la Comision Federal de Electricidad\n";
+      textStr += "para gestionar el Contrato de Interconexion para fuente de energia renovable.\n";
+
+      textStr += "\n\nSin mas por el momento me despido, reiterandome a sus ordenes.\n\n\n\n";
+      if (isSigned){
+        textStr += "Otorga el Poder: <%=if @user.is_residential then @user.nombre + ' ' + @user.apellido else @user.empresa end%> \n";
+      } else{
+        textStr += "Otorga el Poder: _____________________________\n\n";
+      }
+      textStr += "Acepta el Poder: David Eduardo Arrambide Montemayor";
+      // textStr += "Nombre: " + $("input[name='nombre'").val() +"\n";
+      // textStr += "apellido: " + $("input[name='apellido'").val() +"\n";
+      // textStr += "Telefono: " + $("input[name='telefono'").val() +"\n";
+      // textStr += "Email: " + $("input[name='email'").val() +"\n";
+      // textStr += "RPU: " + $("input[name='rpu'").val() +"\n";
+      // textStr += "Consumo Anual Promedio (kWh): " + $("#consumo-total").html() +"\n";
+      doc.text(30, 30, textStr);
+      $('#contrato2-pdf').attr('src', doc.output('datauristring'));
+  }
+
+
+  function createContract(isSigned){
+    var doc = new jsPDF();
+    doc.setFont("helvetica");
+    doc.setFontSize(10);
+    var today = new Date();
+    var months = ["Enero", "Febrero", "Marzo", "Abril","Mayo","Junio","Julio","Agosto","Setiembre","Octubre","Noviembre","Diciembre"];
+    textStr = 'EN LA CIUDAD DE <%=@user.municipio ? @user.municipio.upcase : "SAN PEDRO"%>, NUEVO LEON, SIENDO EL' + today.getDate() + ' DE ' + months[today.getMonth()].toUpperCase() +' DE ' + today.getFullYear()+', COMPARECEN POR UNA PARTE EL SEÑOR DAVID EDUARDO ARRAMBIDE MONTEMAYOR EN NOMBRE Y REPRESENTACION DE LA EMPRESA VERDE MONARCA S.A.P.I DE C.V. A QUIEN ADELANTE Y PARA EFECTOS DEL PRESENTE CONTRATO SE LE DENOMINARÁ LA PARTE VENDEDORA, Y POR OTRA PARTE COMPARECE <%=@user.nombre.upcase if @user.nombre%> <%=@user.apellido.upcase if @user.apellido%> A QUIEN EN LO SUCESIVO SE LE DENOMINARÁ LA PARTE COMPRADORA, QUIENES MANIFIESTAN QUE OCURREN A CELEBRAR EL PRESENTE CONTRATO MERCANTIL DE COMPRAVENTA CON RESERVA DE DOMINIO, EL CUAL LO IDENTIFICAN ADMINISTRATIVAMENTE, PARA TODOS LOS EFECTOS QUE HAYA LUGAR, CON EL NÚMERO VM1001.';
+    splitText = doc.splitTextToSize(textStr, 280);
+    doc.text(30, 30, splitText);
+    $('#contrato-pdf').attr('src', doc.output('datauristring'));
+  }
+
+</script>
+

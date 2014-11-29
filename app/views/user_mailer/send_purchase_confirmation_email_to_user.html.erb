@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <%= stylesheet_link_tag "bootstrap.min" %>
+  </head>
+  <body>
+    <p>Estimado <%=@user.nombre%>,</p>
+
+    <p>Felicidades por tu compra! Se ha realizado exitosamente. Enseguida los detalles de tu compra: </p>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Artículo</th>
+          <th>Precio Unitario</th>
+          <th>Cantidad</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%@items_and_counts_arr.each do |entry|%>
+          <tr>
+            <td><%=entry['item'].name%></td>
+            <td>$<%= number_with_precision(entry['item'].precio, :precision => 2, :delimiter => ',') %> MN</td>
+            <td><%=entry['quantity']%></td>
+            <td>$<%= number_with_precision(entry['item'].precio * entry['quantity'], :precision => 2, :delimiter => ',') %> MN</td>
+
+          </tr>
+
+        <%end%>
+      </tbody>
+    </table>
+Te agradecemos por tu preferencia! Juntos somos Verde Monarca!
+<br>
+Tienda Verde
+
+  </body>
+</html>

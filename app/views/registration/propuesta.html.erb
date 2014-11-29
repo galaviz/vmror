@@ -1,0 +1,178 @@
+<div class="item">
+  <div class="body-wrapper">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-12 col-sm-12 animated" data-animtype="flipInY"
+                   data-animrepeat="0"
+                   data-speed="1s"
+                   data-delay="0.5s">
+                  <h2 class="h2-section-title">Propuesta</h2>
+
+                  <div class="i-section-title">
+                      <i class="icon-users-outline">
+
+                      </i>
+                  </div>
+
+                  <div class="space-sep20"></div>
+              </div>
+          </div>
+
+          <form action="./post_propuesta">
+          <div class="row">
+            <%@propuesta.keys.each do |option|%>
+            <div class="col-xs-12 col-md-<%= if @user.is_residential then 4 else 3 end%>">
+              <div class="panel panel-custom">
+                <div class="panel-heading">
+                  <h3 class="panel-title">VM <%=option%><%= unless @user.is_residential then "%" end%></h3>
+                </div>
+                <div class="panel-body">
+                  <div class="the-price">
+                    <h3>Resumen</h3>
+                  </div>
+                  <table class="table table-condensed">
+                    <tr>
+                      <td><span class="tamano-sistema-solar"><%=@propuesta[option]["tamano"].round(1)%> kWp</span> Tamaño del Sistema Solar <sup>[1]</sup></td>
+                    </tr>
+                    <tr>
+                      <td><span class="produccion-anual"><%= number_with_precision(@propuesta[option]["produccion_anual"], :precision => 0, :delimiter => ',') %> kWH</span> Producción anual (estimada)</td>
+                    </tr>
+                    <tr>
+                      <td><span class="costo-anual-sin-vm">&#36;<%= number_with_precision(@propuesta[option]["costo_anual_sin_vm"], :precision => 2, :delimiter => ',') %> MN</span> Costo anual (sin VM)</td>
+                    </tr>
+                    <tr>
+                      <td><span class="costo-anual">&#36;<%= number_with_precision(@propuesta[option]["costo_anual"], :precision => 2, :delimiter => ',') %> MN</span> Costo anual (con VM)</td>
+                    </tr>
+                     <tr>
+                      <td><span class="ahorro-economico">$<%= number_with_precision(@propuesta[option]["ahorro_economico"], :precision => 2, :delimiter => ',') %> MN (<%= number_with_precision(@propuesta[option]["ahorro_economico_porcentaje"], :precision => 2, :delimiter => ',') %>&#37;)</span> Ahorro económico anual</td>
+                    </tr>
+                    <tr>
+                      <td><span class="ahorro-economico-en-vida">&#36;<%= number_with_precision(@propuesta[option]["ahorro_economico_en_vida"], :precision => 2, :delimiter => ',') %> MN</span> Ahorro económico (en 25 años)<sup>[2]</sup></td>
+                    </tr>
+                  </table>
+                  <div class="the-price">
+                    <h3>Beneficios Ambientales</h3>
+                  </div>
+                  <table class="table table-condensed">
+                    <tr>
+                      <td><span class="ahorro-energetico"><%= number_with_precision(@propuesta[option]["ahorro_energetico_porcentaje"], :precision => 0, :delimiter => ',') %>&#37;</span> Ahorro energético</td>
+                    </tr>
+                    <tr>
+                      <td><span class="arboles-no-talados"><%= number_with_precision(@propuesta[option]["arboles_no_talados"], :precision => 0, :delimiter => ',') %></span> &Aacute;rboles no talados<sup>[2]</sup></td>
+                    </tr>
+                    <tr>
+                      <td><span class="co2"><%= number_with_precision(@propuesta[option]["co2"], :precision => 2, :delimiter => ',') %></span> Toneladas de CO2 evitadas</td>
+                    </tr>
+                  </table>
+                  <div class="the-price">
+                    <h3> Retorno Sobre la Inversión</h3>
+                  </div>
+                  <table class="table table-condensed">
+                    <tr>
+                      <td><span class="inversion-total">$<%= number_with_precision(@propuesta[option]["inversion_total"], :precision => 2, :delimiter => ',') %> USD</span> Inversión total (sin IVA)<sup>[3]</sup></td>
+                    </tr>
+                    <tr>
+                      <td> <span class="costo-por-watt">$<%= number_with_precision(@propuesta[option]["costo_por_watt"], :precision => 2, :delimiter => ',') %> USD/W</span> Costo por Watt<sup>[3]</sup></td>
+                    </tr>
+                    <tr>
+                      <td> <span class="payback"><%= number_with_precision(@propuesta[option]["payback"], :precision => 0, :delimiter => ',') %></span> Payback (Años)</td>
+                    </tr>
+                    <tr>
+                      <td> <span class="tir"><%= number_with_precision(@propuesta[option]["tir"], :precision => 1, :delimiter => ',') %>%</span> TIR <sup>[4]</sup></td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="panel-footer">
+
+                  <button class="btn btn-theme" type="submit" name="<%=option%>">Elegir</button>
+                </div>
+              </div>
+            </div>
+            <%end%>
+
+          </div> <!-- /row -->
+          </form>
+          <section id="footnotes" name="footnotes"></section>
+          <br>
+
+          <p style="text-align:left;">[1] Se tendrá que realizar una visita a su casa para determinar el espacio disponible para la instalación de los páneles solares.<br>
+[2] En los 25 años de la vida del sistema solar<br>
+[3] Con descuento por pago de contado<br>
+[4] Se considera un aumento anual de la tarifa de la CFE del 6%; no obstante, en los últimos 10 años a aumentado a una tasa del 10% anual. Como referencia, el TIR que se obtiene al invertir tu dinero en el banco es del 6%.<br>
+</p>
+          <div class="row">
+            <div class="col-md-offset-3 col-md-6" id="tir-chart"></div>
+          </div>
+          <br>
+          <a href="./energy_info"><button type="button" class="btn btn-theme">Atr&aacute;s</button></a>
+      </div> <!-- /container -->
+  </div> <!-- /wrapper-->
+</div>
+<!--/propuesta-->
+<%= javascript_include_tag "jquery.min" %>
+
+<script>
+  $(document).ready(function(){
+    var dataArr = [];
+    <%@propuesta.keys.each do |option|%>
+    dataArr.push({name:'VM <%=option%><%= unless @user.is_residential then "%" end%>  (' + <%= number_with_precision(@propuesta[option]["tamano"], :precision => 1, :delimiter => ',') %> +' kWp)', y:<%=@propuesta[option]["tir"]%>});
+    <%end%>
+    dataArr.push({name:'Banco', y:6})
+    console.log(dataArr)
+    createPropuestaChart(dataArr);
+  });
+
+  function createPropuestaChart(dataArr) {
+    $('#tir-chart').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Tasa Interna de Rendimiento (TIR)'
+        },
+        legend: {
+            enabled: false,
+        },
+        plotOptions: {
+            series: {
+                borderWidth: 0,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.y:.1f}%'
+                }
+            }
+        },
+        xAxis: {
+            type: 'category'
+        },
+        yAxis: {
+            title: {
+                text: 'Tasa Interna de Rendimiento (TIR)'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.0f} %</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            series: {
+                borderWidth: 0,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.y:.0f}%'
+                }
+            }
+        },
+        series: [{
+            name: 'TIR',
+            colorByPoint: true,
+            data: dataArr
+            // data: [{name:'VM Pequeño (' + tamanoPequeno.toFixed(1) +' kWp)', y:irrPequeno}, {name:'VM Mediano (' + tamanoMediano.toFixed(1) +' kWp)', y:irrMediano}, {name:'VM Grande (' + tamanoGrande.toFixed(1) +' kWp)', y:irrGrande}, {name:'Banco', y:6}]
+        }]
+    });
+  }
+</script>
