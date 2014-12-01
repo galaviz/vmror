@@ -8,11 +8,15 @@ class MainController < ApplicationController
   end
 
   def login
-    user = User.find_by_email(params[:email])
-    unless user.nil?
-      session["user_id"] = user.id
+    @user = User.find_by_email(params["email"])
+    if @user
+      if @user.authenticate(params["passwordinput"])
+        session["user_id"] = @user.id
+        redirect_to :action => :monitoreo, :controller => :dashboard
+      end
+    else
+      
     end
-    redirect_to :action => :monitoreo, :controller => :dashboard
   end
 
 end
