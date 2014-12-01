@@ -128,6 +128,7 @@ class RegistrationController < ApplicationController
     @user.crear_clave_referencia()
     @user.creditos_vm = 100
     @user.puntos_vm = 100
+    @user.password=(params["account-password"])
     @user.save()
     #if successs
     #send email

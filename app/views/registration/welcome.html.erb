@@ -29,7 +29,23 @@
             <input type="password" class="form-control" name="account-password-confirm" placeholder="********">
           </div>
         </div>
-        <button type="submit" class="btn btn-theme" id="btn-crear-cuenta">Crear Cuenta</button>
+        <button type="submit" class="btn btn-theme" id="btn-crear-cuenta" disabled="disabled">Crear Cuenta</button>
       </form>
     </div>
 </div>
+
+<%= javascript_include_tag "jquery.min" %>
+<script>
+$(document).ready(function() {
+
+  $("#account-password-confirm").on('input propertychange paste', function() {
+    if ($("#account-password-confirm").val() == $("#account-password").val()) {
+      $("#btn-crear-cuenta").prop('disabled', false);
+    }
+    else{
+      $("#btn-crear-cuenta").prop('disabled', true);
+    }
+  });
+
+});
+</script>
