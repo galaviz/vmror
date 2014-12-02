@@ -12,8 +12,12 @@ class MainController < ApplicationController
     if @user
       if @user.authenticate(params["passwordinput"])
         session["user_id"] = @user.id
-        redirect_to :action => :monitoreo, :controller => :dashboard
+        render :json =>  { :success => 1}.to_json
+      else
+        render :json =>  { :success => 0, :messages => "¡Contraseña incorrecta!"}.to_json
       end
+    else
+      render :json =>  { :success => 0, :messages => "¡Usuario no existe!"}.to_json
     end
   end
 

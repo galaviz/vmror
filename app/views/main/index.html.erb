@@ -82,7 +82,7 @@
             <div id="myTabContent" class="tab-content">
               <!-- Sign In Form -->
               <div class="tab-pane fade active in" id="signin">
-                <form class="form-horizontal" action="<%=url_for controller: 'main', action: 'login'%>" method="post">
+                <form class="form-horizontal" action="<%=url_for controller: 'main', action: 'login'%>" method="post" id="frmSignin">
                   <fieldset>
                     <!-- Text input-->
                     <div class="control-group">
@@ -118,6 +118,13 @@
                         <button id="signin" class="btn btn-theme btn-block">Iniciar Sesión</button>
                       </div>
                     </div>
+
+                    <div class="control-group" style="color:red;">
+                      <center>
+                        <label class="control-label" id="error-label"></label>
+                      </center>
+                    </div>
+
                   </fieldset>
                 </form>
               </div><!-- /signin -->
@@ -130,6 +137,7 @@
               <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </center>
           </div>
+
         </div><!-- /modal-content -->
       </div><!-- /modal-dialog -->
     </div><!-- /modal -->
@@ -314,6 +322,35 @@
       $(document).ready(function() {
         $('body').scrollTop(0);
         $('#form-carousel').carousel('pause');
+        $( "#frmSignin" ).submit(function( event ) {
+          event.preventDefault();
+          $.ajax({
+            type: "POST",
+            url: "/main/login",
+            data: {
+              email:$("#sign-in-mail").val(),
+              passwordinput:$("#passwordinput").val()
+            },
+            dataType: "json",
+            beforeSend: function(){
+
+            },
+            success: function(pRespuesta) {
+              if(pRespuesta.success == 0){
+                $("#error-label").html(pRespuesta.messages);
+              }
+              else if(pRespuesta.success == 1){
+                window.location = "dashboard/monitoreo"
+              }
+            },
+            error: function(pRespuesta) {
+              alert("error");
+            },
+            complete: function() {
+
+            }
+          });
+        });
       });
 
 
