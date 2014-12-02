@@ -15,7 +15,6 @@ class RegistrationController < ApplicationController
       @user = User.find_by_id(session["user_id"])
     else
       @user = User.new
-      session["is_residential"] = @is_residential
       @user.is_residential = @is_residential
       @user.save()
       session["user_id"] = @user.id

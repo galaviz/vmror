@@ -6,11 +6,15 @@ class LoadData < ActiveRecord::Migration
     exampleUser.puntos_vm = 100
     exampleUser.creditos_vm = 100
     exampleUser.clave_referencia = "PGON1"
+    exampleUser.hashed_password = "e4df635c3914bfe704f6398831497977ccfba1e7"
+    exampleUser.salt = "456"
     exampleUser.save()
     exampleUserResidential =  User.new(:nombre => "Maurizio", :apellido => "Calo", :email => "mauriziocalo07@gmail.com", :is_residential => true, :consumo_total => 13110, :importe_total => 52834)
     exampleUserResidential.clave_referencia = "MCAL001"
     exampleUserResidential.cargo_fijo = 78.40
     exampleUserResidential.energia = 2564.93
+    exampleUserResidential.hashed_password = "e4df635c3914bfe704f6398831497977ccfba1e7"
+    exampleUserResidential.salt = "456"
     exampleUserResidential.save()
   end
 
