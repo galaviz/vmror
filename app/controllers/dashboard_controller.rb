@@ -1,4 +1,66 @@
 class DashboardController < ApplicationController
+
+  def monitoreo
+    if session["user_id"] and User.find_by_id(session["user_id"])
+      @user = User.find_by_id(session["user_id"])
+    else
+      redirect_to :action => :index, :controller => :main
+    end
+    @user_tier = @user.user_tier
+  end
+
+  def puntos
+    if session["user_id"] and User.find_by_id(session["user_id"])
+      @user = User.find_by_id(session["user_id"])
+    else
+      redirect_to :action => :index, :controller => :main
+    end
+    @user_tier = @user.user_tier
+  end
+
+  def tienda
+    puts session["cart"].inspect
+    if session["user_id"] and User.find_by_id(session["user_id"])
+      @user = User.find_by_id(session["user_id"])
+    else
+      redirect_to :action => :index, :controller => :main
+    end
+    unless session["cart"]
+      session["cart"] = Hash.new
+    end
+    @user.puntos_vm = 100
+    @user.creditos_vm = 100
+    @user_tier = @user.user_tier
+    @cart = session["cart"]
+    @num_items_in_cart = 0
+    @cart_total = 0
+    @cart.keys.each do |key|
+      @num_items_in_cart = @num_items_in_cart + @cart[key]
+      @cart_total = @cart_total +  (@cart[key] * Item.find_by_id(key).precio)
+    end
+    @items = Item.all
+  end
+
+  def fundacion
+    if session["user_id"] and User.find_by_id(session["user_id"])
+      @user = User.find_by_id(session["user_id"])
+    else
+      redirect_to :action => :index, :controller => :main
+    end
+    @user_tier = @user.user_tier
+  end
+
+  def post_fundacion
+    if session["user_id"] and User.find_by_id(session["user_id"])
+      @user = User.find_by_id(session["user_id"])
+    else
+      redirect_to :action => :index, :controller => :main
+    end
+    @user_tier = @user.user_tier
+    @creditos_vm = params["creditos_vm"]
+    @amount = params["amount"]
+  end
+
   def process_payment
     @user = User.find_by_id(session["user_id"])
     # Set your secret key: remember to change this to your live secret key in production
@@ -94,48 +156,11 @@ class DashboardController < ApplicationController
       redirect_to(:action=>"pay_it_forward")
   end
 
-  def puntos
-    if session["user_id"] and User.find_by_id(session["user_id"])
-      @user = User.find_by_id(session["user_id"])
-    else
-      @user = User.new
-      @user.email = "maurizio@vm.com"
-      @user.clave_referencia = "PGON1"
-    end
-    @user_tier = @user.user_tier
-  end
-
-  def fundacion
-    if session["user_id"] and User.find_by_id(session["user_id"])
-      @user = User.find_by_id(session["user_id"])
-    else
-      @user = User.new
-      @user.email = "maurizio@vm.com"
-      @user.clave_referencia = "PGON1"
-    end
-    @user_tier = @user.user_tier
-  end
-
-  def post_fundacion
-    if session["user_id"] and User.find_by_id(session["user_id"])
-      @user = User.find_by_id(session["user_id"])
-    else
-      @user = User.new
-      @user.email = "maurizio@vm.com"
-      @user.clave_referencia = "PGON1"
-    end
-    @user_tier = @user.user_tier
-    @creditos_vm = params["creditos_vm"]
-    @amount = params["amount"]
-  end
-
   def post_pay_it_forward
     if session["user_id"] and User.find_by_id(session["user_id"])
       @user = User.find_by_id(session["user_id"])
     else
-      @user = User.new
-      @user.email = "maurizio@vm.com"
-      @user.clave_referencia = "PGON1"
+      redirect_to :action => :index, :controller => :main
     end
     @user_tier = @user.user_tier
     @creditos_vm = params["creditos_vm"]
@@ -148,36 +173,9 @@ class DashboardController < ApplicationController
     if session["user_id"] and User.find_by_id(session["user_id"])
       @user = User.find_by_id(session["user_id"])
     else
-      @user = User.new
-      @user.email = "maurizio@vm.com"
-      @user.clave_referencia = "PGON1"
+      redirect_to :action => :index, :controller => :main
     end
     @user_tier = @user.user_tier
-  end
-
-  def tienda
-    puts session["cart"].inspect
-    if session["user_id"] and User.find_by_id(session["user_id"])
-      @user = User.find_by_id(session["user_id"])
-    else
-      @user = User.new
-      @user.email = "maurizio@vm.com"
-      @user.clave_referencia = "PGON1"
-    end
-    unless session["cart"]
-      session["cart"] = Hash.new
-    end
-    @user.puntos_vm = 100
-    @user.creditos_vm = 100
-    @user_tier = @user.user_tier
-    @cart = session["cart"]
-    @num_items_in_cart = 0
-    @cart_total = 0
-    @cart.keys.each do |key|
-      @num_items_in_cart = @num_items_in_cart + @cart[key]
-      @cart_total = @cart_total +  (@cart[key] * Item.find_by_id(key).precio)
-    end
-    @items = Item.all
   end
 
   def item
@@ -186,9 +184,7 @@ class DashboardController < ApplicationController
     if session["user_id"] and User.find_by_id(session["user_id"])
       @user = User.find_by_id(session["user_id"])
     else
-      @user = User.new
-      @user.email = "maurizio@vm.com"
-      @user.clave_referencia = "PGON1"
+      redirect_to :action => :index, :controller => :main
     end
     @user.puntos_vm = 100
     @user.creditos_vm = 100
@@ -212,9 +208,7 @@ class DashboardController < ApplicationController
     if session["user_id"] and User.find_by_id(session["user_id"])
       @user = User.find_by_id(session["user_id"])
     else
-      @user = User.new
-      @user.email = "maurizio@vm.com"
-      @user.clave_referencia = "PGON1"
+      redirect_to :action => :index, :controller => :main
     end
     cart = session["cart"]
     @items_and_counts_arr = []

@@ -30,7 +30,16 @@
     <%= javascript_include_tag "modernizr.custom" %>
   </head>
   <body>
-    <table style="width:100%; height:100%;">
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand smoothScroll" href="#home"><%= image_tag "Logo_Verde_Monarca.png" %></a>
+        </div>
+      </div><!-- /container -->
+    </div><!-- /fixed-navbar -->
+
+    <table style="width:100%; height:100%; margin-top:100px;">
       <tr>
         <td>&nbsp;</td>
         <td style="width:300px;" valign="middle">
