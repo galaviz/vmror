@@ -322,6 +322,7 @@
       $(document).ready(function() {
         $('body').scrollTop(0);
         $('#form-carousel').carousel('pause');
+
         $( "#frmSignin" ).submit(function( event ) {
           event.preventDefault();
           $.ajax({
@@ -340,7 +341,7 @@
                 $("#error-label").html(pRespuesta.messages);
               }
               else if(pRespuesta.success == 1){
-                window.location = "dashboard/monitoreo"
+                window.location = "/dashboard/monitoreo"
               }
             },
             error: function(pRespuesta) {
@@ -352,7 +353,6 @@
           });
         });
       });
-
 
       $('.nav li a').on('click',function(){
         $('.navbar-collapse').collapse('hide');

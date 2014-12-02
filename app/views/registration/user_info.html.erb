@@ -7,7 +7,7 @@
                    data-animrepeat="0"
                    data-speed="1s"
                    data-delay="0.5s">
-                  <h2 class="h2-section-title">Información del Usuario (<%=if @user.is_residential then "Residencial" else "Comercial" end%>)</h2>
+                  <h2 class="h2-section-title">Información del Usuario (<%=if @is_residential then "Residencial" else "Comercial" end%>)</h2>
 
                   <div class="i-section-title">
                       <i class="icon-users-outline">
@@ -24,7 +24,7 @@
               <div class="col-md-6 col-sm-6 centered">
                   <div class="classic-form">
                       <form class="form-horizontal" role="form" id="registration-form-user" action="./post_user_info">
-                        <% unless @user.is_residential%>
+                        <% unless @is_residential%>
                         <div class="form-group">
                           <label for="empresa" class="col-sm-4 control-label">Empresa</label>
                           <div class="col-sm-8">
