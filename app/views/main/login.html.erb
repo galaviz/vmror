@@ -85,20 +85,21 @@
         <td>&nbsp;</td>
       </tr>
       <tr>
+        <td style="height:20px;">
+          &nbsp;
+        </td>
+      </tr>
+      <tr>
         <td colspan="3" style="text-align:center; color:red;">
           <% 
             if @user.nil? 
           %>
-            <div>
-              ¡Usuario no existe!
-            </div>
+            <label class="control-label">¡Usuario no existe!</label>
           <% 
             else 
               if @user.authenticate(params["passwordinput"]) == false
           %>
-            <div>
-              ¡Contraseña incorrecta!
-            </div>
+            <label class="control-label">¡Contraseña incorrecta!</label>
           <% 
               end
             end 
