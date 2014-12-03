@@ -9,6 +9,15 @@ class RegistrationController < ApplicationController
     redirect_to(:action => :user_info)
   end
 
+  def checkEmailExists
+    @user = User.find_by_email(params["email"])
+    if @user
+      render :json =>  { :success => 0, :messages => "¡El correo ya existe!"}.to_json
+    else
+      render :json =>  { :success => 1}.to_json
+    end
+  end
+
   def user_info
     @is_residential = session["is_residential"]
     if session["user_id"] and User.find_by_id(session["user_id"])
