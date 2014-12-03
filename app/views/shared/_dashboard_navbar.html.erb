@@ -30,9 +30,22 @@
             <li <%if active_tab == "pay_it_forward"%> class="active"<%end%>><a href="<%=url_for controller: 'dashboard', action: 'pay_it_forward'%>" class="smoothScroll">Pay-It-Forward</a></li>
           </ul>
           <!-- Sign In / Sign Up -->
-          <ul class="nav navbar-nav navbar-right">
+          <!--<ul class="nav navbar-nav navbar-right">
             <li class="dropdown"><%=link_to("LOGOUT", {:action => 'logout', :controller => 'main'})%></li>
-          </ul>
+              <ul class="dropdown-menu">
+                <li>hola</li>              
+              </ul>
+          </ul>-->
+          <div class="dropdown navbar-right" style="cursor:pointer; color:#3D9970; margin-top:16px ">
+            <ul class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><%=@user.nombre + " " + @user.apellido %>&nbsp;<span class="caret"></span>
+            </ul>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+              <li><a tabindex="-1" href="#">Action</a></li>
+              <li><a tabindex="-1" href="#">Another action</a></li>
+              <li><a tabindex="-1" href="#">Something else here</a></li>
+              <li><a tabindex="-1"><%=link_to("LOGOUT", {:action => 'logout', :controller => 'main'})%></a></li>
+            </ul>        
+          </div>
         </div><!--/nav-collapse -->
       </div><!-- /container -->
     </div><!-- /top-navbar -->
