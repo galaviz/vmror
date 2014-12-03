@@ -214,7 +214,51 @@
             }
           });
         });
-      });
+
+		$( "#registration-form-user" ).submit(function( event ) {
+			event.preventDefault();
+			if($("#email").val() == ""){
+				window.location = "post_user_info"
+			}
+			else{
+				$.ajax({
+					type: "POST",
+					url: "/Registration/checkEmailExists",
+					data: {
+						email:$("#email").val()
+					},
+					dataType: "json",
+					beforeSend: function(){
+
+					},
+					success: function(pRespuesta) {
+						if(pRespuesta.success == 0){
+							//$('[data-toggle="popover"]').attr("data-content", );
+							$('[data-toggle="popover"]').popover({
+								html : true,
+								content: function() {
+								  return "<div style='color:red;'>" + pRespuesta.messages + "</div>";
+								}
+							});
+							$('[data-toggle="popover"]').popover("show");
+							$('html, body').animate({
+								scrollTop: $("#email").offset().top - 100
+							}, 500);
+						}
+						else if(pRespuesta.success == 1){
+							window.location = "post_user_info"
+						}
+					},
+					error: function(pRespuesta) {
+						alert("error");
+					},
+					complete: function() {
+
+					}
+				});
+			}
+		});
+	});
     </script>
   </body>
 </html>
