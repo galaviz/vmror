@@ -48,9 +48,8 @@ class RegistrationController < ApplicationController
     user.calle = params["calle"]
     user.numero_direccion = params["numero"]
     user.colonia = params["colonia"]
-    user.codigo_postal = params["codigo-postal"]
+    user.codigo_postal = params["codigoPostal"]
     user.save()
-    redirect_to(:action=>:energy_info)
   end
 
   def energy_info

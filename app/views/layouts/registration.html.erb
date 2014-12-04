@@ -246,7 +246,27 @@
 							}, 500);
 						}
 						else if(pRespuesta.success == 1){
-							window.location = "post_user_info"
+                                                    $.ajax({
+                                                      type: "POST",
+                                                      url: "/registration/post_user_info",
+                                                      data: {
+                                                        empresa: $('[name="empresa"]').val(),
+                                                        nombre: $('[name="nombre"]').val(),
+                                                        apellido: $('[name="apellido"]').val(),
+                                                        email: $('[name="email"]').val(),
+                                                        telefono: $('[name="telefono"]').val(),
+                                                        celular: $('[name="celular"]').val(),
+                                                        estado: $('[name="estado"]').val(),
+                                                        municipio: $('[name="municipio"]').val(),
+                                                        calle: $('[name="calle"]').val(),
+                                                        numero: $('[name="numero"]').val(),
+                                                        colonia: $('[name="colonia"]').val(),
+                                                        codigoPostal: $('[name="codigo-postal"]').val()
+                                                      },
+                                                      success: function(pRespuesta) {
+							window.location = "energy_info"
+                                                      }
+                                                    });
 						}
 					},
 					error: function(pRespuesta) {
