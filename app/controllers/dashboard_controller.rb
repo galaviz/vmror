@@ -288,4 +288,20 @@ class DashboardController < ApplicationController
     session["cart"] = Hash.new
   end
 
+  def post_change_password
+    @user = User.find_by_id(session["user_id"])
+    
+    if @user.authenticate(params["password_input"])
+      if params["password_input_new"]==params["password_input_confirm"]
+        @user.password=(params["password_input_new"])
+        @user.save()
+        render :json =>  { :success => 1}.to_json
+      else
+        render :json =>  { :success => 0, :messages => "¡La contrase&ntilde;a no coincide!"}.to_json
+      end
+    else
+      render :json =>  { :success => 0, :messages => "¡la contraseña anterior no coincide!"}.to_json  
+    end
+  end
+
 end
