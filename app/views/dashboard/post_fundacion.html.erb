@@ -108,6 +108,39 @@
     <%= javascript_include_tag "animations" %>
     <%= javascript_include_tag "jquery.formatter.min" %>
     <%= javascript_include_tag "legacy" %>
+    <script>
+    $(document).ready(function() {
+      $( "#resetpassword-form" ).submit(function( event ) {
+          event.preventDefault();
+          $.ajax({
+            type: "POST",
+            url: "/dashboard/post_change_password",
+            data: {
+              password_input:$("#password_input").val(),
+              password_input_new:$("#password_input_new").val(),
+              password_input_confirm:$("#password_input_confirm").val()
+            },
+            dataType: "json",
+            beforeSend: function(){
 
+            },
+            success: function(pRespuesta) {
+              if(pRespuesta.success == 0){
+                $("#error-label").html(pRespuesta.messages);
+              }
+              else if(pRespuesta.success == 1){
+                window.location = "/dashboard/monitoreo"
+              }
+            },
+            error: function(pRespuesta) {
+              alert("error");
+            },
+            complete: function() {
+
+            }
+          });
+        });
+    });      
+    </script>
   </body>
 </html>

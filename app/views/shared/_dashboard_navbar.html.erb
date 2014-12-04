@@ -29,23 +29,82 @@
           <ul class="nav navbar-nav cl-effect-13">
             <li <%if active_tab == "pay_it_forward"%> class="active"<%end%>><a href="<%=url_for controller: 'dashboard', action: 'pay_it_forward'%>" class="smoothScroll">Pay-It-Forward</a></li>
           </ul>
-          <!-- Sign In / Sign Up -->
+          <!-- Sign In / Sign Up / Profile-->
           <!--<ul class="nav navbar-nav navbar-right">
             <li class="dropdown"><%=link_to("LOGOUT", {:action => 'logout', :controller => 'main'})%></li>
-              <ul class="dropdown-menu">
-                <li>hola</li>              
-              </ul>
           </ul>-->
-          <div class="dropdown navbar-right" style="cursor:pointer; color:#3D9970; margin-top:16px ">
+          <div class="dropdown navbar-right" style="cursor:pointer; color:#3D9970; margin-top:16px">
             <ul class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><%=@user.nombre + " " + @user.apellido %>&nbsp;<span class="caret"></span>
             </ul>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-              <li><a tabindex="-1" href="#">Action</a></li>
-              <li><a tabindex="-1" href="#">Another action</a></li>
-              <li><a tabindex="-1" href="#">Something else here</a></li>
-              <li><a tabindex="-1"><%=link_to("LOGOUT", {:action => 'logout', :controller => 'main'})%></a></li>
+              <li><a tabindex="-1" href="#resetpassword" data-toggle="modal" data-target="#resetpassword-modal">Cambiar Contrase&ntilde;a</a></li>
+              <li><%=link_to("LOGOUT", {:action => 'logout', :controller => 'main'})%></li>
             </ul>        
           </div>
+
         </div><!--/nav-collapse -->
       </div><!-- /container -->
     </div><!-- /top-navbar -->
+
+    <div class="modal fade bs-modal-sm in" id="resetpassword-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <br>
+          <div class="modal-header">
+            Cambiar Contrase&ntilde;a
+          </div>
+          <div class="modal-body">
+            <div id="myTabContent" class="tab-content">
+              <!-- Change Password Form -->
+              <div class="tab-pane fade active in" id="resetpassword">
+                <form class="form-horizontal" id="resetpassword-form" role="form" action="./post_change_password" method="post">
+                  <fieldset>
+                    
+                    <!-- Password input-->
+                    <div class="control-group">
+                      
+                      <label class="control-label" for="password_input">Contrase Actual:</label>
+                      <div class="controls">
+                        <input required="" id="password_input" name="password_input" class="form-control" type="password" placeholder="********" class="input-medium">
+                      </div>
+                      <label class="control-label" for="password_input_new">Contrase&ntilde;a Nueva:</label>
+                      <div class="controls">
+                        <input required="" id="password_input_new" name="password_input_new" class="form-control" type="password" placeholder="********" class="input-medium">
+                      </div>
+                      <label for="password_input_confirm" class="control-label">Confirmar Contrase&ntilde;a:</label>
+                      <div class="controls">
+                        <input required="" id="password_input_confirm" name="password_input_confirm" class="form-control" type="password" placeholder="********" class="input-medium">
+                      </div>
+                    </div>
+
+                    <!-- Buttons-->
+                    <div class="control-group">
+                      <label class="control-label" for="signin"></label>
+                      <div class="controls">
+                        <button type="submit" id="signin" class="btn btn-theme btn-block">Guardar</button>
+                      </div>
+                    </div>
+
+                    <div class="control-group" style="color:red;">
+                      <center>
+                        <label class="control-label" id="error-label"></label>
+                      </center>
+                    </div>
+
+                  </fieldset>
+                </form>
+              </div><!-- /Change Password Form -->
+
+            </div><!-- /tab-content -->
+          </div><!-- /modal-body -->
+
+          <div class="modal-footer">
+            <center>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </center>
+          </div>
+
+        </div><!-- /modal-content -->
+      </div><!-- /modal-dialog -->
+    </div><!-- /modal -->
+
