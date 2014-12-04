@@ -175,6 +175,7 @@
     <%= javascript_include_tag "picker.time" %>
     <%= javascript_include_tag "picker.date" %>
     <%= javascript_include_tag "vfs_fonts" %>
+    <%= javascript_include_tag "ajax" %>
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -187,97 +188,50 @@
 
         $( "#frmSignin" ).submit(function( event ) {
           event.preventDefault();
-          $.ajax({
-            type: "POST",
-            url: "/main/login",
-            data: {
-              email:$("#sign-in-mail").val(),
-              passwordinput:$("#passwordinput").val()
-            },
-            dataType: "json",
-            beforeSend: function(){
-
-            },
-            success: function(pRespuesta) {
-              if(pRespuesta.success == 0){
-                $("#error-label").html(pRespuesta.messages);
-              }
-              else if(pRespuesta.success == 1){
-                window.location = "/dashboard/monitoreo"
-              }
-            },
-            error: function(pRespuesta) {
-              alert("error");
-            },
-            complete: function() {
-
-            }
-          });
+          var pRequestO = new Object();
+          pRequestO.email=$("#sign-in-mail").val();
+          pRequestO.passwordinput=$("#passwordinput").val();
+          
+          ASPR(pRequestO, "/main/login",function(pRespuesta){window.location = "/dashboard/monitoreo"}, function(pRespuesta){$("#error-label").html(pRespuesta.messages);})
+          
         });
 
-		$( "#registration-form-user" ).submit(function( event ) {
-			event.preventDefault();
-			if($("#email").val() == ""){
-				window.location = "post_user_info"
-			}
-			else{
-				$.ajax({
-					type: "POST",
-					url: "/Registration/checkEmailExists",
-					data: {
-						email:$("#email").val()
-					},
-					dataType: "json",
-					beforeSend: function(){
-
-					},
-					success: function(pRespuesta) {
-						if(pRespuesta.success == 0){
-							//$('[data-toggle="popover"]').attr("data-content", );
-							$('[data-toggle="popover"]').popover({
-								html : true,
-								content: function() {
-								  return "<div style='color:red;'>" + pRespuesta.messages + "</div>";
-								}
-							});
-							$('[data-toggle="popover"]').popover("show");
-							$('html, body').animate({
-								scrollTop: $("#email").offset().top - 100
-							}, 500);
-						}
-						else if(pRespuesta.success == 1){
-                                                    $.ajax({
-                                                      type: "POST",
-                                                      url: "/registration/post_user_info",
-                                                      data: {
-                                                        empresa: $('[name="empresa"]').val(),
-                                                        nombre: $('[name="nombre"]').val(),
-                                                        apellido: $('[name="apellido"]').val(),
-                                                        email: $('[name="email"]').val(),
-                                                        telefono: $('[name="telefono"]').val(),
-                                                        celular: $('[name="celular"]').val(),
-                                                        estado: $('[name="estado"]').val(),
-                                                        municipio: $('[name="municipio"]').val(),
-                                                        calle: $('[name="calle"]').val(),
-                                                        numero: $('[name="numero"]').val(),
-                                                        colonia: $('[name="colonia"]').val(),
-                                                        codigoPostal: $('[name="codigo-postal"]').val()
-                                                      },
-                                                      success: function(pRespuesta) {
-							window.location = "energy_info"
-                                                      }
-                                                    });
-						}
-					},
-					error: function(pRespuesta) {
-						alert("error");
-					},
-					complete: function() {
-
-					}
-				});
-			}
-		});
+	$( "#registration-form-user" ).submit(function( event ) {
+          event.preventDefault();
+	  if($("#email").val() != ""){
+            var pRequestO = new Object();
+            
+            pRequestO.empresa= $('[name="empresa"]').val();
+            pRequestO.nombre= $('[name="nombre"]').val();
+            pRequestO.apellido= $('[name="apellido"]').val();
+            pRequestO.email= $('[name="email"]').val();
+            pRequestO.telefono= $('[name="telefono"]').val();
+            pRequestO.celular= $('[name="celular"]').val();
+            pRequestO.estado= $('[name="estado"]').val();
+            pRequestO.municipio= $('[name="municipio"]').val();
+            pRequestO.calle= $('[name="calle"]').val();
+            pRequestO.numero= $('[name="numero"]').val();
+            pRequestO.colonia= $('[name="colonia"]').val();
+            pRequestO.codigoPostal= $('[name="codigo-postal"]').val();
+            ASPR(pRequestO,
+                 "/Registration/post_user_info",
+                 function(pRespuesta){
+                    window.location = "energy_info"
+                  },
+                function(pRespuesta){
+                  $('[data-toggle="popover"]').popover({
+                          html : true,
+                          content: function() {
+                            return "<div style='color:red;'>" + pRespuesta.messages + "</div>";
+                          }
+                  });
+                  $('[data-toggle="popover"]').popover("show");
+                  $('html, body').animate({
+                          scrollTop: $("#email").offset().top - 100
+                  }, 500);
+                })
+            }
+          });
 	});
     </script>
   </body>
