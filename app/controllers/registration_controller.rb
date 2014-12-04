@@ -9,15 +9,6 @@ class RegistrationController < ApplicationController
     redirect_to(:action => :user_info)
   end
 
-  def checkEmailExists
-    @user = User.find_by_email(params["email"])
-    if @user
-      render :json =>  { :success => 0, :messages => "¡El correo ya existe!"}.to_json
-    else
-      render :json =>  { :success => 1}.to_json
-    end
-  end
-
   def user_info
     @is_residential = session["is_residential"]
     if session["user_id"] and User.find_by_id(session["user_id"])
@@ -32,24 +23,67 @@ class RegistrationController < ApplicationController
   end
 
   def post_user_info
-    user = User.find_by_id(session["user_id"])
-    puts "params post user info"
-    puts params
-    if params["empresa"]
-      user.empresa = params["empresa"]
+    if params["email"] != ""
+      
+      @user = User.find_by_email(params["email"])
+      if @user
+        render :json =>  { :success => 0, :messages => "¡El correo ya existe!"}.to_json
+      else
+        
+        user = User.find_by_id(session["user_id"])
+        puts "params post user info"
+        puts params
+        if params["empresa"]
+          user.empresa = params["empresa"]
+        end
+        user.nombre = params["nombre"]
+        user.apellido = params["apellido"]
+        user.email = params["email"]
+        user.telefono = params["telefono"]
+        user.celular = params["celular"]
+        user.estado = params["estado"]
+        user.municipio = params["municipio"]
+        user.calle = params["calle"]
+        user.numero_direccion = params["numero"]
+        user.colonia = params["colonia"]
+        user.codigo_postal = params["codigoPostal"]
+        user.save()
+        
+        render :json =>  { :success => 1}.to_json
+      end
+      
+    else
+      
+      user = User.find_by_id(session["user_id"])
+      puts "params post user info"
+      puts params
+      if params["empresa"]
+        user.empresa = params["empresa"]
+      end
+      user.nombre = params["nombre"]
+      user.apellido = params["apellido"]
+      user.email = params["email"]
+      user.telefono = params["telefono"]
+      user.celular = params["celular"]
+      user.estado = params["estado"]
+      user.municipio = params["municipio"]
+      user.calle = params["calle"]
+      user.numero_direccion = params["numero"]
+      user.colonia = params["colonia"]
+      user.codigo_postal = params["codigoPostal"]
+      user.save()
+      render :json =>  { :success => 1}.to_json
+      
     end
-    user.nombre = params["nombre"]
-    user.apellido = params["apellido"]
-    user.email = params["email"]
-    user.telefono = params["telefono"]
-    user.celular = params["celular"]
-    user.estado = params["estado"]
-    user.municipio = params["municipio"]
-    user.calle = params["calle"]
-    user.numero_direccion = params["numero"]
-    user.colonia = params["colonia"]
-    user.codigo_postal = params["codigoPostal"]
-    user.save()
+    
+    
+    
+    
+    
+    
+    
+    
+    
   end
 
   def energy_info

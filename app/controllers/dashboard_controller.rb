@@ -3,62 +3,63 @@ class DashboardController < ApplicationController
   def monitoreo
     if session["user_id"] and User.find_by_id(session["user_id"])
       @user = User.find_by_id(session["user_id"])
+      @user_tier = @user.user_tier
     else
       redirect_to :action => :index, :controller => :main
     end
-    @user_tier = @user.user_tier
   end
 
   def puntos
     if session["user_id"] and User.find_by_id(session["user_id"])
       @user = User.find_by_id(session["user_id"])
+      @user_tier = @user.user_tier
     else
       redirect_to :action => :index, :controller => :main
     end
-    @user_tier = @user.user_tier
   end
 
   def tienda
     puts session["cart"].inspect
     if session["user_id"] and User.find_by_id(session["user_id"])
       @user = User.find_by_id(session["user_id"])
+        
+      unless session["cart"]
+        session["cart"] = Hash.new
+      end
+      @user.puntos_vm = 100
+      @user.creditos_vm = 100
+      @user_tier = @user.user_tier
+      @cart = session["cart"]
+      @num_items_in_cart = 0
+      @cart_total = 0
+      @cart.keys.each do |key|
+        @num_items_in_cart = @num_items_in_cart + @cart[key]
+        @cart_total = @cart_total +  (@cart[key] * Item.find_by_id(key).precio)
+      end
+      @items = Item.all
     else
       redirect_to :action => :index, :controller => :main
     end
-    unless session["cart"]
-      session["cart"] = Hash.new
-    end
-    @user.puntos_vm = 100
-    @user.creditos_vm = 100
-    @user_tier = @user.user_tier
-    @cart = session["cart"]
-    @num_items_in_cart = 0
-    @cart_total = 0
-    @cart.keys.each do |key|
-      @num_items_in_cart = @num_items_in_cart + @cart[key]
-      @cart_total = @cart_total +  (@cart[key] * Item.find_by_id(key).precio)
-    end
-    @items = Item.all
   end
 
   def fundacion
     if session["user_id"] and User.find_by_id(session["user_id"])
       @user = User.find_by_id(session["user_id"])
+      @user_tier = @user.user_tier
     else
       redirect_to :action => :index, :controller => :main
     end
-    @user_tier = @user.user_tier
   end
 
   def post_fundacion
     if session["user_id"] and User.find_by_id(session["user_id"])
       @user = User.find_by_id(session["user_id"])
+      @user_tier = @user.user_tier
+      @creditos_vm = params["creditos_vm"]
+      @amount = params["amount"]
     else
       redirect_to :action => :index, :controller => :main
     end
-    @user_tier = @user.user_tier
-    @creditos_vm = params["creditos_vm"]
-    @amount = params["amount"]
   end
 
   def process_payment
@@ -159,23 +160,23 @@ class DashboardController < ApplicationController
   def post_pay_it_forward
     if session["user_id"] and User.find_by_id(session["user_id"])
       @user = User.find_by_id(session["user_id"])
+      @user_tier = @user.user_tier
+      @creditos_vm = params["creditos_vm"]
+      @amount = params["amount"]
+      @titular = params["titular"]
+      @codigo_vm = params["codigo_vm"]
     else
       redirect_to :action => :index, :controller => :main
     end
-    @user_tier = @user.user_tier
-    @creditos_vm = params["creditos_vm"]
-    @amount = params["amount"]
-    @titular = params["titular"]
-    @codigo_vm = params["codigo_vm"]
   end
 
   def pay_it_forward
     if session["user_id"] and User.find_by_id(session["user_id"])
       @user = User.find_by_id(session["user_id"])
+      @user_tier = @user.user_tier
     else
       redirect_to :action => :index, :controller => :main
     end
-    @user_tier = @user.user_tier
   end
 
   def item
@@ -183,12 +184,12 @@ class DashboardController < ApplicationController
     @item = Item.find_by_id(@item_id)
     if session["user_id"] and User.find_by_id(session["user_id"])
       @user = User.find_by_id(session["user_id"])
+      @user.puntos_vm = 100
+      @user.creditos_vm = 100
+      @user_tier = @user.user_tier
     else
       redirect_to :action => :index, :controller => :main
     end
-    @user.puntos_vm = 100
-    @user.creditos_vm = 100
-    @user_tier = @user.user_tier
   end
 
   def add_to_cart
