@@ -1,27 +1,24 @@
-$(document).ready(function(){
-    
-});
-
-
-function ASPR(thisData, thisLocation,thisSuccess, thisError){
+function Ajax(thisData, thisLocation,thisSuccess, thisError){
     $.ajax({
           type: "POST",
           url: thisLocation,
           data: thisData,
           dataType: "json",
           beforeSend: function(){
+	    
           },
-          success: function(pRespuesta) {
-			  propiedades = pRespuesta;
-			  if (propiedades.success === 1) {
-				thisSuccess(propiedades);                                                            
+          success: function(pResponse) {
+			  if (pResponse.success === 1) {
+				thisSuccess(pResponse);                                                            
 			  } else {
-				thisError(propiedades);
+				thisError(pResponse);
 			  }
 		  },
           error: function() {
+	    
           },
           complete: function() {
+	    
           }
-      });
+    });
 }

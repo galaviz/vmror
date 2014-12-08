@@ -192,13 +192,34 @@
           pRequestO.email=$("#sign-in-mail").val();
           pRequestO.passwordinput=$("#passwordinput").val();
           
-          ASPR(pRequestO, "/main/login",function(pRespuesta){window.location = "/dashboard/monitoreo"}, function(pRespuesta){$("#error-label").html(pRespuesta.messages);})
+          Ajax(pRequestO, "/main/login", function(pResponse){window.location = "/dashboard/monitoreo"}, function(pResponse){$("#error-label").html(pResponse.messages);})
           
         });
 
 	$( "#registration-form-user" ).submit(function( event ) {
           event.preventDefault();
-	  if($("#email").val() != ""){
+          if ($("#first-name").val() == "") {
+            $("#first-name").css("border", "1px solid red");
+            $('html, body').animate({
+                    scrollTop: $("#registration-form-user").offset().top - 100
+            }, 500);
+          }
+          
+          if ($("#last-name").val() == "") {
+            $("#last-name").css("border", "1px solid red");
+            $('html, body').animate({
+                    scrollTop: $("#registration-form-user").offset().top - 100
+            }, 500);
+          }
+          
+          if ($("#email").val() == "") {
+            $("#email").css("border", "1px solid red");
+            $('html, body').animate({
+                    scrollTop: $("#registration-form-user").offset().top - 100
+            }, 500);
+          }
+          
+	  if($("#email").val() != "" && $("#first-name").val() != "" && $("#last-name").val() != ""){
             var pRequestO = new Object();
             
             pRequestO.empresa= $('[name="empresa"]').val();
@@ -213,7 +234,7 @@
             pRequestO.numero= $('[name="numero"]').val();
             pRequestO.colonia= $('[name="colonia"]').val();
             pRequestO.codigoPostal= $('[name="codigo-postal"]').val();
-            ASPR(pRequestO,
+            Ajax(pRequestO,
                  "/Registration/post_user_info",
                  function(pRespuesta){
                     window.location = "energy_info"

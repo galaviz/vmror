@@ -78,7 +78,7 @@
                   <br>
                   <br>
                   <a href="./forma_pago"><button type="button" class="btn btn-theme">Atr&aacute;s</button></a>
-                  <a href="./post_confirmation"><button type="submit" class="btn btn-theme">Confirmar</button></a>
+                  <a href="./post_confirmation"><button type="submit" id="post-confirmation" disabled class="btn btn-theme">Confirmar</button></a>
                 </div>
             </div>
           </div> <!-- /row -->
@@ -114,6 +114,23 @@
     });
     $('#contract-checkbox2').change(function() {
         createContract2($(this).is(":checked"));
+    });
+    
+    $( "#contract-checkbox" ).on( "click", function() {
+        if ($("#contract-checkbox").is(':checked') && $("#contract-checkbox2").is(':checked')) {
+            $("#post-confirmation").removeAttr("disabled");
+        }
+        else{
+            $("#post-confirmation").attr("disabled", "disabled");
+        }
+    });
+    $( "#contract-checkbox2" ).on( "click", function() {
+        if ($("#contract-checkbox").is(':checked') && $("#contract-checkbox2").is(':checked')) {
+            $("#post-confirmation").removeAttr("disabled");
+        }
+        else{
+            $("#post-confirmation").attr("disabled", "disabled");
+        }
     });
   });
 
