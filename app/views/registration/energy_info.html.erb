@@ -27,7 +27,7 @@
                           <div class="form-group has-feedback" id="rpu-form-group">
                               <label for="rpu" class="col-sm-3 control-label">RPU</label>
                               <div class="col-sm-9">
-                                  <input type="text" class="form-control" id="rpu" name="rpu" placeholder="Número de servicio (12 digitos)" value="<%=@user.rpu%>">
+                                  <input type="text" class="form-control" id="rpu" name="rpu" placeholder="Número de servicio (12 digitos)" value="">
                                   <i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-rpu"></i>
                                   <small class="help-block" id="rpu-help-block">El RPU no es valido o no existe en nuestra base de datos</small>
                               </div>
@@ -51,7 +51,7 @@
                                   <div class="pull-left">
                                     <div class="btn-group">
                                       <select class="form-control" name="tarifa" id="tarifa">
-                                        <%if @user.is_residential%>
+                                        <%if @is_residential%>
                                           <option>DAC</option>
                                         <%else%>
                                           <option>OM</option>
@@ -63,18 +63,18 @@
                                   </div>
                                 </div>
                             </div>
-                            <%if @user.is_residential%>
+                            <%if @is_residential==true%>
                             <div class="form-group has-feedback">
                                 <label class="col-sm-3 control-label">Cargo Fijo (de un mes): </label>
                                 <div class="col-sm-9">
-                                  <input type="text" class="form-control" id="cargo-fijo" name="cargo-fijo" value="<%=@user.cargo_fijo%>" placeholder="Cargo Fijo (MN)">
+                                  <input type="text" class="form-control" id="cargo-fijo" name="cargo-fijo" value="" placeholder="Cargo Fijo (MN)">
                                   <i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-fixed-charge"></i>
                                 </div>
                             </div>
                             <div class="form-group has-feedback">
                                 <label class="col-sm-3 control-label">Energia (de un mes) </label>
                                 <div class="col-sm-9">
-                                  <input type="text" class="form-control" id="energia" name="energia" value="<%=@user.energia%>" placeholder="Energia (de un mes) (MN)">
+                                  <input type="text" class="form-control" id="energia" name="energia" value="" placeholder="Energia (de un mes) (MN)">
                                   <i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-energy-subtotal"></i>
                                 </div>
                             </div>
@@ -82,14 +82,14 @@
                               <div class="form-group has-feedback">
                                   <label class="col-sm-3 control-label">Demanda Facturable (de un mes) </label>
                                   <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="cargo-fijo" name="cargo-fijo" value="<%=@user.cargo_fijo%>" placeholder="Demanda Facturada (MN)">
+                                    <input type="text" class="form-control" id="cargo-fijo" name="cargo-fijo" value="" placeholder="Demanda Facturada (MN)">
                                     <i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-fixed-charge"></i>
                                   </div>
                               </div>
                               <div class="form-group has-feedback">
                                   <label class="col-sm-3 control-label">Subtotal (de un mes) </label>
                                   <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="energia" name="energia" value="<%=@user.energia%>" placeholder="Subtotal (de un mes) (MN)">
+                                    <input type="text" class="form-control" id="energia" name="energia" value="" placeholder="Subtotal (de un mes) (MN)">
                                     <i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-energy-subtotal"></i>
                                   </div>
                               </div>
@@ -101,7 +101,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Consumo en el último año (12 meses) </label>
-                                <%unless @user.is_residential%>
+                                <%unless @is_residential%>
                                 <div class="col-sm-9 control-label" style="text-align:center;">Nota: Es importante que en su recibo habrá dos valores para el mes de Abril (Abr) y el mes de Octubre (Oct)</div>
                                 <%end%>
                             </div>
@@ -112,7 +112,7 @@
                                   <input type="text" class="form-control monthly-consumption" name="<%=month%>" placeholder="Consumo (kWh)"><%if month == @months[0]%><i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-consumption-summary"></i><%end%>
                                 </div>
                                 <div class="col-sm-5">
-                                  <input type="text" class="form-control monthly-import" name="<%=month%>" placeholder="<%=if @user.is_residential then 'Importe ($MN)' else 'Precio Medio ($MN)' end%>"><%if month == @months[0]%><i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-consumption-summary"></i><%end%>
+                                  <input type="text" class="form-control monthly-import" name="<%=month%>" placeholder="<%=if @is_residential then 'Importe ($MN)' else 'Precio Medio ($MN)' end%>"><%if month == @months[0]%><i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-consumption-summary"></i><%end%>
                                 </div>
                               </div>
                             <%end%>
@@ -126,15 +126,15 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Total: </label>
-                                <div class="control-label col-sm-4" id="consumo-total" name="consumo-total"><%=@user.consumo_total%></div>
-                                <div class="control-label col-sm-5" id="import-total" name="import-total"><%=@user.importe_total%></div>
+                                <div class="control-label col-sm-4" id="consumo-total" name="consumo-total"></div>
+                                <div class="control-label col-sm-5" id="import-total" name="import-total"></div>
                             </div>
                             <!--hidden fields-->
-                            <input style='display:none' name='consumo-total' id="consumo-total-hidden" value="<%=@user.consumo_total%>">
-                            <input style='display:none' name='import-total' id="import-total-hidden" value="<%=@user.importe_total%>">
+                            <input style='display:none' name='consumo-total' id="consumo-total-hidden" value="">
+                            <input style='display:none' name='import-total' id="import-total-hidden" value="">
                             <!--/hidden fields-->
                           </div> <!--/manual info-->
-                          <a href="./user_info"><button type="button" class="btn btn-theme">Atr&aacute;s</button></a>
+                          <a href="./tipo_de_cliente"><button type="button" class="btn btn-theme">Atr&aacute;s</button></a>
                           <button type="submit" class="btn btn-theme" id="energy-info-next-button">Siguiente</button>
 
                       </form>
@@ -183,7 +183,7 @@ $(document).ready(function() {
     $('#consumo-total-hidden').val(sum);
   });
 
-  <%if @user.is_residential%>
+  <%if @is_residential%>
     $(".monthly-import").on('input propertychange paste', function() {
       var sum = 0;
       $('.monthly-import').each(function() {
