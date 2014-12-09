@@ -204,6 +204,10 @@
                     scrollTop: $("#registration-form-user").offset().top - 100
             }, 500);
           }
+          else
+          {
+            $("#first-name").css("border", "none");
+          }  
           
           if ($("#last-name").val() == "") {
             $("#last-name").css("border", "1px solid red");
@@ -211,6 +215,10 @@
                     scrollTop: $("#registration-form-user").offset().top - 100
             }, 500);
           }
+          else
+          {
+            $("#last-name").css("border", "none");
+          }  
           
           if ($("#email").val() == "") {
             $("#email").css("border", "1px solid red");
@@ -218,6 +226,10 @@
                     scrollTop: $("#registration-form-user").offset().top - 100
             }, 500);
           }
+          else
+          {
+            $("#email").css("border", "none");
+          }  
           
 	  if($("#email").val() != "" && $("#first-name").val() != "" && $("#last-name").val() != ""){
             var pRequestO = new Object();
@@ -237,7 +249,7 @@
             Ajax(pRequestO,
                  "/Registration/post_user_info",
                  function(pRespuesta){
-                    window.location = "energy_info"
+                    window.location = "propuesta"
                   },
                 function(pRespuesta){
                   $('[data-toggle="popover"]').popover({

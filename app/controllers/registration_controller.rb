@@ -6,7 +6,7 @@ class RegistrationController < ApplicationController
 
     is_residential = params["is_residential"]
     session["is_residential"] = is_residential
-    redirect_to(:action => :user_info)
+    redirect_to(:action => :energy_info)
   end
 
   def user_info
@@ -88,6 +88,14 @@ class RegistrationController < ApplicationController
 
   def energy_info
       @is_residential = session["is_residential"]
+      if session["user_id"] and User.find_by_id(session["user_id"])
+      @user = User.find_by_id(session["user_id"])
+    else
+      @user = User.new
+      @user.is_residential = @is_residential
+      @user.save()
+      session["user_id"] = @user.id
+    end
       @user = User.find_by_id(session["user_id"])
       @months = @is_residential ? ["Enero", "Febrero", "Marzo", "Abril","Mayo","Junio","Julio","Agosto","Setiembre","Octubre","Noviembre","Diciembre"] :["Enero", "Febrero", "Marzo", "Abril","Abril (2)", "Mayo","Junio","Julio","Agosto","Setiembre","Octubre","Octubre (2)","Noviembre","Diciembre"]
 
@@ -103,7 +111,7 @@ class RegistrationController < ApplicationController
     user.importe_total = params["import-total"]
     puts user.inspect
     user.save()
-    redirect_to(:action=>:propuesta)
+    redirect_to(:action=>:user_info)
   end
 
   def propuesta
