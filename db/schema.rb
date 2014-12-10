@@ -11,10 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141112135510) do
+ActiveRecord::Schema.define(version: 20141205194048) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "info_energeticas", force: true do |t|
+    t.string   "rpu"
+    t.string   "name"
+    t.string   "apellido"
+    t.string   "tarifa"
+    t.float    "cargo_fijo"
+    t.float    "energia"
+    t.float    "consumo_total"
+    t.float    "importe_total"
+    t.float    "total_a_pagar"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "items", force: true do |t|
     t.string   "name"
