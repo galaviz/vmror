@@ -65,6 +65,9 @@
 
 <script>
   $(document).ready(function(){
+    contract64 = "";
+    power64 = "";
+    
     //createContract(false);
     createContractUsingPDFMake();
     createContract2(true);
@@ -101,6 +104,10 @@
             $btn.button('reset')
         }, function(pResponse){})
     });
+    
+    
+    setTimeout(function(){ savePDF(contract64, power64); }, 2000);//Most be the last function
+    
   });
 
   /*http://pdfmake.org/#/gettingstarted */
@@ -247,12 +254,8 @@
      };
      pdfMake.createPdf(docDefinition);
      pdfMake.createPdf(docDefinition).getDataUrl(function(outDoc) {
+        contract64 = outDoc;
         $('#contrato-pdf').attr('src', outDoc);
-        var pRequestO = new Object();
-        dataURL = outDoc.replace(/^data:application\/(png|jpg|pdf);base64,/, "");
-        pRequestO.pdf = dataURL;
-        pRequestO.pdfName = 'Contrato';
-        Ajax(pRequestO, "save_contract", function(pResponse){}, function(pResponse){})
      });;
   }
 
@@ -287,13 +290,8 @@
       // textStr += "RPU: " + $("input[name='rpu'").val() +"\n";
       // textStr += "Consumo Anual Promedio (kWh): " + $("#consumo-total").html() +"\n";
       doc.text(30, 30, textStr);
-      $('#contrato2-pdf').attr('src', doc.output('datauristring'));
-        //var outDoc = doc.output('datauri');
-        //var pRequestO = new Object();
-        //dataURL = outDoc.replace(/^data:application\/(png|jpg|pdf);base64,/, "");
-        //pRequestO.pdf = dataURL;
-        //pRequestO.pdfName = 'Poder';
-        //Ajax(pRequestO, "save_contract", function(pResponse){}, function(pResponse){})
+      power64 = doc.output('datauristring');
+      $('#contrato2-pdf').attr('src', power64);
   }
 
 
@@ -309,5 +307,17 @@
     $('#contrato-pdf').attr('src', doc.output('datauristring'));
   }
 
+    function savePDF(contract, power){
+        var pRequestO = new Object();
+        contract = contract.replace(/^data:application\/(png|jpg|pdf);base64,/, "");
+        power = power.replace(/^data:application\/(png|jpg|pdf);base64,/, "");
+        
+        pRequestO.contract64PDF = contract;
+        pRequestO.contract64Name = 'Contrato';
+        pRequestO.power64PDF = power;
+        pRequestO.power64Name = 'Poder';
+        Ajax(pRequestO, "save_contract", function(pResponse){}, function(pResponse){})
+    }
+  
 </script>
 

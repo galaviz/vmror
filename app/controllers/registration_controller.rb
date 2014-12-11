@@ -182,14 +182,21 @@ class RegistrationController < ApplicationController
   end
 
   def save_contract
-    pdf = params[:pdf]
-    if pdf == nil or pdf == ""
+    contractPDF = params[:contract64PDF]
+    powerPDF = params[:power64PDF]
+    if contractPDF == nil or contractPDF == "" or powerPDF == nil or powerPDF == ""
       render :json => { :success => 0 }.to_json
     else
       user = User.find_by_id(session["user_id"])
-      file_name = user.nombre[0] + user.apellido[0,2] + '-' + params[:pdfName]
-      File.open('app/assets/contracts/' + file_name + '.pdf',"wb") do |file|
-        file.write(Base64.decode64(pdf))
+      
+      contract = user.nombre[0] + user.apellido[0,2] + '-' + params[:contract64Name]
+      File.open('app/assets/contracts/' + contract + '.pdf',"wb") do |file|
+        file.write(Base64.decode64(contractPDF))
+      end
+      
+      power = user.nombre[0] + user.apellido[0,2] + '-' + params[:power64Name]
+      File.open('app/assets/contracts/' + power + '.pdf',"wb") do |file|
+        file.write(Base64.decode64(powerPDF))
       end
       render :json => { :success => 1 }.to_json
     end
