@@ -132,6 +132,8 @@
                             <!--hidden fields-->
                             <input style='display:none' name='consumo-total' id="consumo-total-hidden" value="">
                             <input style='display:none' name='import-total' id="import-total-hidden" value="">
+                            <input style='display:none' name='apellido' id="apellido-hidden" value="">
+                            <input style='display:none' name='nombre' id="nombre-hidden" value="">
                             <!--/hidden fields-->
                           </div> <!--/manual info-->
                           <a href="./tipo_de_cliente"><button type="button" class="btn btn-theme">Atr&aacute;s</button></a>
@@ -167,7 +169,6 @@ $(document).ready(function() {
       $('#manual-info').fadeIn();
       $('#energy-info-next-button').prop('disabled', false);
       $('#rpu-form-group').removeClass('has-error');
-      $('#rpu-help-block').hide();
     }
   });
 
@@ -245,50 +246,23 @@ function computeDepuracion(){
 function validateRpuField(){
     var rpu = parseInt($("#rpu").val().replace(/\s/g, ""));
     console.log(rpu);
-    energyInfoJson = getEnergyInfoFromRPU(rpu);
-    if (energyInfoJson != null){
+    var pRequestO=new Object();
+    pRequestO.rpu=rpu;
+    Ajax(pRequestO,"/registration/rpu_info",function(pResponse){
+
       $('#energy-info-next-button').prop('disabled', false);
       $('#rpu-form-group').addClass('has-success');
       $('#rpu-form-group').removeClass('has-error');
       $('#rpu-help-block').hide();
-      $('#cargo-fijo').val(energyInfoJson.cargo_fijo);
-      $('#energia').val(energyInfoJson.energia);
-      $('#consumo-total').html(energyInfoJson.consumo_total);
-      $('#consumo-total-hidden').val(energyInfoJson.consumo_total);
-      $('#import-total').html(energyInfoJson.importe_total);
-      $('#import-total-hidden').val(energyInfoJson.importe_total);
-    } else{
+      
+
+    },function(pResponse){
       $('#rpu-form-group').removeClass('has-success');
       $('#rpu-form-group').addClass('has-error');
       $('#energy-info-next-button').prop('disabled', true);
-      $('#consumo-total').html("");
-      $('#import-total').html("");
-      $('#cargo-fijo').html(energyInfoJson.cargo_fijo);
-      $('#energia').html(energyInfoJson.energia);
-      $('#consumo-total-hidden').val(0);
-      $('#import-total-hidden').val(0);
       $('#rpu-help-block').show();
-    }
+    })
 }
 
-// STUB function. TODO: Make an actual call to db
-function getEnergyInfoFromRPU(rpu) {
-  energyInfoJson = {};
-  if (rpu == 376780500123) {
-    energyInfoJson.consumo_total = 13110;
-    energyInfoJson.importe_total = 52834;
-    energyInfoJson.cargo_fijo = 78.40;
-    energyInfoJson.energia = 2564.93;
-    return energyInfoJson;
-  } else if (rpu == 415020400019) {
-    energyInfoJson.consumo_total = 745640;
-    energyInfoJson.importe_total = 1328240.78;
-    energyInfoJson.cargo_fijo = 22097.94;
-    energyInfoJson.energia = 111797.19;
-    return energyInfoJson;
-  } else {
-    return null;
-  }
-}
 </script>
 

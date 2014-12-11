@@ -16,6 +16,7 @@ class LoadData < ActiveRecord::Migration
     exampleUserResidential.hashed_password = "e4df635c3914bfe704f6398831497977ccfba1e7"
     exampleUserResidential.salt = "456"
     exampleUserResidential.save()
+
   end
 
   def down

@@ -94,12 +94,15 @@ class RegistrationController < ApplicationController
 
   def post_energy_info
     puts params.inspect
+    @rpu=InfoEnergetica.find_by(rpu: params[:rpu]) 
     user = User.find_by_id(session["user_id"])
-    user.rpu = params["rpu"]
-    user.energia = params["energia"]
-    user.cargo_fijo = params["cargo-fijo"]
-    user.consumo_total = params["consumo-total"]
-    user.importe_total = params["import-total"]
+    user.rpu = @rpu.rpu
+    user.energia = @rpu.energia
+    user.cargo_fijo = @rpu.cargo_fijo
+    user.consumo_total = @rpu.consumo_total
+    user.importe_total = @rpu.importe_total
+    user.nombre = @rpu.name
+    user.apellido = @rpu.apellido
     puts user.inspect
     user.save()
     redirect_to(:action=>:user_info)
@@ -192,6 +195,15 @@ class RegistrationController < ApplicationController
     #UserMailer.send_welcome_email(@user).deliver
     redirect_to(:action=>:monitoreo,:controller=>:dashboard)
     #else go back to form. display error message
+  end
+
+  def rpu_info
+    @rpu=InfoEnergetica.find_by(rpu: params[:rpu]) 
+    if @rpu
+      render :json =>  { :success => 1 }.to_json
+    else
+      render :json =>  { :success => 0 }.to_json
+    end
   end
 
 end
