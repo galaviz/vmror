@@ -37,4 +37,11 @@ class UserMailer < ActionMailer::Base
     mail(to: "yalmasri@keepmoving.com.mx" , subject: 'Compra en la Tienda VM')
   end
 
+  def send_contract(user)
+    @user = user
+    file_name = user.nombre[0] + user.apellido[0,2] + '-Contrato'
+    attachments[file_name + '.pdf'] = File.read('app/assets/contracts/' + file_name + '.pdf', :mode => 'rb')
+    mail(to: @user.email, subject: 'Contrato Verde Monarca - ' + @user.nombre + ' ' + @user.apellido)
+  end
+  
 end

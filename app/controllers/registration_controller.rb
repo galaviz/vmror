@@ -75,20 +75,11 @@ class RegistrationController < ApplicationController
       render :json =>  { :success => 1}.to_json
       
     end
-    
-    
-    
-    
-    
-    
-    
-    
-    
   end
 
   def energy_info
       @is_residential = session["is_residential"]
-      if session["user_id"] and User.find_by_id(session["user_id"])
+    if session["user_id"] and User.find_by_id(session["user_id"])
       @user = User.find_by_id(session["user_id"])
     else
       @user = User.new
@@ -167,12 +158,56 @@ class RegistrationController < ApplicationController
   end
 
   def post_confirmation
-    redirect_to(:action=>:welcome)
+    signature = params[:signature]
+    if signature == nil or signature == ""
+      render :json => { :success => 0 }.to_json
+    else
+      user = User.find_by_id(session["user_id"])
+      file_name = user.nombre[0] + user.apellido[0,2]
+      File.open('app/assets/customerSignature/' + file_name + '.png',"wb") do |file|
+        file.write(Base64.decode64(signature))
+      end
+      render :json => { :success => 1 }.to_json
+    end
+  end
+
+  def contract
+    @user = User.find_by_id(session["user_id"])
+    @propuesta= @user.crear_propuesta()
+    
+    file_name = @user.nombre[0] + @user.apellido[0,2]
+    @signature = Base64.encode64(File.open("app/assets/customerSignature/" + file_name + ".png", "rb").read)
+    @signatureDavid = Base64.encode64(File.open("app/assets/customerSignature/signatureDavid.png", "rb").read)
+    
+  end
+
+  def save_contract
+    pdf = params[:pdf]
+    if pdf == nil or pdf == ""
+      render :json => { :success => 0 }.to_json
+    else
+      user = User.find_by_id(session["user_id"])
+      file_name = user.nombre[0] + user.apellido[0,2] + '-' + params[:pdfName]
+      File.open('app/assets/contracts/' + file_name + '.pdf',"wb") do |file|
+        file.write(Base64.decode64(pdf))
+      end
+      render :json => { :success => 1 }.to_json
+    end
+  end
+
+  def send_contract
+    @user = User.find_by_id(session["user_id"])
+    UserMailer.send_contract(@user).deliver
+    render :json => { :success => 1 }.to_json
   end
 
   def welcome
     @user = User.find_by_id(session["user_id"])
     @propuesta= @user.crear_propuesta()
+    file_name = @user.nombre[0] + @user.apellido[0,2]
+    if File.exist?('app/assets/customerSignature/' + file_name + '.png')
+      File.delete('app/assets/customerSignature/' + file_name + '.png')
+    end
   end
 
   def post_registration
