@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(version: 20141205194048) do
     t.string   "stripe_id"
     t.integer  "puntos_vm"
     t.string   "creditos_vm"
+    t.string   "ruta_firma"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
