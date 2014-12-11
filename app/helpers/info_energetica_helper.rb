@@ -1,0 +1,2 @@
+module InfoEnergeticaHelper
+end
