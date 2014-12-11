@@ -31,6 +31,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :stripe_id
       t.integer :puntos_vm
       t.string :creditos_vm
+      t.string :ruta_firma
       t.timestamps
     end
   end
