@@ -162,7 +162,9 @@ class RegistrationController < ApplicationController
     if signature == nil or signature == ""
       render :json => { :success => 0 }.to_json
     else
-      File.open('signature.png',"wb") do |file|
+      user = User.find_by_id(session["user_id"])
+      file_name = user.nombre[0] + user.apellido[0,2]
+      File.open('app/assets/customerSignature/' + file_name + '.png',"wb") do |file|
         file.write(Base64.decode64(signature))
       end
       render :json => { :success => 1 }.to_json
@@ -173,13 +175,39 @@ class RegistrationController < ApplicationController
     @user = User.find_by_id(session["user_id"])
     @propuesta= @user.crear_propuesta()
     
-    @signature = Base64.encode64(File.open("app/assets/customerSignature/signature.png", "rb").read)
+    file_name = @user.nombre[0] + @user.apellido[0,2]
+    @signature = Base64.encode64(File.open("app/assets/customerSignature/" + file_name + ".png", "rb").read)
+    @signatureDavid = Base64.encode64(File.open("app/assets/customerSignature/signatureDavid.png", "rb").read)
     
+  end
+
+  def save_contract
+    pdf = params[:pdf]
+    if pdf == nil or pdf == ""
+      render :json => { :success => 0 }.to_json
+    else
+      user = User.find_by_id(session["user_id"])
+      file_name = user.nombre[0] + user.apellido[0,2] + '-' + params[:pdfName]
+      File.open('app/assets/contracts/' + file_name + '.pdf',"wb") do |file|
+        file.write(Base64.decode64(pdf))
+      end
+      render :json => { :success => 1 }.to_json
+    end
+  end
+
+  def send_contract
+    @user = User.find_by_id(session["user_id"])
+    UserMailer.send_contract(@user).deliver
+    render :json => { :success => 1 }.to_json
   end
 
   def welcome
     @user = User.find_by_id(session["user_id"])
     @propuesta= @user.crear_propuesta()
+    file_name = @user.nombre[0] + @user.apellido[0,2]
+    if File.exist?('app/assets/customerSignature/' + file_name + '.png')
+      File.delete('app/assets/customerSignature/' + file_name + '.png')
+    end
   end
 
   def post_registration
