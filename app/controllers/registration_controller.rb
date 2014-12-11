@@ -75,20 +75,11 @@ class RegistrationController < ApplicationController
       render :json =>  { :success => 1}.to_json
       
     end
-    
-    
-    
-    
-    
-    
-    
-    
-    
   end
 
   def energy_info
       @is_residential = session["is_residential"]
-      if session["user_id"] and User.find_by_id(session["user_id"])
+    if session["user_id"] and User.find_by_id(session["user_id"])
       @user = User.find_by_id(session["user_id"])
     else
       @user = User.new
@@ -164,7 +155,23 @@ class RegistrationController < ApplicationController
   end
 
   def post_confirmation
-    redirect_to(:action=>:welcome)
+    signature = params[:signature]
+    if signature == nil or signature == ""
+      render :json => { :success => 0 }.to_json
+    else
+      File.open('signature.png',"wb") do |file|
+        file.write(Base64.decode64(signature))
+      end
+      render :json => { :success => 1 }.to_json
+    end
+  end
+
+  def contract
+    @user = User.find_by_id(session["user_id"])
+    @propuesta= @user.crear_propuesta()
+    
+    @signature = Base64.encode64(File.open("app/assets/customerSignature/signature.png", "rb").read)
+    
   end
 
   def welcome
