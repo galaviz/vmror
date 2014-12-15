@@ -233,7 +233,14 @@
           {
             $("#email").css("border", "none");
           }  
-          
+		  
+          if (validateEmail($("#email").val())) {
+            $("#email").css("border", "1px solid red");
+            $('html, body').animate({
+                    scrollTop: $("#registration-form-user").offset().top - 100
+            }, 500);
+			return false;
+          }
 	  if($("#email").val() != "" && $("#first-name").val() != "" && $("#last-name").val() != ""){
             var pRequestO = new Object();
             
@@ -269,6 +276,15 @@
             }
           });
 	});
+	
+	function validateEmail(email) {
+		var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+		if( emailReg.test( email ) ) {
+			return false;
+		} else {
+			return true;
+		}
+	}
     </script>
   </body>
 </html>
