@@ -23,16 +23,16 @@
 
               <div class="col-md-8 col-sm-8 centered">
                   <div class="classic-form">
-                      <form class="form-horizontal" role="form" id="registration-form-energy" action="./post_energy_info">
+                      <form class="form-horizontal" role="form" id="registration-form-energy" action="">
                           <div class="form-group has-feedback" id="rpu-form-group">
                               <label for="rpu" class="col-sm-3 control-label">RPU</label>
                               <div class="col-sm-9">
                                   <input type="text" class="form-control" id="rpu" name="rpu" placeholder="Número de servicio (12 digitos)" value="">
                                   <i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-rpu"></i>
-                                  <small class="help-block" id="rpu-help-block">El RPU no es valido o no existe en nuestra base de datos</small>
+                                  <small class="help-block" id="rpu-help-block"></small>
                               </div>
                           </div>
-
+						  
                           <div class="form-group">
                               <div class="col-sm-offset-3 col-sm-9">
                                   <div class="checkbox">
@@ -51,7 +51,7 @@
                                   <div class="pull-left">
                                     <div class="btn-group">
                                       <select class="form-control" name="tarifa" id="tarifa">
-                                        <%if @is_residential%>
+                                        <%if @is_residential==true%>
                                           <option>DAC</option>
                                         <%else%>
                                           <option>OM</option>
@@ -132,12 +132,10 @@
                             <!--hidden fields-->
                             <input style='display:none' name='consumo-total' id="consumo-total-hidden" value="">
                             <input style='display:none' name='import-total' id="import-total-hidden" value="">
-                            <input style='display:none' name='apellido' id="apellido-hidden" value="">
-                            <input style='display:none' name='nombre' id="nombre-hidden" value="">
                             <!--/hidden fields-->
                           </div> <!--/manual info-->
                           <a href="./tipo_de_cliente"><button type="button" class="btn btn-theme">Atr&aacute;s</button></a>
-                          <button type="submit" class="btn btn-theme" id="energy-info-next-button">Siguiente</button>
+                          <button type="submit" class="btn btn-theme" disabled id="energy-info-next-button">Siguiente</button>
 
                       </form>
                   </div>
@@ -150,119 +148,160 @@
 <!--/Energy-info-->
 <%= javascript_include_tag "jquery.min" %>
 <script>
-$(document).ready(function() {
-  $('#manual-info').hide();
-  $('#energy-info-next-button').prop('disabled', true);
-  $('#rpu-help-block').hide();
+	$(document).ready(function() {
+		$('#manual-info').hide();
+		$('#energy-info-next-button').prop('disabled', true);
+		$('#rpu-help-block').hide();
 
-  $("#rpu").on('input propertychange paste', function() {
-    if ($("#energy-info-auth").is(':checked')) {
-      validateRpuField();
-    }
-  });
+		$("#rpu").on('input propertychange paste', function() {
+			validateRpuField();
+		});
 
-  $("#energy-info-auth").click(function(){
-    if ($("#energy-info-auth").is(':checked')) {
-      validateRpuField();
-      $('#manual-info').fadeOut();
-    } else {
-      $('#manual-info').fadeIn();
-      $('#energy-info-next-button').prop('disabled', false);
-      $('#rpu-form-group').removeClass('has-error');
-    }
-  });
+		$("#registration-form-energy").submit(function( event ) {
+			var access=0;
+			$("#manual-info > input").each(function() {
+				if ($(this).val() == "") {
+					$(this).parent().addClass('has-error');
+					access=0;
+				}
+				else{access=1;}
+			});
+			if(access==1 || $("#energy-info-auth").is(':checked')){
+				$("#registration-form-energy").attr('action', './post_energy_info');
+				$("#registration-form-energy").submit();
+			}
+			event.preventDefault();
+		});
 
-  $(".monthly-consumption").on('input propertychange paste', function() {
-    var sum = 0;
-    $('.monthly-consumption').each(function() {
-        val = parseInt($(this).val());
-        if (!isNaN(val)) {
-          sum += val;
-        }
-    });
-    $('#consumo-total').html(numberWithCommas(sum) + " kWh");
-    $('#consumo-total-hidden').val(sum);
-  });
+		$("#energy-info-auth").click(function(){
+			if ($("#energy-info-auth").is(':checked')) {
+				validateRpuField();
+				$('#manual-info').fadeOut();
+			} else {
+				$('#manual-info').fadeIn();
+				$('#energy-info-next-button').prop('disabled', false);
+				$('#rpu-form-group').removeClass('has-error');
+			}
+		});
 
-  <%if @is_residential%>
-    $(".monthly-import").on('input propertychange paste', function() {
-      var sum = 0;
-      $('.monthly-import').each(function() {
-          val = parseFloat($(this).val());
-          if (!isNaN(val)) {
-            sum += val;
-          }
-      });
-      var subtotal = sum / 1.16;
-      var iva = subtotal * 0.16;
-      var total = sum;
-      $('#import-subtotal').html('$' + numberWithCommas(subtotal.toFixed(2)) + " MN");
-      $('#import-iva').html('$' + numberWithCommas(iva.toFixed(2)) + " MN");
-      $('#import-total').html('$' + numberWithCommas(total.toFixed(2)) + " MN");
-      $('#import-total-hidden').val(total);
-    });
-  <%else%>
-    $(".month-row").on('input propertychange paste', function() {
-      var sum = 0;
-      $('.month-row').each(function() {
-          var consumo = parseFloat($(this).find(".monthly-consumption").val());
-          var precioMedio = parseFloat($(this).find(".monthly-import").val());
-          val = consumo * precioMedio;
-          if (!isNaN(val)) {
-            sum += val;
-          }
-      });
-      var subtotal = sum;
-      var iva = subtotal * 0.16;
-      var total = subtotal * 1.16;
-      $('#import-subtotal').html('$' + numberWithCommas(subtotal.toFixed(2)) + " MN");
-      $('#import-iva').html('$' + numberWithCommas(iva.toFixed(2)) + " MN");
-      $('#import-total').html('$' + numberWithCommas(total.toFixed(2)) + " MN");
-      $('#import-total-hidden').val(total);
-    });
-  <%end%>
+		$(".monthly-consumption").on('input propertychange paste', function() {
+			var sum = 0;
+			$('.monthly-consumption').each(function() {
+				val = parseInt($(this).val());
+				if (!isNaN(val)) {
+					sum += val;
+				}
+			});
+			$('#consumo-total').html(numberWithCommas(sum) + " kWh");
+			$('#consumo-total-hidden').val(sum);
+		});
 
-  $("#cargo-fijo, #energia").on('input propertychange paste', function() {
-    computeDepuracion();
-  });
+	  <%if @is_residential%>
+		$(".monthly-import").on('input propertychange paste', function() {
+		  var sum = 0;
+		  $('.monthly-import').each(function() {
+			  val = parseFloat($(this).val());
+			  if (!isNaN(val)) {
+				sum += val;
+			  }
+		  });
+		  var subtotal = sum / 1.16;
+		  var iva = subtotal * 0.16;
+		  var total = sum;
+		  $('#import-subtotal').html('$' + numberWithCommas(subtotal.toFixed(2)) + " MN");
+		  $('#import-iva').html('$' + numberWithCommas(iva.toFixed(2)) + " MN");
+		  $('#import-total').html('$' + numberWithCommas(total.toFixed(2)) + " MN");
+		  $('#import-total-hidden').val(total);
+		});
+	  <%else%>
+		$(".month-row").on('input propertychange paste', function() {
+		  var sum = 0;
+		  $('.month-row').each(function() {
+			  var consumo = parseFloat($(this).find(".monthly-consumption").val());
+			  var precioMedio = parseFloat($(this).find(".monthly-import").val());
+			  val = consumo * precioMedio;
+			  if (!isNaN(val)) {
+				sum += val;
+			  }
+		  });
+		  var subtotal = sum;
+		  var iva = subtotal * 0.16;
+		  var total = subtotal * 1.16;
+		  $('#import-subtotal').html('$' + numberWithCommas(subtotal.toFixed(2)) + " MN");
+		  $('#import-iva').html('$' + numberWithCommas(iva.toFixed(2)) + " MN");
+		  $('#import-total').html('$' + numberWithCommas(total.toFixed(2)) + " MN");
+		  $('#import-total-hidden').val(total);
+		});
+	  <%end%>
 
-});
+		$("#cargo-fijo, #energia").on('input propertychange paste', function() {
+			computeDepuracion();
+		});
 
-/*src: http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript*/
-function numberWithCommas(x) {
-    var parts = x.toString().split(".");
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return parts.join(".");
-}
 
-function computeDepuracion(){
-  var depuracion = parseFloat($("#cargo-fijo").val().replace(/,/g,'')) / parseFloat($("#energia").val().replace(/,/g,''));
-  var depuracionPercent = 100 * depuracion;
-  if (!isNaN(depuracionPercent)){
-    $("#depuracion").html(depuracionPercent.toFixed(2)+"%")
-  }
-}
+	});
 
-function validateRpuField(){
-    var rpu = parseInt($("#rpu").val().replace(/\s/g, ""));
-    console.log(rpu);
-    var pRequestO=new Object();
-    pRequestO.rpu=rpu;
-    Ajax(pRequestO,"/registration/rpu_info",function(pResponse){
+	/*src: http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript*/
+	function numberWithCommas(x) {
+		var parts = x.toString().split(".");
+		parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		return parts.join(".");
+	}
 
-      $('#energy-info-next-button').prop('disabled', false);
-      $('#rpu-form-group').addClass('has-success');
-      $('#rpu-form-group').removeClass('has-error');
-      $('#rpu-help-block').hide();
-      
+	function computeDepuracion(){
+	  var depuracion = parseFloat($("#cargo-fijo").val().replace(/,/g,'')) / parseFloat($("#energia").val().replace(/,/g,''));
+	  var depuracionPercent = 100 * depuracion;
+	  if (!isNaN(depuracionPercent)){
+		$("#depuracion").html(depuracionPercent.toFixed(2)+"%")
+	  }
+	}
 
-    },function(pResponse){
-      $('#rpu-form-group').removeClass('has-success');
-      $('#rpu-form-group').addClass('has-error');
-      $('#energy-info-next-button').prop('disabled', true);
-      $('#rpu-help-block').show();
-    })
-}
+	function validateRpuField(){
+		var rpu = $("#rpu").val().replace(/\s/g, "");
+		console.log(rpu);
+		var pRequestO=new Object();
+		pRequestO.rpu=rpu;
+		if(rpu.length == 12){
+			Ajax(pRequestO,"/registration/rpu_info",function(pResponse){
+
+				$('#energy-info-next-button').prop('disabled', false);
+				$('#rpu-form-group').addClass('has-success');
+				$('#rpu-form-group').removeClass('has-error');
+				$('#rpu-help-block').hide();
+			  
+
+			},function(pResponse){
+				if (pResponse.success == 0){
+					$('#rpu-form-group').removeClass('has-success');
+					$('#rpu-form-group').addClass('has-error');
+					$('#energy-info-next-button').prop('disabled', true);
+					$('#rpu-help-block').html('¡El RPU no existe en nuestra base de datos!');
+					$('#rpu-help-block').show();
+					$('#manual-info').fadeIn();
+					$('#rpu-form-group').removeClass('has-warning');
+					$("#energy-info-auth").removeAttr('checked');
+					$('#energy-info-next-button').prop('disabled', false);
+				}
+				else if (pResponse.success == 2){
+					$('#rpu-form-group').removeClass('has-success');
+					$('#rpu-form-group').addClass('has-error');
+					$('#energy-info-next-button').prop('disabled', true);
+					$('#rpu-help-block').html('¡El RPU esta registrado con otro usuario!');
+					$('#rpu-help-block').show();
+				}
+			})
+		}
+		else{
+			$('#manual-info').fadeOut();
+			$("#energy-info-auth").prop('checked', true);
+			$('#rpu-form-group').removeClass('has-success');
+			$('#rpu-form-group').addClass('has-error');
+			$('#energy-info-next-button').prop('disabled', true);
+			$('#rpu-help-block').html('¡El RPU no es valido!');
+			$('#rpu-help-block').show();
+			$('#energy-info-next-button').prop('disabled', true);
+		}
+	}
 
 </script>
 
