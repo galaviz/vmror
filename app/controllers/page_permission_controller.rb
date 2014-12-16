@@ -1,0 +1,2 @@
+class PagePermissionController < ApplicationController
+end

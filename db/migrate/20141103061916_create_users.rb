@@ -34,6 +34,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :password_reset_token
       t.datetime :password_reset_sent_at
       t.integer :pasos
+      t.integer :profile_id
       t.timestamps
     end
   end

@@ -1,0 +1,2 @@
+class ProfilePermissionController < ApplicationController
+end
