@@ -227,7 +227,7 @@ class RegistrationController < ApplicationController
     #if successs
     #send email
     #puts("sending email")
-    #UserMailer.send_welcome_email(@user).deliver
+    UserMailer.send_welcome_email(@user).deliver
     redirect_to(:action=>:monitoreo,:controller=>:dashboard)
     #else go back to form. display error message
   end

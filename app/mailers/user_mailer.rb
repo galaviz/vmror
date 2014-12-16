@@ -8,7 +8,7 @@ class UserMailer < ActionMailer::Base
   def send_welcome_email(user)
     @user = user
     @propuesta= @user.crear_propuesta()
-    mail(to: "yalmasri@keepmoving.com.mx", subject: 'Usuario se ha registrado a verdemonarca')
+    mail(to: @user.email, subject: 'Usuario se ha registrado a verdemonarca')
   end
 
   def send_donation_confirmation_email(user, amount, creditos_vm, codigo_vm)
@@ -45,4 +45,9 @@ class UserMailer < ActionMailer::Base
     mail(to: @user.email, subject: 'Contrato Verde Monarca - ' + @user.nombre + ' ' + @user.apellido)
   end
   
+  def password_reset(user)
+    @user = user
+    mail :to => user.email, :subject => "Recuperación de Contraseña"
+  end
+
 end

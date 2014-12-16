@@ -1,4 +1,6 @@
 Verdemonarcaonrails::Application.routes.draw do
+  #get "password_resets/new"
+  resources :password_resets
   get "info_energetica/index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

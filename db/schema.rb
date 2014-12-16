@@ -80,7 +80,8 @@ ActiveRecord::Schema.define(version: 20141211164015) do
     t.string   "stripe_id"
     t.integer  "puntos_vm"
     t.string   "creditos_vm"
-    t.string   "ruta_firma"
+    t.string   "password_reset_token"
+    t.datetime "password_reset_sent_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
