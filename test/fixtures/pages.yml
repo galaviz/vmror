@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  description: MyString
+  command: MyString
+  order_by: 1
+  is_menu: false
+  active: false
+
+two:
+  description: MyString
+  command: MyString
+  order_by: 1
+  is_menu: false
+  active: false
