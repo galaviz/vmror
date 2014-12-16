@@ -28,14 +28,14 @@
                         <div class="form-group">
                           <label for="fecha-visita" class="col-sm-4 control-label">Fecha de Visita</label>
                           <div class="col-sm-8">
-                            <div style="position:relative;"><input type="text" class="form-control" name="fecha-visita" id="fecha-visita" placeholder="Haz Click para Seleccionar la Fecha" value="<%=@user.fecha_visita%>"></div>
+                            <div style="position:relative;"><input type="text" class="form-control" name="fecha-visita" id="fecha-visita" placeholder="Haz Click para Seleccionar la Fecha" value="<%=@user.fecha_visita%>" style="cursor: pointer;"></div>
                           </div>
                         </div>
 
                         <div class="form-group">
                           <label for="hora-visita" class="col-sm-4 control-label">Hora de Visita</label>
                           <div class="col-sm-8">
-                            <input type="text" class="form-control" name="hora-visita" id="hora-visita" value="<%=@user.hora_visita%>" placeholder="Haz Click para Seleccionar la Hora">
+                            <input type="text" class="form-control" name="hora-visita" id="hora-visita" value="<%=@user.hora_visita%>" placeholder="Haz Click para Seleccionar la Hora" style="cursor: pointer;">
                           </div>
                         </div>
                         <p style="text-align:justify">No pudiste encontrar un horario que se acomode con tu agenda? ¡No te preocupes! Por favor llámanos al (818) 340 8279 y ¡nos aseguraremos de que uno de nuestros técnicos te visita en el horario ideal para ti!</p>
@@ -61,13 +61,35 @@
 
 <script>
   $(document).ready(function() {
+	var d = new Date();
+	var month = d.getMonth()+1;
+	var day = d.getDate();
+	var today = d.getFullYear() + '/' + (month<10 ? '0' : '') + month + '/' + (day<10 ? '0' : '') + day;
+	
     $('#fecha-visita').pickadate({
         monthsFull: ["Enero", "Febrero", "Marzo", "Abril","Mayo","Junio","Julio","Agosto","Setiembre","Octubre","Noviembre","Diciembre"],
         weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
         showWeekdaysFull: false,
         today: 'Hoy',
         clear: 'Borrar',
-        close: 'Cerrar'
+        close: 'Cerrar',
+		min: true,
+		formatSubmit: 'yyyy/mm/dd',
+		hiddenName: false,
+		onSet: function(context) {
+		
+			var myHour = $('#hora-visita').pickatime('picker')
+			
+			var selectedDate = $('#fecha-visita').pickadate('picker').get('select', 'yyyy/mm/dd');
+			
+			if(selectedDate==today){
+				myHour.set('min', true);
+			}
+			else {
+				myHour.set('min', false);
+			}
+
+		}
     });
     $('#hora-visita').pickatime({
         format: 'H:i A',
@@ -75,5 +97,6 @@
         max: [17,0],
         interval: 45
     });
+
   });
 </script>

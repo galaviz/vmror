@@ -33,6 +33,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :creditos_vm
       t.string :password_reset_token
       t.datetime :password_reset_sent_at
+      t.integer :pasos
       t.timestamps
     end
   end

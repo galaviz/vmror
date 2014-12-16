@@ -1,116 +1,105 @@
 class RegistrationController < ApplicationController
 
   def begin_registration
-    session["user_id"] = nil
     reset_session
 
-    is_residential = params["is_residential"]
-    session["is_residential"] = is_residential
+    session["is_residential"] = params["is_residential"]
     redirect_to(:action => :energy_info)
-  end
-
-  def user_info
-    @is_residential = session["is_residential"]
-    if session["user_id"] and User.find_by_id(session["user_id"])
-      @user = User.find_by_id(session["user_id"])
-    else
-      @user = User.new
-      @user.is_residential = @is_residential
-      @user.save()
-      session["user_id"] = @user.id
-    end
-    puts @user.inspect
-  end
-
-  def post_user_info
-    if params["email"] != ""
-      
-      @user = User.find_by_email(params["email"])
-      if @user
-        render :json =>  { :success => 0, :messages => "¡El correo ya existe!"}.to_json
-      else
-        
-        user = User.find_by_id(session["user_id"])
-        puts "params post user info"
-        puts params
-        if params["empresa"]
-          user.empresa = params["empresa"]
-        end
-        user.nombre = params["nombre"]
-        user.apellido = params["apellido"]
-        user.email = params["email"]
-        user.telefono = params["telefono"]
-        user.celular = params["celular"]
-        user.estado = params["estado"]
-        user.municipio = params["municipio"]
-        user.calle = params["calle"]
-        user.numero_direccion = params["numero"]
-        user.colonia = params["colonia"]
-        user.codigo_postal = params["codigoPostal"]
-        user.save()
-        
-        render :json =>  { :success => 1}.to_json
-      end
-      
-    else
-      
-      user = User.find_by_id(session["user_id"])
-      puts "params post user info"
-      puts params
-      if params["empresa"]
-        user.empresa = params["empresa"]
-      end
-      user.nombre = params["nombre"]
-      user.apellido = params["apellido"]
-      user.email = params["email"]
-      user.telefono = params["telefono"]
-      user.celular = params["celular"]
-      user.estado = params["estado"]
-      user.municipio = params["municipio"]
-      user.calle = params["calle"]
-      user.numero_direccion = params["numero"]
-      user.colonia = params["colonia"]
-      user.codigo_postal = params["codigoPostal"]
-      user.save()
-      render :json =>  { :success => 1}.to_json
-      
-    end
   end
 
   def energy_info
       @is_residential = session["is_residential"]
-    if session["user_id"] and User.find_by_id(session["user_id"])
-      @user = User.find_by_id(session["user_id"])
-    else
-      @user = User.new
-      @user.is_residential = @is_residential
-      @user.save()
-      session["user_id"] = @user.id
-    end
-      @user = User.find_by_id(session["user_id"])
       @months = @is_residential ? ["Enero", "Febrero", "Marzo", "Abril","Mayo","Junio","Julio","Agosto","Setiembre","Octubre","Noviembre","Diciembre"] :["Enero", "Febrero", "Marzo", "Abril","Abril (2)", "Mayo","Junio","Julio","Agosto","Setiembre","Octubre","Octubre (2)","Noviembre","Diciembre"]
 
   end
 
   def post_energy_info
     puts params.inspect
-    @rpu=InfoEnergetica.find_by(rpu: params[:rpu]) 
-    user = User.find_by_id(session["user_id"])
-    user.rpu = @rpu.rpu
-    user.energia = @rpu.energia
-    user.cargo_fijo = @rpu.cargo_fijo
-    user.consumo_total = @rpu.consumo_total
-    user.importe_total = @rpu.importe_total
-    user.nombre = @rpu.name
-    user.apellido = @rpu.apellido
-    puts user.inspect
-    user.save()
+    session["rpu"] = params["rpu"]
     redirect_to(:action=>:user_info)
+  end
+
+  def user_info
+    @is_residential = session["is_residential"]
+	
+    @rpu=InfoEnergetica.find_by(rpu: session[:rpu]) 
+    @user = User.new
+    @user.nombre = @rpu.name
+    @user.apellido = @rpu.apellido
+    puts @user.inspect
+  end
+
+  def post_user_info
+	if params["email"] != ""
+		@user = User.find_by_email(params["email"])
+		if @user
+			if session[:user_id] and @user.id == session[:user_id]
+				rpu=InfoEnergetica.find_by(rpu: session[:rpu]) 
+				puts "params post user info"
+				puts params
+				if params["empresa"]
+				@user.empresa = params["empresa"]
+				end
+				@user.is_residential = session["is_residential"]
+				@user.nombre = params["nombre"]
+				@user.apellido = params["apellido"]
+				@user.email = params["email"]
+				@user.telefono = params["telefono"]
+				@user.celular = params["celular"]
+				@user.estado = params["estado"]
+				@user.municipio = params["municipio"]
+				@user.calle = params["calle"]
+				@user.numero_direccion = params["numero"]
+				@user.colonia = params["colonia"]
+				@user.codigo_postal = params["codigoPostal"]
+				@user.rpu = rpu.rpu
+				@user.energia = rpu.energia
+				@user.cargo_fijo = rpu.cargo_fijo
+				@user.consumo_total = rpu.consumo_total
+				@user.importe_total = rpu.importe_total
+				@user.pasos = 0
+				@user.save()
+			else 
+				render :json =>  { :success => 0, :messages => "¡El correo ya existe!"}.to_json
+			end
+		else
+			rpu=InfoEnergetica.find_by(rpu: session[:rpu]) 
+			user = User.new
+			puts "params post user info"
+			puts params
+			if params["empresa"]
+			user.empresa = params["empresa"]
+			end
+			user.is_residential = session["is_residential"]
+			user.nombre = params["nombre"]
+			user.apellido = params["apellido"]
+			user.email = params["email"]
+			user.telefono = params["telefono"]
+			user.celular = params["celular"]
+			user.estado = params["estado"]
+			user.municipio = params["municipio"]
+			user.calle = params["calle"]
+			user.numero_direccion = params["numero"]
+			user.colonia = params["colonia"]
+			user.codigo_postal = params["codigoPostal"]
+			user.rpu = rpu.rpu
+			user.energia = rpu.energia
+			user.cargo_fijo = rpu.cargo_fijo
+			user.consumo_total = rpu.consumo_total
+			user.importe_total = rpu.importe_total
+			user.pasos = 0
+			user.save()
+			session[:user_id] = user.id
+			render :json =>  { :success => 1}.to_json
+		end
+	end
   end
 
   def propuesta
     @user = User.find_by_id(session["user_id"])
     @propuesta= @user.crear_propuesta()
+	@user.pasos = 1
+	@user.save()
   end
 
   def post_propuesta
@@ -123,6 +112,8 @@ class RegistrationController < ApplicationController
 
   def fecha_visita
     @user = User.find_by_id(session["user_id"])
+	@user.pasos = 2
+	@user.save()
   end
 
   def post_fecha_visita
@@ -142,6 +133,7 @@ class RegistrationController < ApplicationController
     @iva = @subtotal * 0.16
     @total = @subtotal * 1.16
     @user.total_a_pagar = @total
+	@user.pasos = 3
     @user.save()
   end
 
@@ -155,17 +147,27 @@ class RegistrationController < ApplicationController
   def confirmation
     @user = User.find_by_id(session["user_id"])
     @propuesta= @user.crear_propuesta()
+	@user.pasos = 4
+	@user.save()
+    @signatureDavid = Base64.encode64(File.open("app/assets/customerSignature/signatureDavid.png", "rb").read)
   end
 
   def post_confirmation
-    signature = params[:signature]
-    if signature == nil or signature == ""
+    contractPDF = params[:contract64PDF]
+    powerPDF = params[:power64PDF]
+    if contractPDF == nil or contractPDF == "" or powerPDF == nil or powerPDF == ""
       render :json => { :success => 0 }.to_json
     else
       user = User.find_by_id(session["user_id"])
-      file_name = user.nombre[0] + user.apellido[0,2]
-      File.open('app/assets/customerSignature/' + file_name + '.png',"wb") do |file|
-        file.write(Base64.decode64(signature))
+      
+      contract = user.nombre[0,2] + user.apellido[0,2] + '-' + params[:contract64Name]
+      File.open('app/assets/contracts/' + contract + '.pdf',"wb") do |file|
+        file.write(Base64.decode64(contractPDF))
+      end
+      
+      power = user.nombre[0,2] + user.apellido[0,2] + '-' + params[:power64Name]
+      File.open('app/assets/contracts/' + power + '.pdf',"wb") do |file|
+        file.write(Base64.decode64(powerPDF))
       end
       render :json => { :success => 1 }.to_json
     end
@@ -174,32 +176,12 @@ class RegistrationController < ApplicationController
   def contract
     @user = User.find_by_id(session["user_id"])
     @propuesta= @user.crear_propuesta()
+	@user.pasos = 5
+	@user.save()
     
-    file_name = @user.nombre[0] + @user.apellido[0,2]
-    @signature = Base64.encode64(File.open("app/assets/customerSignature/" + file_name + ".png", "rb").read)
-    @signatureDavid = Base64.encode64(File.open("app/assets/customerSignature/signatureDavid.png", "rb").read)
-    
-  end
-
-  def save_contract
-    contractPDF = params[:contract64PDF]
-    powerPDF = params[:power64PDF]
-    if contractPDF == nil or contractPDF == "" or powerPDF == nil or powerPDF == ""
-      render :json => { :success => 0 }.to_json
-    else
-      user = User.find_by_id(session["user_id"])
-      
-      contract = user.nombre[0] + user.apellido[0,2] + '-' + params[:contract64Name]
-      File.open('app/assets/contracts/' + contract + '.pdf',"wb") do |file|
-        file.write(Base64.decode64(contractPDF))
-      end
-      
-      power = user.nombre[0] + user.apellido[0,2] + '-' + params[:power64Name]
-      File.open('app/assets/contracts/' + power + '.pdf',"wb") do |file|
-        file.write(Base64.decode64(powerPDF))
-      end
-      render :json => { :success => 1 }.to_json
-    end
+    file_name = @user.nombre[0,2] + @user.apellido[0,2]
+    @contract1 = 'data:application/pdf;base64,' + Base64.encode64(File.open("app/assets/contracts/" + file_name + "-Contrato.pdf", "rb").read)
+    @contract2 = 'data:application/pdf;base64,' + Base64.encode64(File.open("app/assets/contracts/" + file_name + "-Otorgacion.pdf", "rb").read)
   end
 
   def send_contract
@@ -211,6 +193,8 @@ class RegistrationController < ApplicationController
   def welcome
     @user = User.find_by_id(session["user_id"])
     @propuesta= @user.crear_propuesta()
+	@user.pasos = 6
+	@user.save()
     file_name = @user.nombre[0] + @user.apellido[0,2]
     if File.exist?('app/assets/customerSignature/' + file_name + '.png')
       File.delete('app/assets/customerSignature/' + file_name + '.png')
@@ -223,22 +207,33 @@ class RegistrationController < ApplicationController
     @user.creditos_vm = 100
     @user.puntos_vm = 100
     @user.password=(params["account-password"])
+	@user.pasos = 0
     @user.save()
     #if successs
     #send email
     #puts("sending email")
     UserMailer.send_welcome_email(@user).deliver
+<<<<<<< HEAD
+=======
+	session["is_residential"] = nil
+	session["rpu"] = nil
+>>>>>>> origin/master
     redirect_to(:action=>:monitoreo,:controller=>:dashboard)
     #else go back to form. display error message
   end
 
   def rpu_info
-    @rpu=InfoEnergetica.find_by(rpu: params[:rpu]) 
-    if @rpu
-      render :json =>  { :success => 1 }.to_json
-    else
-      render :json =>  { :success => 0 }.to_json
-    end
+	@user = User.find_by(rpu: params[:rpu]) 
+    if @user
+		  render :json =>  { :success => 2 }.to_json
+	else
+		@rpu=InfoEnergetica.find_by(rpu: params[:rpu]) 
+		if @rpu
+		  render :json =>  { :success => 1 }.to_json
+		else
+		  render :json =>  { :success => 0, :message => "" }.to_json
+		end
+	end
   end
 
 end

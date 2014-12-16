@@ -336,15 +336,15 @@
             beforeSend: function(){
 
             },
-            success: function(pRespuesta) {
-              if(pRespuesta.success == 0){
-                $("#error-label").html(pRespuesta.messages);
+            success: function(pResponse) {
+              if(pResponse.success == 0){
+                $("#error-label").html(pResponse.messages);
               }
-              else if(pRespuesta.success == 1){
-                window.location = "/dashboard/monitoreo"
+              else if(pResponse.success == 1){
+                window.location = pResponse.location;
               }
             },
-            error: function(pRespuesta) {
+            error: function(pResponse) {
               alert("error");
             },
             complete: function() {
