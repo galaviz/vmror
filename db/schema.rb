@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141211164015) do
+ActiveRecord::Schema.define(version: 20141216224032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,48 @@ ActiveRecord::Schema.define(version: 20141211164015) do
     t.float    "precio"
     t.string   "vida"
     t.string   "disponibilidad"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "page_permissions", force: true do |t|
+    t.integer  "page_id"
+    t.integer  "permission_id"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pages", force: true do |t|
+    t.string   "description"
+    t.string   "command"
+    t.integer  "order_by"
+    t.boolean  "is_menu"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "permissions", force: true do |t|
+    t.string   "description"
+    t.string   "command"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "profile_permissions", force: true do |t|
+    t.integer  "profile_id"
+    t.integer  "permission_id"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "profiles", force: true do |t|
+    t.string   "description"
+    t.integer  "page_id"
+    t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -81,6 +123,7 @@ ActiveRecord::Schema.define(version: 20141211164015) do
     t.integer  "puntos_vm"
     t.string   "creditos_vm"
     t.integer  "pasos"
+    t.integer  "profile_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,4 +1,9 @@
 Verdemonarcaonrails::Application.routes.draw do
+  get "profile_permission/index"
+  get "action_permission/index"
+  get "profile/index"
+  get "permission/index"
+  get "page/index"
   get "info_energetica/index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

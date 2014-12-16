@@ -32,6 +32,7 @@ class CreateUsers < ActiveRecord::Migration
       t.integer :puntos_vm
       t.string :creditos_vm
       t.integer :pasos
+      t.integer :profile_id
       t.timestamps
     end
   end
