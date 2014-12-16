@@ -45,4 +45,9 @@ class UserMailer < ActionMailer::Base
     mail(to: @user.email, subject: 'Contrato Verde Monarca - ' + @user.nombre + ' ' + @user.apellido)
   end
   
+  def password_reset(user)
+    @user = user
+    mail :to => user.email, :subject => "Recuperación de Contraseña"
+  end
+
 end

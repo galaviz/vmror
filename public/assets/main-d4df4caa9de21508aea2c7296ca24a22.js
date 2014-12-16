@@ -162,16 +162,16 @@ $(document).ready(function() {
 
       var today = new Date();
       var months = ["Enero", "Febrero", "Marzo", "Abril","Mayo","Junio","Julio","Agosto","Setiembre","Octubre","Noviembre","Diciembre"];
-      textStr += "Monterrey, Nuevo Leon a " + today.getDate() + " de " + months[today.getMonth()] + " de "+ today.getFullYear() + "\n";
-      textStr += "\n\nComision Federal de Electricidad\n";
+      textStr += "Monterrey, Nuevo León a " + today.getDate() + " de " + months[today.getMonth()] + " de "+ today.getFullYear() + "\n";
+      textStr += "\n\nComisión Federal de Electricidad\n";
       textStr += "A quien corresponda:\n\n\n";
 
       textStr += "Por  medio de  la  presente,  otorgo el  poder para que  a mi nombre y representacion\n";
-      textStr += "la empresa  Verde  Monarca,  en  representacion del Ing.  David  Eduardo  Arrambide\n";
-      textStr += "Montemayor, realice los tramites necesarios ante la Comision Federal de Electricidad\n";
-      textStr += "para gestionar el Contrato de Interconexion para fuente de energia renovable.\n";
+      textStr += "la empresa  Verde  Monarca,  en  representación del Ing.  David  Eduardo  Arrambide\n";
+      textStr += "Montemayor, realice los tramites necesarios ante la Comisión Federal de Electricidad\n";
+      textStr += "para gestionar el Contrato de Interconexión para fuente de energía renovable.\n";
 
-      textStr += "\n\nSin mas por el momento me despido, reiterandome a sus ordenes.\n\n\n\n";
+      textStr += "\n\nSin más por el momento me despido, reiterándome a sus órdenes.\n\n\n\n";
       if (isSigned){
         textStr += "Otorga el Poder: " + $("input[name='nombre'").val() + " " + $("input[name='apellido'").val() + "\n";
       } else{

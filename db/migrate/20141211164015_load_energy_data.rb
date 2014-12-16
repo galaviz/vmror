@@ -23,6 +23,18 @@ class LoadEnergyData < ActiveRecord::Migration
     energy.importe_total = 1328240.78;
     energy.total_a_pagar = 1328240.78;
     energy.save()
+
+    energy = InfoEnergetica.new
+    energy.rpu = "415020400119";
+    energy.name = "Celso";
+    energy.apellido = "Ramirez";
+    energy.tarifa = 15;
+    energy.cargo_fijo = 22097.94;
+    energy.energia = 111797.19;
+    energy.consumo_total = 745640;
+    energy.importe_total = 1328240.78;
+    energy.total_a_pagar = 1328240.78;
+    energy.save()
     
   end
 end

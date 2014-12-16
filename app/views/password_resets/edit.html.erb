@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Verde Monarca">
+    <meta name="keywords" content="">
+    <meta name="author" content="Lauro Galaviz">
+    <link href="assets/img/favicon.png" rel="shortcut icon" >
+    <title>Verde Monarca</title>
+    <%= stylesheet_link_tag "bootstrap.min" %>
+    <%= stylesheet_link_tag "style" %>
+    <%= stylesheet_link_tag "responsive" %>
+    <%= stylesheet_link_tag "animate.min" %>
+    <%= stylesheet_link_tag "colorpickr" %>
+    <%= stylesheet_link_tag "linecons" %>
+    <%= stylesheet_link_tag "social-icons" %>
+    <%= stylesheet_link_tag "font-awesome.min" %>
+    <%= stylesheet_link_tag "axfont" %>
+    <%= stylesheet_link_tag "formsStyle" %>
+    <%= stylesheet_link_tag "formsResponsive" %>
+    <%= stylesheet_link_tag "pickadate/classic" %>
+    <%= stylesheet_link_tag "pickadate/classic.date" %>
+    <%= stylesheet_link_tag "pickadate/classic.time" %>
+    <%= stylesheet_link_tag "jquery.signaturepad" %>
+ 
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600' rel='stylesheet' type='text/css'>
+    <!-- Web Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <%= javascript_include_tag "modernizr.custom" %>
+  </head>
+
+  <body data-spy="scroll" data-offset="0" data-target=".navbar">
+
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <%=link_to image_tag("Logo_Verde_Monarca.png", :border => 0), {:action => 'index', :controller => 'main'}, :class => 'navbar-brand smoothScroll'%>
+        </div>
+
+        <div class="navbar-collapse collapse">
+
+
+          <!-- Sign In / Sign Up -->
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown"><a href="#signin" data-toggle="modal" data-target="#registration-modal"> MI PORTAL</a></li>
+          </ul>
+        </div><!--/nav-collapse -->
+      </div><!-- /container -->
+    </div><!-- /fixed-navbar -->
+
+    <!-- Sign In / Sign Up Modal -->
+    <div class="modal fade bs-modal-sm" id="registration-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <br>
+          <div class="modal-header">
+            Iniciar Sesi&oacute;n
+          </div>
+          <div class="modal-body">
+            <div id="myTabContent" class="tab-content">
+              <!-- Sign In Form -->
+              <div class="tab-pane fade active in" id="signin">
+                <form class="form-horizontal" action="<%=url_for controller: 'main', action: 'login'%>" method="post" id="frmSignin">
+                  <fieldset>
+                    <!-- Text input-->
+                    <div class="control-group">
+                      <label class="control-label" for="Email">Email:</label>
+                      <div class="controls">
+                        <input id="sign-in-mail" name="Email" class="form-control" type="text" placeholder="email" class="input-large" required="">
+                      </div>
+                    </div>
+
+                    <!-- Password input-->
+                    <div class="control-group">
+                      <label class="control-label" for="passwordinput">Password:</label>
+                      <div class="controls">
+                        <input required="" id="passwordinput" name="passwordinput" class="form-control" type="password" placeholder="********" class="input-medium">
+                      </div>
+                    </div>
+
+                    <!-- Multiple Checkboxes (inline) -->
+<!--                    <div class="control-group">
+                      <label class="control-label" for="rememberme"></label>
+                      <div class="controls">
+                        <label class="checkbox inline" for="rememberme-0">
+                          <input type="checkbox" name="rememberme" id="rememberme-0" value="Remember me">
+                          Recuerdame
+                        </label>
+                      </div>
+                    </div>
+ -->
+                    <!-- Button -->
+                    <div class="control-group">
+                      <label class="control-label" for="signin"></label>
+                      <div class="controls">
+                        <button id="signin" name="signin" class="btn btn-theme btn-block">Iniciar Sesión</button>
+                      </div>
+                    </div>
+                    <a href="#signin" data-toggle="modal" data-target="#reset_password-modal"><%= link_to "¿olvidaste la contaseña?", new_password_reset_path %></a>
+                    <div class="control-group" style="color:red;">
+                      <center>
+                        <label class="control-label" id="error-label"></label>
+                      </center>
+                    </div>
+
+                  </fieldset>
+                </form>
+              </div><!-- /signin -->
+
+            </div><!-- /tab-content -->
+          </div><!-- /modal-body -->
+
+          <div class="modal-footer">
+            <center>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </center>
+          </div>
+        </div><!-- /modal-content -->
+      </div><!-- /modal-dialog -->
+    </div><!-- /modal -->
+
+
+    <!-- password reset -->
+	<div style="margin-top:60px" class="container text-center" >
+		<%= form_for @user, :url => password_reset_path(params[:id]) do |f| %>
+		  <% if @user.errors.any? %>
+		    <div class="error_messages">
+		      <h2>Error</h2>
+		      <ul>
+		        <% for message in @user.errors.full_messages %>
+		          <li><%= message %></li>
+		        <% end %>
+		      </ul>
+		    </div>
+		  <% end %>
+		  <h1>Restablecer Contraseña</h1>
+			<div class="field">
+				<!--<%= f.label :contraseña %>-->
+				Ingresa tu nueva clave de acceso.
+			</div>
+			<div class="field">
+				<center><%= f.password_field :password, :style => "width:258px; height:34px", :class => "form-control", :placeholder => "Contraseña" %></center>
+			</div>
+			&nbsp;
+			<!--<div class="field">
+				<%= f.label :confirmar_contraseña %>
+			</div>-->
+			<div class="field">
+				<center><%= f.password_field :password_confirmation, :style => "width:258px; height:34px", :class => "form-control", :placeholder => "Confirmar contraseña" %></center>
+			</div>
+			<% if flash[:notice] %>
+		    	<div class="notice"><%= flash[:notice] %></div>
+		  	<% end %>
+		  	<div class="modal-footer">
+	            <center>
+	              <button type="submit" class="btn btn-default" data-dismiss="modal">Guardar</button>
+	            </center>
+          	</div>
+
+		<% end %>
+	</div>
+<!-- /password reset -->
+
+    <div class="registration" id="registration-container"></div>
+
+    <%= render(:partial => "shared/footer")%>
+
+    <!-- jQuery  -->
+    <%= javascript_include_tag "jquery.min" %>
+    <%= javascript_include_tag "bootstrap.min" %>
+    <%= javascript_include_tag "detectmobilebrowser" %>
+    <%= javascript_include_tag "smoothscroll" %>
+    <%= javascript_include_tag "bootstrapValidator.min" %>
+    <%= javascript_include_tag "jquery.inview.min" %>
+    <%= javascript_include_tag "jquery.easing.1.3" %>
+    <%= javascript_include_tag "animations" %>
+    <%= javascript_include_tag "jquery.formatter.min" %>
+    <%= javascript_include_tag "jspdf" %>
+    <%= javascript_include_tag "myFormatter" %>
+    <%= javascript_include_tag "legacy" %>
+    <%= javascript_include_tag "picker" %>
+    <%= javascript_include_tag "picker.time" %>
+    <%= javascript_include_tag "picker.date" %>
+    <%= javascript_include_tag "vfs_fonts" %>
+    <%= javascript_include_tag "ajax" %>
+    <%= javascript_include_tag "jquery.signaturepad.min" %>
+    <%= javascript_include_tag "json2.min" %>
+
+  </body>
+</html>
+
