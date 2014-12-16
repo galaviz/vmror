@@ -23,6 +23,8 @@ class PasswordResetsController < ApplicationController
 	  if @user.password_reset_sent_at < 1.hours.ago
 	    redirect_to new_password_reset_path, :notice => "el restablecimiento de la contraseña ha caducado."
 	  elsif @user.password=(params[:user][:password])
+	  	@user.password_reset_token=""
+	  	@user.password_reset_sent_at=""
 	  	@user.save()
 	    #redirect_to edit_password_reset_path, :notice => "la contraseña se ha cambiado."
 	    redirect_to root_url
