@@ -125,10 +125,6 @@ ActiveRecord::Schema.define(version: 20141216224032) do
     t.string   "password_reset_token"
     t.datetime "password_reset_sent_at"
     t.integer  "pasos"
-<<<<<<< HEAD
-=======
-    t.integer  "profile_id"
->>>>>>> origin/master
     t.datetime "created_at"
     t.datetime "updated_at"
   end
