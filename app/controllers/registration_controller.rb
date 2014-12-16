@@ -213,11 +213,8 @@ class RegistrationController < ApplicationController
     #send email
     #puts("sending email")
     UserMailer.send_welcome_email(@user).deliver
-<<<<<<< HEAD
-=======
 	session["is_residential"] = nil
 	session["rpu"] = nil
->>>>>>> origin/master
     redirect_to(:action=>:monitoreo,:controller=>:dashboard)
     #else go back to form. display error message
   end
