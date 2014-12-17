@@ -21,7 +21,9 @@ class RegistrationController < ApplicationController
 
   def user_info
     @is_residential = session["is_residential"]
-	
+	  @country = Country.select("id, description").where(active: true)
+    @state = State.select("id, description").where(active: true)
+    @location = Location.select("id, description").where(active: true)
     @rpu=InfoEnergetica.find_by(rpu: session[:rpu]) 
     @user = User.new
     @user.nombre = @rpu.name
@@ -46,8 +48,9 @@ class RegistrationController < ApplicationController
 				@user.email = params["email"]
 				@user.telefono = params["telefono"]
 				@user.celular = params["celular"]
-				@user.estado = params["estado"]
-				@user.municipio = params["municipio"]
+				@user.country_id = params["pais"]
+				@user.state_id = params["estado"]
+        @user.location_id = params["municipio"]
 				@user.calle = params["calle"]
 				@user.numero_direccion = params["numero"]
 				@user.colonia = params["colonia"]
@@ -76,8 +79,9 @@ class RegistrationController < ApplicationController
 			user.email = params["email"]
 			user.telefono = params["telefono"]
 			user.celular = params["celular"]
-			user.estado = params["estado"]
-			user.municipio = params["municipio"]
+			user.country_id = params["pais"]
+      user.state_id = params["estado"]
+      user.location_id = params["municipio"]
 			user.calle = params["calle"]
 			user.numero_direccion = params["numero"]
 			user.colonia = params["colonia"]
@@ -207,7 +211,7 @@ class RegistrationController < ApplicationController
     @user.creditos_vm = 100
     @user.puntos_vm = 100
     @user.password=(params["account-password"])
-	@user.pasos = 0
+	  @user.pasos = 0
     @user.save()
     #if successs
     #send email
@@ -222,15 +226,15 @@ class RegistrationController < ApplicationController
   def rpu_info
 	@user = User.find_by(rpu: params[:rpu]) 
     if @user
-		  render :json =>  { :success => 2 }.to_json
-	else
-		@rpu=InfoEnergetica.find_by(rpu: params[:rpu]) 
-		if @rpu
-		  render :json =>  { :success => 1 }.to_json
-		else
-		  render :json =>  { :success => 0, :message => "" }.to_json
-		end
-	end
+  		  render :json =>  { :success => 2 }.to_json
+  	else
+  		@rpu=InfoEnergetica.find_by(rpu: params[:rpu]) 
+  		if @rpu
+  		  render :json =>  { :success => 1 }.to_json
+  		else
+  		  render :json =>  { :success => 0, :message => "" }.to_json
+  		end
+  	end
   end
 
 end
