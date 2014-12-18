@@ -18,6 +18,7 @@
     <%= stylesheet_link_tag "social-icons" %>
     <%= stylesheet_link_tag "font-awesome.min" %>
     <%= stylesheet_link_tag "bootstrapValidator.min" %>
+    <%= stylesheet_link_tag "style" %>
     <!-- Web Fonts -->
     <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
 
@@ -146,6 +147,7 @@
     <%= javascript_include_tag "animations" %>
     <%= javascript_include_tag "jquery.formatter.min" %>
     <%= javascript_include_tag "legacy" %>
+    <%= javascript_include_tag "ajax" %>
     <script>
     $(document).ready(function() {
       $( "#resetpassword-form" ).submit(function( event ) {
@@ -167,7 +169,7 @@
                 $("#error-label").html(pRespuesta.messages);
               }
               else if(pRespuesta.success == 1){
-                window.location = "/dashboard/monitoreo"
+                window.location = pRespuesta.location;
               }
             },
             error: function(pRespuesta) {

@@ -1,7 +1,10 @@
 class DashboardController < ApplicationController
 
-  def monitoreo
+  def configuration
+	@method = __method__
     if session["user_id"] and User.find_by_id(session["user_id"])
+	  @pages = Page.select("description, command").where(menu_id: 1, active: true).order(order_by: :asc)
+	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
       @user = User.find_by_id(session["user_id"])
       @user_tier = @user.user_tier
     else
@@ -9,8 +12,10 @@ class DashboardController < ApplicationController
     end
   end
 
-  def puntos
+  def monitoring
     if session["user_id"] and User.find_by_id(session["user_id"])
+	  @pages = Page.select("description, command").where(menu_id: 1, active: true).order(order_by: :asc)
+	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
       @user = User.find_by_id(session["user_id"])
       @user_tier = @user.user_tier
     else
@@ -18,9 +23,22 @@ class DashboardController < ApplicationController
     end
   end
 
-  def tienda
+  def points
+    if session["user_id"] and User.find_by_id(session["user_id"])
+	  @pages = Page.select("description, command").where(menu_id: 1, active: true).order(order_by: :asc)
+	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
+      @user = User.find_by_id(session["user_id"])
+      @user_tier = @user.user_tier
+    else
+      redirect_to :action => :index, :controller => :main
+    end
+  end
+
+  def green_shop
     puts session["cart"].inspect
     if session["user_id"] and User.find_by_id(session["user_id"])
+	  @pages = Page.select("description, command").where(menu_id: 1, active: true).order(order_by: :asc)
+	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
       @user = User.find_by_id(session["user_id"])
         
       unless session["cart"]
@@ -42,8 +60,21 @@ class DashboardController < ApplicationController
     end
   end
 
-  def fundacion
+  def foundation
     if session["user_id"] and User.find_by_id(session["user_id"])
+	  @pages = Page.select("description, command").where(menu_id: 1, active: true).order(order_by: :asc)
+	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
+      @user = User.find_by_id(session["user_id"])
+      @user_tier = @user.user_tier
+    else
+      redirect_to :action => :index, :controller => :main
+    end
+  end
+
+  def pay_it_forward
+    if session["user_id"] and User.find_by_id(session["user_id"])
+	  @pages = Page.select("description, command").where(menu_id: 1, active: true).order(order_by: :asc)
+	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
       @user = User.find_by_id(session["user_id"])
       @user_tier = @user.user_tier
     else
@@ -170,15 +201,6 @@ class DashboardController < ApplicationController
     end
   end
 
-  def pay_it_forward
-    if session["user_id"] and User.find_by_id(session["user_id"])
-      @user = User.find_by_id(session["user_id"])
-      @user_tier = @user.user_tier
-    else
-      redirect_to :action => :index, :controller => :main
-    end
-  end
-
   def item
     @item_id = params["id"]
     @item = Item.find_by_id(@item_id)
@@ -296,7 +318,7 @@ class DashboardController < ApplicationController
       if params["password_input_new"]==params["password_input_confirm"]
         @user.password=(params["password_input_new"])
         @user.save()
-        render :json =>  { :success => 1}.to_json
+        render :json =>  { :success => 1, :location => "/dashboard/monitoring"}.to_json
       else
         render :json =>  { :success => 0, :messages => "¡La contrase&ntilde;a no coincide!"}.to_json
       end
@@ -305,4 +327,33 @@ class DashboardController < ApplicationController
     end
   end
 
+  #Configurations Methods
+  def users
+	redirect_to(:action=>"index", :controller => "user")
+  end
+  
+  def profiles
+	redirect_to(:action=>"index", :controller => "profile")
+  end
+  
+  def pages
+	redirect_to(:action=>"index", :controller => "page")
+  end
+  
+  def permissions
+	redirect_to(:action=>"index", :controller => "permission")
+  end
+  
+  def countries
+	redirect_to(:action=>"index", :controller => "country")
+  end
+  
+  def states
+	redirect_to(:action=>"index", :controller => "state")
+  end
+  
+  def locations
+	redirect_to(:action=>"index", :controller => "location")
+  end
+  
 end

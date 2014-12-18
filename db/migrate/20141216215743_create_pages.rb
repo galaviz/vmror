@@ -4,7 +4,7 @@ class CreatePages < ActiveRecord::Migration
       t.string :description
       t.string :command
       t.integer :order_by
-      t.boolean :is_menu
+      t.integer :menu_id
       t.boolean :active
 
       t.timestamps

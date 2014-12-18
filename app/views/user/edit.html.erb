@@ -18,6 +18,8 @@
     <%= stylesheet_link_tag "social-icons" %>
     <%= stylesheet_link_tag "font-awesome.min" %>
     <%= stylesheet_link_tag "bootstrapValidator.min" %>
+    <%= stylesheet_link_tag "style" %>
+    <%= stylesheet_link_tag "formsStyle" %>
     <!-- Web Fonts -->
     <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
 
@@ -32,119 +34,245 @@
 
   <body data-spy="scroll" data-offset="0" data-target=".portal-sidebar">
 
-    <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "monitoreo"})%>
-
-    <div class="main-dashboard-content">
+    <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "monitoring"})%>
+	<div class="main-dashboard-content">
       <div class="container">
-        <div class="col-sm-3 portal-sidebar">
-          <ul class="nav nav-list portal-sidenav affix cl-effect-13">
-            <li class="active"><a href="#consumo-energetico" class="smoothScroll">Consumo Energético</a></li>
-            <li class=""><a href="#generacion-solar" class="smoothScroll">Generación Solar</a></li>
-            <li class=""><a href="#balance-neto" class="smoothScroll">Balance Neto</a></li>
-            <li class=""><a href="#control-energetico" class="smoothScroll">Control Energético</a></li>
-          </ul>
-        </div>
 
-        <div class="col-sm-6">
-          <section id="consumo-energetico" name="consumo-energetico"></section>
-          <div class="consumo-energetico">
-              <div class="row">
-                <h2 class="text-center">Consumo Energético</h2>
-                <hr>
-              </div><!-- /row -->
-              <br>
-              <div class="text-center">
-                <div class="btn-group chart-btn-group" data-toggle="buttons-radio">
-                  <button type="button" class="btn btn-theme" id="daily-consumption-button">Día</button>
-                  <button type="button active" class="btn btn-theme" id="monthly-consumption-button">Mes</button>
-                  <button type="button" class="btn btn-theme" id="yearly-consumption-button">Año</button>
-                </div>
-              </div>
-              <br>
-              <div class="row">
-                <div class="col-sm-12">
-                  <div id="consumption-chart"></div>
-                </div>
-              </div>
-              <br><br><br>
-              <br>
-          </div><!-- /consumo-energetico -->
+		<div class="row">
+			<div class="col-md-12 col-sm-12 animated" data-animtype="flipInY"
+			data-animrepeat="0"
+			data-speed="1s"
+			data-delay="0.5s">
+				<div class="space-sep20"></div>
+				<h2 class="h2-section-title">Datos del Usuario <%= @user.nombre + ' ' + @user.apellido %></h2>
 
-          <section id="generacion-solar" name="generacion-solar"></section>
-          <div class="generacion-solar">
-              <div class="row">
-                <h2 class="text-center">Generación Solar</h2>
-                <hr>
-              </div><!-- /row -->
-              <br>
-              <div class="text-center">
-                <div class="btn-group chart-btn-group" data-toggle="buttons-radio">
-                  <button type="button" class="btn btn-theme" id="daily-solar-generation-button">Día</button>
-                  <button type="button active" class="btn btn-theme" id="monthly-solar-generation-button">Mes</button>
-                  <button type="button" class="btn btn-theme" id="yearly-solar-generation-button">Año</button>
-                </div>
-              </div>
-              <br>
-              <div class="row">
-                <div class="col-sm-12" id="solar-generation-chart"></div>
-              </div>
-              <br><br><br>
-              <br>
-          </div><!-- /generacion-solar -->
+				<div class="i-section-title">
+					<i class="icon-users-outline">
 
-          <section id="balance-neto" name="balance-neto"></section>
-          <div class="balance-neto">
-              <div class="row">
-                <h2 class="text-center">Balance Neto</h2>
-                <hr>
-              </div><!-- /row -->
-              <br>
-              <div class="text-center">
-                <div class="btn-group chart-btn-group" data-toggle="buttons-radio">
-                  <button type="button" class="btn btn-theme" id="daily-balance-button">Día</button>
-                  <button type="button active" class="btn btn-theme" id="monthly-balance-button">Mes</button>
-                  <button type="button" class="btn btn-theme" id="yearly-balance-button">Año</button>
-                </div>
-              </div>
-              <br>
-              <div class="row">
-                <div class="col-sm-12" id="balance-chart"></div>
-              </div>
-              <br><br><br>
-              <br>
-          </div><!-- /balance-neto -->
+					</i>
+				</div>
 
-          <section id="control-energetico" name="control-energetico"></section>
-          <div class="control-energetico">
-              <div class="row">
-                <h2 class="text-center">Control Energético</h2>
-                <hr>
-              </div><!-- /row -->
-              <div class="row">
-                <p class="text-center">Muy pronto podrás controlar tu consumo energético (iluminación, aires acondicionados, etc.) para lograr importantes ahorros energéticos, utilizando el <strong class="theme-color">Wiser Home Control!</strong></p>
-              </div>
-              <br><br><br>
-              <div class="row">
-                <div class="col-sm-10 col-sm-offset-2">
-                  <embed src="https://www.youtube.com/embed/dZzYoUYbBR8" height="315px"></embed>
-                </div>
-              </div>
-              <br>
-              <br><br><br>
-          </div><!-- /control-energetico -->
+				<div class="space-sep20"></div>
+			</div>
+		</div>
 
-        </div>
-        <div class="col-sm-3 portal-right-sidebar">
-          <div class="item">
-            <h3 class="theme-color">TIPS</h3>
-            Te recomendamos que cambies tu focos para lograr ahorros de hasta 30% en iluminacion ya que la mayoria de tu consumo viene de ello.
-          </div>
-          <div class="item">
-            <h3 class="theme-color">PROMOCIONES</h3>
-            Descuento del 30% en focos ahorradores LED.
-            Compra en la <a href="<%=url_for controller: 'dashboard', action: 'tienda'%>"><strong>TIENDA VERDE</strong></a>
-          </div>
-        </div>
+		<div class="row">
+
+			<div class="col-md-6 col-sm-6 centered">
+				<div class="classic-form">
+					<form class="form-horizontal" role="form" id="user-edit-form" action="/user/update/<%=@user.id%>">
+						
+						<div class="form-group">
+							<label for="rpu" class="col-sm-4 control-label">Nombre</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="rpu" value="<%=@user.rpu%>" placeholder="RPU" id="rpu" >
+							</div>
+						</div>
+
+						<% if @user.is_residential==false%>
+						<div class="form-group">
+							<label for="empresa" class="col-sm-4 control-label">Empresa</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="empresa" value="<%=@user.empresa%>" placeholder="Empresa">
+							</div>
+						</div>
+						<%end%>
+						
+						<div class="form-group">
+							<label for="nombre" class="col-sm-4 control-label">Nombre</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="nombre" value="<%=@user.nombre%>" placeholder="Nombre" id="first-name" >
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="apellido" class="col-sm-4 control-label">Apellido</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="apellido" value="<%=@user.apellido%>" placeholder="Apellido" id="last-name" >
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="email" class="col-sm-4 control-label">Email</label>
+							<div class="col-sm-8">
+								<input 
+									type="email" 
+									name="email" 
+									id="email" 
+									class="form-control" 
+									value="<%=@user.email%>" 
+									placeholder="Email"
+									data-toggle="popover" 
+									data-placement="bottom"
+									data-trigger="manual" 
+									title="" 
+									data-content=""
+								/>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="telefono" class="col-sm-4 control-label">Teléfono</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control"name="telefono" id="telefono" value="<%=@user.telefono%>" placeholder="Teléfono">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="celular" class="col-sm-4 control-label">Celular</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="celular" id="celular" value="<%=@user.celular%>" placeholder="Celular">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="pais" class="col-sm-4 control-label">País</label>
+							<div class="col-sm-8">
+								<select class="form-control" name="pais">
+									<option>México</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="estado" class="col-sm-4 control-label">Estado</label>
+							<div class="col-sm-8">
+								<select class="form-control" name="estado">
+									<option>Nuevo Le&oacute;n</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="municipio" class="col-sm-4 control-label">Municipio</label>
+							<div class="col-sm-8">
+								<select class="form-control" name="municipio">
+								<option>Abasolo</option>
+								<option>Agualeguas</option>
+								<option>Los Aldamas</option>
+								<option>Allende</option>
+								<option>Anáhuac</option>
+								<option>Apodaca</option>
+								<option>Aramberri</option>
+								<option>Benito Juárez</option>
+								<option>Bustamante</option>
+								<option>Cadereyta Jiménez</option>
+								<option>El Carmen</option>
+								<option>Cerralvo</option>
+								<option>Ciénega de Flores</option>
+								<option>China</option>
+								<option>Doctor Arroyo</option>
+								<option>Doctor Coss</option>
+								<option>Doctor González</option>
+								<option>Galeana</option>
+								<option>García</option>
+								<option>General Bravo</option>
+								<option>General Escobedo</option>
+								<option>General Terán</option>
+								<option>General Treviño</option>
+								<option>General Zaragoza</option>
+								<option>General Zuazua</option>
+								<option>Guadalupe</option>
+								<option>Los Herreras</option>
+								<option>Hidalgo</option>
+								<option>Higueras</option>
+								<option>Hualahuises</option>
+								<option>Iturbide</option>
+								<option>Lampazos de Naranjo</option>
+								<option>Linares</option>
+								<option>Marín</option>
+								<option>Melchor Ocampo</option>
+								<option>Mier y Noriega</option>
+								<option>Mina</option>
+								<option>Montemorelos</option>
+								<option>Monterrey</option>
+								<option>Parás</option>
+								<option>Pesquería</option>
+								<option>Los Ramones</option>
+								<option>Rayones</option>
+								<option>Sabinas Hidalgo</option>
+								<option>Salinas Victoria</option>
+								<option>San Nicolás de los Garza</option>
+								<option>San Pedro Garza García</option>
+								<option>Santa Catarina</option>
+								<option>Santiago</option>
+								<option>Vallecillo</option>
+								<option>Villaldama</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="calle" class="col-sm-4 control-label">Calle</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="calle" placeholder="Calle" value="<%=@user.calle%>">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="numero" class="col-sm-4 control-label">Número</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="numero" placeholder="Número" value="<%=@user.numero_direccion%>">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="colonia" class="col-sm-4 control-label">Colonia</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="colonia" placeholder="Colonia" value="<%=@user.colonia%>">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="codigo-postal" class="col-sm-4 control-label">Código Postal</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="codigo-postal" name="codigo-postal" placeholder="Código Postal" value="<%=@user.codigo_postal%>">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="codigo-postal" class="col-sm-4 control-label">Código Postal</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="codigo-postal" name="codigo-postal" placeholder="Código Postal" value="<%=@user.codigo_postal%>">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="puntos-vm" class="col-sm-4 control-label">Puntos VM</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="puntos-vm" name="puntos-vm" placeholder="Puntos VM" value="<%=@user.puntos_vm%>">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="creditos-vm" class="col-sm-4 control-label">Puntos VM</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="creditos-vm" name="creditos-vm" placeholder="Créditos VM" value="<%=@user.creditos_vm%>">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="profile" class="col-sm-4 control-label">Perfil</label>
+							<div class="col-sm-8">
+								<select class="form-control" name="profile">
+									<% @profiles.each do |p|%>
+									<option value="<%=p.id%>" <% if p.id == @user.profile_id %>selected<% end %>><%=p.description%></option>
+									<% end %>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group text-center">
+							<button class="btn btn-theme" formaction="/user/">Regresar</button>
+							<button type="submit" class="btn btn-theme">Guardar</button>
+						</div>
+
+					</form>
+				</div>
+			</div>
+			<div class="space-sep20"></div>
+		</div> <!-- /row -->
+
       </div><!--/container-->
     </div>
 
@@ -161,11 +289,11 @@
     <%= javascript_include_tag "animations" %>
     <%= javascript_include_tag "jquery.formatter.min" %>
     <%= javascript_include_tag "legacy" %>
+    <%= javascript_include_tag "ajax" %>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/drilldown.js"></script>
     <script>
-
       $(document).ready(function() {
         $('body').scrollTop(0);
         $('.chart-btn-group').button();
@@ -203,7 +331,7 @@
                 $("#error-label").html(pRespuesta.messages);
               }
               else if(pRespuesta.success == 1){
-                window.location = "/dashboard/monitoreo"
+                window.location = pRespuesta.location;
               }
             },
             error: function(pRespuesta) {

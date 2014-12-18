@@ -12,29 +12,30 @@
 
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav cl-effect-13">
-            <li <%if active_tab == "monitoreo"%> class="active"<%end%>><a href="<%=url_for controller: 'dashboard', action: 'monitoreo'%>" class="smoothScroll">Tablero de Energía</a></li>
+		  <% @pages.each do |p| %>
+			<% if SecurityController.has_permission(session[:user_id], p.command) %>
+			<li <%if active_tab == p.command%> class="active"<%end%>><a href="<%=url_for controller: 'dashboard', action: p.command%>" class="smoothScroll"><%=p.description%></a></li>
+			<% end %>
+		  <%end%>
           </ul>
-          <ul class="nav navbar-nav cl-effect-13">
-            <li <%if active_tab == "puntos"%> class="active"<%end%>><a href="<%=url_for controller: 'dashboard', action: 'puntos'%>" class="smoothScroll">Créditos y Puntos VM</a></li>
-          </ul>
-
-          <ul class="nav navbar-nav cl-effect-13">
-            <li <%if active_tab == "tienda"%> class="active"<%end%>><a href="<%=url_for controller: 'dashboard', action: 'tienda'%>" class="smoothScroll">Tienda Verde</a></li>
-          </ul>
-
-          <ul class="nav navbar-nav cl-effect-13">
-            <li <%if active_tab == "fundacion"%> class="active"<%end%>><a href="<%=url_for controller: 'dashboard', action: 'fundacion'%>" class="smoothScroll">Fundación VM</a></li>
-          </ul>
-
-          <ul class="nav navbar-nav cl-effect-13">
-            <li <%if active_tab == "pay_it_forward"%> class="active"<%end%>><a href="<%=url_for controller: 'dashboard', action: 'pay_it_forward'%>" class="smoothScroll">Pay-It-Forward</a></li>
-          </ul>
+		  
           <!-- Sign In / Sign Up / Profile-->
           <div class="dropdown navbar-right" style="cursor:pointer; color:#3D9970; margin-top:16px; margin-right:20px;">
-            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><%=@user.nombre + " " + @user.apellido %>&nbsp;<span class="caret"></span></a>
+            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><%=@online_user.nombre + " " + @online_user.apellido %>&nbsp;<span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
               <li><a tabindex="-1" href="#resetpassword" data-toggle="modal" data-target="#resetpassword-modal">Cambiar Contrase&ntilde;a</a></li>
               <li><%=link_to("LOGOUT", {:action => 'logout', :controller => 'main'})%></li>
+			  <li class="divider"></li>
+				<li class="dropdown dropdown-submenu left">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Configuraci&oacute;n</a>
+					<ul class="dropdown-menu pull-left">
+						<% @configurations.each do |p| %>
+							<% if SecurityController.has_permission(session[:user_id], p.command) %>
+							<li <%if active_tab == p.command%> class="active"<%end%>><a href="<%=url_for controller: 'dashboard', action: p.command%>" class="smoothScroll"><%=p.description%></a></li>
+							<% end %>
+						<%end%>
+					</ul>
+				</li>
             </ul>        
           </div>
 

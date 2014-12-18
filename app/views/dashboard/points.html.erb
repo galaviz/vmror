@@ -18,6 +18,7 @@
     <%= stylesheet_link_tag "social-icons" %>
     <%= stylesheet_link_tag "font-awesome.min" %>
     <%= stylesheet_link_tag "bootstrapValidator.min" %>
+    <%= stylesheet_link_tag "style" %>
     <!-- Web Fonts -->
     <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
 
@@ -32,13 +33,14 @@
 
   <body data-spy="scroll" data-offset="0" data-target=".portal-sidebar">
 
-    <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "fundacion"})%>
+    <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "points"})%>
+
     <div class="main-dashboard-content">
       <div class="container">
         <div class="col-sm-3 portal-sidebar">
           <ul class="nav nav-list portal-sidenav affix cl-effect-13">
             <li class="active"><a href="#descripcion" class="smoothScroll">Descripción</a></li>
-            <li class=""><a href="#agua-para-todos" class="smoothScroll">¡Agua Para Todos!</a></li>
+            <li class=""><a href="#mas-informacion" class="smoothScroll">¿Como Se Premian?</a></li>
           </ul>
         </div>
 
@@ -50,66 +52,46 @@
                 <hr>
               </div><!-- /row -->
               <div class="row">
-                <p class="text-justify"> La <strong class="theme-color">Fundacion Verde Monarca</strong> tiene como fin fomentar proyectos sociales de carácter sustentable en comunidades marginadas y de bajos recursos. Como miembro Verde Monarca, ahora puedes optar a donar tus ahorros económicos, tus créditos VM, tu dinero y/o tu tiempo para crear un mejor México.</p>
+                <p class="text-justify"> Los <strong class="theme-color">Créditos VM y Puntos VM</strong> son una excelente manera de incentivar a nuestros miembros a adoptar un estilo de vida pro-activa hacia la sustentabilidad.</p>
+                <p class="text-justify"> <strong class="theme-color">Créditos VM:</strong> Podrán utilizarse como dinero virtual para comprar artículos de eficiencia y ahorro energético en la Tienda Verde, para realizar donaciones a la fundación Verde Monarca, y/o para patrocinar la instalación parcial o total de sistemas solares de miembros de bajos recursos y/o de tus amigos (Programa "Pay-It-Forward").</p>
+                <p class="text-justify"> <strong class="theme-color">Puntos VM:</strong> Determinan el nivel de usuario y sus beneficios como miembro de Verde Monarca.</p>
+                <ul>
+                  <li><strong class="bronze-color">VM Bronce:</strong> &gt;100 puntos VM (nivel base de inscripción)</li>
+                  <li><strong class="silver-color">VM Plata:</strong> &gt;1,000 puntos VM</li>
+                  <li><strong class="gold-color">VM Oro:</strong> &gt;5,000 puntos VM</li>
+                  <li><strong class="platinum-color">VM Platino:</strong> &gt;50,000 puntos VM</li>
+                  <li><strong class="theme-color">VM Verde:</strong> &gt;100,000 puntos VM</li>
+                </ul>
               </div>
-              <div class="text-center"><%= image_tag("charity.svg",:class => "svg", :style => "height:150px;") %></div>
               <br><br><br>
               <br>
           </div><!-- /consumo-energetico -->
 
-          <section id="agua-para-todos" name="agua-para-todos"></section>
-          <div class="agua-para-todos">
+          <section id="mas-informacion" name="mas-informacion"></section>
+          <div class="mas-informacion">
               <div class="row">
-                <h2 class="text-center platinum-color">¡Agua Para Todos!</h2>
+                <h2 class="text-center">¿Como Se Premian?</h2>
                 <hr>
               </div><!-- /row -->
               <div class="row">
-                <p class="text-justify">El agua es el elemento más importante en nuestras vidas. Es indispensable para mantenernos sanos y para fomentar el crecimiento de cultivos que permitan la autosuficiencia y el crecimiento económico. Ayúdanos a construir bombas de aguas, impulsadas por energía solar, en zonas marginadas para llevarle agua a todos los mexicanos. Tú donación permitirá que haya <strong class="platinum-color">¡Agua para Todos!</strong></p>
-                <strong>Meta:</strong> Instalación de 100 bombas de agua solares en zonas marginadas<br>
-                <strong>Monto:</strong> $1,000,000 MN <br>
-                <strong>Avance:</strong> $50,000 MN (5%) <br><br>
-                <div class="classic-form">
+                <p class="text-justify"> Para fomentar el ahorro energético de los miembros Verde Monarca, se te premiarán <strong class="theme-color">10 créditos VM y 10 puntos VM</strong> por cada 1% de ahorro energético. El ahorro energético se calculará basado en tu consumo energético del mes actual en comparación al mismo mes del año anterior. Por ejemplo:</p>
+                <ul>
+                  <li><strong class="bold">Consumo Sept-13:</strong> 1,700 kWh</li>
+                  <li><strong class="bold">Consumo Sept-14:</strong> 1,600 kWh</li>
+                  <li><strong class="bold">Ahorro Energético:</strong> 5.9%</li>
+                  <li><strong class="bold">Premiación:</strong> 59 créditos VM y 59 puntos VM</li>
+                </ul>
+                <br><br>
 
-                  <br><br>
-                  <form class="text-center form-horizontal" action="./process_donation" method="POST">
-                    <div class="form-group">
-                      <label class="col-sm-4 control-label">Deseo Donar: </label>
-                    </div>
-                    <div class="form-group">
-                      <label for="creditos" class="col-sm-4 control-label">Créditos VM:</label>
-                      <div class="col-sm-8">
-                        <input type="text" class="form-control" name="creditos_vm" placeholder="100">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="creditos" class="col-sm-4 control-label">$MN: </label>
-                      <div class="col-sm-8">
-                        <input type="text" class="form-control" name="amount" placeholder="100">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="col-sm-8 col-sm-offset-4">
-                        <div class="pull-left"><input type='checkbox' name='donar-mensualmente'> Donar Mensualmente </div><br>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="col-sm-8 col-sm-offset-4">
-                      <div class="pull-left"><input type='checkbox' name='dedicar-donacion'> Dedicar esta donacion a un amigo </div><br>
-                      </div>
-                    </div>
-                  <script
-                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                    data-key="pk_live_TZMVzigJsplccEBJVDYNjcGQ"
-                    data-name="Verde Monarca"
-                    data-description="Fundacion VM"
-                    data-currency="MXN"
-                    data-email="<%=@user.email%>"
-                    data-label="Pagar"
-                    data-image="">
-                  </script>
-                  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-                </form>
-                </div>
+                <h4 class="bold">Invitación de nuevos miembros Verde Monarca</h4>
+                <p class="text-justify"> Para fomentar una sociedad interactiva y unida, por cada persona a quien invites a unirse a Verde Monarca y quien resulte miembro VM, se te premiarán <strong class="theme-color">500 créditos VM y 500 puntos VM</strong>. ¡No se te olvide proporcionarle tu clave de referencia a tu amigo/a!</p>
+                <ul>
+                  <li><strong class="bold">Clave de Referencia:</strong> <%=@user.clave_referencia%></li>
+                </ul>
+                <br><br>
+
+                <h4 class="bold">Donaciones al Programa "Pay-It-Forward" y Fundación Verde Monarca</h4>
+                <p class="text-justify"> Para fomentar el altruismo sustentable, las donaciones a la Fundación Verde Monarca, la cual tiene el fin de impulsar proyectos sociales de energía renvable en comunidades marginadas y de bajos recursos, y las donaciones al Programa "Pay-It-Forward", en el cual podrás patrocinar de manera parcial o total la instalación de un sistema solar para algún miembro de bajos recursos y/o para algún amigo/a, se te premiarán <strong class="theme-color">100 puntos VM por cada $1,000 MN donados</strong> (en forma de dinero o de créditos VM). Ahora con tus ahorros económicos podrás crear un mejor mundo, un mundo sustentable!</p>
               </div>
               <br><br><br>
               <br>
@@ -143,6 +125,7 @@
     <%= javascript_include_tag "animations" %>
     <%= javascript_include_tag "jquery.formatter.min" %>
     <%= javascript_include_tag "legacy" %>
+    <%= javascript_include_tag "ajax" %>
     <script>
     $(document).ready(function() {
       $( "#resetpassword-form" ).submit(function( event ) {
@@ -164,7 +147,7 @@
                 $("#error-label").html(pRespuesta.messages);
               }
               else if(pRespuesta.success == 1){
-                window.location = "/dashboard/monitoreo"
+                window.location = pRespuesta.location;
               }
             },
             error: function(pRespuesta) {

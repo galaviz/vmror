@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20141216224032) do
     t.string   "description"
     t.string   "command"
     t.integer  "order_by"
-    t.boolean  "is_menu"
+    t.integer  "menu_id"
     t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
