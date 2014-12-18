@@ -11,10 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141216224032) do
+ActiveRecord::Schema.define(version: 20141217160516) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "countries", force: true do |t|
+    t.string   "description"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "info_energeticas", force: true do |t|
     t.string   "rpu"
@@ -40,6 +47,14 @@ ActiveRecord::Schema.define(version: 20141216224032) do
     t.float    "precio"
     t.string   "vida"
     t.string   "disponibilidad"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "locations", force: true do |t|
+    t.string   "description"
+    t.integer  "state_id"
+    t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -91,6 +106,14 @@ ActiveRecord::Schema.define(version: 20141216224032) do
     t.datetime "updated_at"
   end
 
+  create_table "states", force: true do |t|
+    t.string   "description"
+    t.integer  "country_id"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", force: true do |t|
     t.string   "email"
     t.string   "hashed_password"
@@ -101,8 +124,9 @@ ActiveRecord::Schema.define(version: 20141216224032) do
     t.string   "apellido"
     t.string   "telefono"
     t.string   "celular"
-    t.string   "estado"
-    t.string   "municipio"
+    t.integer  "country_id"
+    t.integer  "state_id"
+    t.integer  "location_id"
     t.string   "calle"
     t.integer  "numero_direccion"
     t.string   "colonia"
@@ -125,6 +149,7 @@ ActiveRecord::Schema.define(version: 20141216224032) do
     t.string   "password_reset_token"
     t.datetime "password_reset_sent_at"
     t.integer  "pasos"
+    t.integer  "profile_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

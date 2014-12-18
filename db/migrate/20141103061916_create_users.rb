@@ -10,8 +10,9 @@ class CreateUsers < ActiveRecord::Migration
       t.string :apellido
       t.string :telefono
       t.string :celular
-      t.string :estado
-      t.string :municipio
+      t.integer :country_id
+      t.integer :state_id
+      t.integer :location_id
       t.string :calle
       t.integer :numero_direccion
       t.string :colonia

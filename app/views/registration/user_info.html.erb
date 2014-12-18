@@ -87,7 +87,9 @@
                           <label for="pais" class="col-sm-4 control-label">País</label>
                           <div class="col-sm-8">
                             <select class="form-control" name="pais">
-                              <option>México</option>
+                              <% @country.each do |c|%>
+                                <option value="<%=c.id%>"><%=c.description%></option>
+                              <%end%>
                             </select>
                           </div>
                         </div>
@@ -96,7 +98,9 @@
                           <label for="estado" class="col-sm-4 control-label">Estado</label>
                           <div class="col-sm-8">
                             <select class="form-control" name="estado">
-                              <option>Nuevo Le&oacute;n</option>
+                              <% @state.each do |s|%>
+                                <option value="<%=s.id%>"><%=s.description%></option>
+                              <%end%>
                             </select>
                           </div>
                         </div>
@@ -105,58 +109,10 @@
                           <label for="municipio" class="col-sm-4 control-label">Municipio</label>
                           <div class="col-sm-8">
                             <select class="form-control" name="municipio">
-                              <option>Abasolo</option>
-                              <option>Agualeguas</option>
-                              <option>Los Aldamas</option>
-                              <option>Allende</option>
-                              <option>Anáhuac</option>
-                              <option>Apodaca</option>
-                              <option>Aramberri</option>
-                              <option>Benito Juárez</option>
-                              <option>Bustamante</option>
-                              <option>Cadereyta Jiménez</option>
-                              <option>El Carmen</option>
-                              <option>Cerralvo</option>
-                              <option>Ciénega de Flores</option>
-                              <option>China</option>
-                              <option>Doctor Arroyo</option>
-                              <option>Doctor Coss</option>
-                              <option>Doctor González</option>
-                              <option>Galeana</option>
-                              <option>García</option>
-                              <option>General Bravo</option>
-                              <option>General Escobedo</option>
-                              <option>General Terán</option>
-                              <option>General Treviño</option>
-                              <option>General Zaragoza</option>
-                              <option>General Zuazua</option>
-                              <option>Guadalupe</option>
-                              <option>Los Herreras</option>
-                              <option>Hidalgo</option>
-                              <option>Higueras</option>
-                              <option>Hualahuises</option>
-                              <option>Iturbide</option>
-                              <option>Lampazos de Naranjo</option>
-                              <option>Linares</option>
-                              <option>Marín</option>
-                              <option>Melchor Ocampo</option>
-                              <option>Mier y Noriega</option>
-                              <option>Mina</option>
-                              <option>Montemorelos</option>
-                              <option>Monterrey</option>
-                              <option>Parás</option>
-                              <option>Pesquería</option>
-                              <option>Los Ramones</option>
-                              <option>Rayones</option>
-                              <option>Sabinas Hidalgo</option>
-                              <option>Salinas Victoria</option>
-                              <option>San Nicolás de los Garza</option>
-                              <option>San Pedro Garza García</option>
-                              <option>Santa Catarina</option>
-                              <option>Santiago</option>
-                              <option>Vallecillo</option>
-                              <option>Villaldama</option>
-                            </select>
+                              <% @location.each do |l|%>
+                                <option value="<%=l.id%>"><%=l.description%></option>
+                              <%end%>
+                            </select>  
                           </div>
                         </div>
 

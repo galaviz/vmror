@@ -10,6 +10,9 @@ class LoadData < ActiveRecord::Migration
     exampleUser.salt = "456"
     exampleUser.pasos = 0
     exampleUser.profile_id = 1
+    exampleUser.country_id = 1
+    exampleUser.state_id = 19
+    exampleUser.location_id = 40
     exampleUser.save()
 	
     exampleUserResidential =  User.new(:nombre => "Maurizio", :apellido => "Calo", :email => "mauriziocalo07@gmail.com", :is_residential => true, :consumo_total => 13110, :importe_total => 52834)
@@ -22,6 +25,9 @@ class LoadData < ActiveRecord::Migration
     exampleUserResidential.creditos_vm = 100
     exampleUserResidential.pasos = 0
     exampleUserResidential.profile_id = 1
+    exampleUserResidential.country_id = 1
+    exampleUserResidential.state_id = 19
+    exampleUserResidential.location_id = 40
     exampleUserResidential.save()
 
   end

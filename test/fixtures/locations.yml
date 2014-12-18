@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  description: MyString
+  state: MyString
+  _id: 1
+  active: false
+
+two:
+  description: MyString
+  state: MyString
+  _id: 1
+  active: false

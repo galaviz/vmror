@@ -250,6 +250,7 @@
             pRequestO.email= $('[name="email"]').val();
             pRequestO.telefono= $('[name="telefono"]').val();
             pRequestO.celular= $('[name="celular"]').val();
+            pRequestO.pais= $('[name="pais"]').val();
             pRequestO.estado= $('[name="estado"]').val();
             pRequestO.municipio= $('[name="municipio"]').val();
             pRequestO.calle= $('[name="calle"]').val();
@@ -275,6 +276,36 @@
                 })
             }
           });
+
+    $('[name="pais"]').on('change', function(){
+
+      $('[name="estado"]').html("");
+      $('[name="municipio"]').html("");
+      var pRequestO = new Object();
+      pRequestO.country = $(this).val();
+      Ajax(pRequestO,"/states/get_states",function(pResponse){
+        $.each(pResponse.state_list, function(i, state) {
+            var st = '<option value="' + state.id + '">' + state.description + '</option>'
+            $('[name="estado"]').append(st);
+        })
+      },function(pResponse){})
+      
+    });
+
+    $('[name="estado"]').on('change', function(){
+
+      $('[name="municipio"]').html("");
+      var pRequestO = new Object();
+      pRequestO.state = $(this).val();
+      Ajax(pRequestO,"/locations/get_locations",function(pResponse){
+        $.each(pResponse.location_list, function(i, location) {
+            var lc = '<option value="' + location.id + '">' + location.description + '</option>'
+            $('[name="municipio"]').append(lc);
+        })
+      },function(pResponse){})
+
+    });
+
 	});
 	
 	function validateEmail(email) {
