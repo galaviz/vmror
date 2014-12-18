@@ -18,7 +18,9 @@ class MainController < ApplicationController
 		case @user.pasos
 		when 0
 			if @user.authenticate(params["passwordinput"])
-				location = "/dashboard/monitoreo"
+				profile = Profile.find_by_id(@user.profile_id)
+				page = Page.find_by_id(profile.page_id)
+				location = "/dashboard/" + page.command
 				success = 1
 			else
 				session["user_id"] = nil
