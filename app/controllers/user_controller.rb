@@ -13,6 +13,9 @@ class UserController < ApplicationController
 	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
 	  @online_user = User.find_by_id(session["user_id"])
 	  @profiles = Profile.select("id, description").where(active: true).order(id: :asc)
+	  @country = Country.select("id, description").where(active: true)
+	  @state = State.select("id, description").where(active: true)
+	  @location = Location.select("id, description").where(active: true)
 	end 
 	
 	def update
@@ -23,8 +26,9 @@ class UserController < ApplicationController
 	  @user.email = params["email"]
 	  @user.telefono = params["telefono"]
 	  @user.celular = params["celular"]
-	  @user.estado = params["estado"]
-	  @user.municipio = params["municipio"]
+	  @user.country_id = params["pais"]
+	  @user.state_id = params["estado"]
+	  @user.location_id = params["municipio"]
 	  @user.calle = params["calle"]
 	  @user.numero_direccion = params["numero"]
 	  @user.colonia = params["colonia"]

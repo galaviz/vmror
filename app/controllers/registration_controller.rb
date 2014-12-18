@@ -21,7 +21,7 @@ class RegistrationController < ApplicationController
 
   def user_info
     @is_residential = session["is_residential"]
-	  @country = Country.select("id, description").where(active: true)
+	@country = Country.select("id, description").where(active: true)
     @state = State.select("id, description").where(active: true)
     @location = Location.select("id, description").where(active: true)
     @rpu=InfoEnergetica.find_by(rpu: session[:rpu]) 
