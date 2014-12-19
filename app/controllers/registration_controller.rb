@@ -93,6 +93,7 @@ class RegistrationController < ApplicationController
 			user.consumo_total = rpu.consumo_total
 			user.importe_total = rpu.importe_total
 			user.pasos = 0
+      user.profile_id = 2
 			user.save()
 			session[:user_id] = user.id
 			render :json =>  { :success => 1}.to_json
