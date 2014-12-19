@@ -61,6 +61,7 @@ class RegistrationController < ApplicationController
 				@user.consumo_total = rpu.consumo_total
 				@user.importe_total = rpu.importe_total
 				@user.pasos = 0
+        @user.profile_id = 2
 				@user.save()
 			else 
 				render :json =>  { :success => 0, :messages => "¡El correo ya existe!"}.to_json
