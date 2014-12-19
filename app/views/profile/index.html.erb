@@ -45,7 +45,8 @@
 								<th>#</th>
 								<th>Descripci&oacute;n</th>
 								<th>P&aacute;gina</th>
-								<th></th>
+								<th style="width:80px;"></th>
+								<th style="width:80px;"></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -55,6 +56,11 @@
 							<td><%=p.pr%></td>
 							<td><%=p.pa%></td>
 							<td><a href="/profile/edit/<%=p.id%>">Editar</a></td>
+							<% if p.active%>
+							<td><a href="/profile/deactivate/<%=p.id%>">Desactivar</a></td>
+							<% else %>
+							<td><a href="/profile/deactivate/<%=p.id%>" style="color:red;">Activar</a></td>
+							<% end %>
 						</tr>
 						<% end %>
 						</tbody>
