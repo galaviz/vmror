@@ -35,8 +35,8 @@
                     <tr><td><span class='bold'>Email:</span></td><td><%=@user.email%></td></tr>
                     <tr><td><span class='bold'>Teléfono:</span></td><td><%=@user.telefono%></td></tr>
                     <tr><td><span class='bold'>Celular:</span></td><td><%=@user.celular%></td></tr>
-                    <tr><td><span class='bold'>Estado:</span></td><td><%=@user.estado%></td></tr>
-                    <tr><td><span class='bold'>Municipio:</span></td><td><%=@user.municipio%></td></tr>
+                    <tr><td><span class='bold'>Estado:</span></td><td><%=@state.description%></td></tr>
+                    <tr><td><span class='bold'>Municipio:</span></td><td><%=@location.description%></td></tr>
                     <tr><td><span class='bold'>Calle:</span></td><td><%=@user.calle%></td></tr>
                     <tr><td><span class='bold'>Número:</span></td><td><%=@user.numero_direccion%></td></tr>
                     <tr><td><span class='bold'>Colonia:</span></td><td><%=@user.colonia%></td></tr>
@@ -92,7 +92,7 @@
                   <br>
                   <br>
                   <a href="./forma_pago"><button type="button" class="btn btn-theme">Atr&aacute;s</button></a>
-                  <button type="submit" id="post-confirmation" disabled class="btn btn-theme">Confirmar</button>
+                  <button type="submit" id="post-confirmation" disabled class="btn btn-theme" data-loading-text="generado contratos">Confirmar</button>
                 </div>
             </div>
           </div> <!-- /row -->
@@ -117,6 +117,11 @@
 				$("#post-confirmation").removeAttr("disabled");
 			}
 		});
+
+		$( "#post-confirmation" ).on( "click", function() {
+	        var $btn = $(this).button('loading')
+    	});
+
 		$("#clear").on('click', function(){ $("#post-confirmation").attr("disabled", "disabled"); });
 		
 		$('#post-confirmation').on('click', function(){
@@ -170,7 +175,7 @@
 		var firmaVM = "David Eduardo Arrambide Montemayor";
 		var docDefinition = {
 			content: [
-				{ text: 'EN LA CIUDAD DE <%=@user.municipio.upcase%>, <%=@user.estado.upcase%>, SIENDO EL ' + today.getDate() + ' DE ' + months[today.getMonth()].toUpperCase() + ' DE ' + today.getFullYear() + ', COMPARECEN POR UNA PARTE EL SEÑOR DAVID EDUARDO ARRAMBIDE MONTEMAYOR EN NOMBRE Y REPRESENTACION DE LA EMPRESA VERDE MONARCA S.A.P.I DE C.V. A QUIEN ADELANTE Y PARA EFECTOS DEL PRESENTE CONTRATO SE LE DENOMINARÁ LA “PARTE VENDEDORA”, Y POR OTRA PARTE COMPARECE <%=if @user.is_residential then @user.nombre.upcase + ' ' + @user.apellido.upcase else @user.empresa.upcase end%>A QUIEN EN LO SUCESIVO SE LE DENOMINARÁ LA “PARTE COMPRADORA”, QUIENES MANIFIESTAN QUE OCURREN A CELEBRAR EL PRESENTE CONTRATO MERCANTIL DE COMPRAVENTA CON RESERVA DE DOMINIO, EL CUAL LO IDENTIFICAN ADMINISTRATIVAMENTE, PARA TODOS LOS EFECTOS QUE HAYA LUGAR, CON EL NÚMERO VM1001.\n\n', style: 'header'},
+				{ text: 'EN LA CIUDAD DE <%=@location.description.upcase%>, <%=@state.description.upcase%>, SIENDO EL ' + today.getDate() + ' DE ' + months[today.getMonth()].toUpperCase() + ' DE ' + today.getFullYear() + ', COMPARECEN POR UNA PARTE EL SEÑOR DAVID EDUARDO ARRAMBIDE MONTEMAYOR EN NOMBRE Y REPRESENTACION DE LA EMPRESA VERDE MONARCA S.A.P.I DE C.V. A QUIEN ADELANTE Y PARA EFECTOS DEL PRESENTE CONTRATO SE LE DENOMINARÁ LA “PARTE VENDEDORA”, Y POR OTRA PARTE COMPARECE <%=if @user.is_residential then @user.nombre.upcase + ' ' + @user.apellido.upcase else @user.empresa.upcase end%>A QUIEN EN LO SUCESIVO SE LE DENOMINARÁ LA “PARTE COMPRADORA”, QUIENES MANIFIESTAN QUE OCURREN A CELEBRAR EL PRESENTE CONTRATO MERCANTIL DE COMPRAVENTA CON RESERVA DE DOMINIO, EL CUAL LO IDENTIFICAN ADMINISTRATIVAMENTE, PARA TODOS LOS EFECTOS QUE HAYA LUGAR, CON EL NÚMERO VM1001.\n\n', style: 'header'},
 				{text: 'CLÁUSULAS\n\n', style: 'title'},
 				{
 					text: [
@@ -214,7 +219,7 @@
 					]
 				},
 				{text: '<%=@user.calle%> #<%=@user.numero_direccion%>, Colonia <%=@user.colonia%>', style: 'tabbed'},
-				{text: '<%=@user.municipio%>, <%=@user.estado%>, México C.P. <%=@user.codigo_postal%>\n\n', style: 'tabbed'},
+				{text: '<%=@location.description%>, <%=@state.description%>, México C.P. <%=@user.codigo_postal%>\n\n', style: 'tabbed'},
 				{text: 'Por “puesta en marcha” se entiende que el equipo se encuentre instalado y funcionando, siendo por cuenta y costo de la “PARTE VENDEDORA” realizar los trámites de interconexión ante la Comisión Federal de Electricidad.\n\n', style: 'paragraph'},
 				{
 					text: [
@@ -245,7 +250,7 @@
 				{ text: 'Por la “PARTE VENDEDORA” \nNotre Dame #115-A, Colonia Valle de San Ángel,\nSan Pedro Garza García, Nuevo León, México C.P. 66290\nTel. (818) 340 8279\n Email. darrambide@verdemonarca.com\n\n', style: 'paragraph' },
 				{ text: 'Por la “PARTE COMPRADORA”',style: 'paragraph' },
 				{ text: '<%=@user.calle%> #<%=@user.numero_direccion%>, Colonia <%=@user.colonia%>”',style: 'paragraph' },
-				{ text: '<%=@user.municipio%>, <%=@user.estado%>, México C.P. <%=@user.codigo_postal%>',style: 'paragraph' },
+				{ text: '<%=@location.description%>, <%=@state.description%>, México C.P. <%=@user.codigo_postal%>',style: 'paragraph' },
 				{ text: 'Tel. <%=@user.telefono%>',style: 'paragraph' },
 				{ text: 'Email. <%=@user.email%>\n\n',style: 'paragraph' },
 				{
@@ -328,7 +333,7 @@
 		doc.setFontSize(10);
 		var today = new Date();
 		var months = ["Enero", "Febrero", "Marzo", "Abril","Mayo","Junio","Julio","Agosto","Setiembre","Octubre","Noviembre","Diciembre"];
-		textStr = 'EN LA CIUDAD DE <%=@user.municipio ? @user.municipio.upcase : "SAN PEDRO"%>, NUEVO LEON, SIENDO EL' + today.getDate() + ' DE ' + months[today.getMonth()].toUpperCase() +' DE ' + today.getFullYear()+', COMPARECEN POR UNA PARTE EL SEÑOR DAVID EDUARDO ARRAMBIDE MONTEMAYOR EN NOMBRE Y REPRESENTACION DE LA EMPRESA VERDE MONARCA S.A.P.I DE C.V. A QUIEN ADELANTE Y PARA EFECTOS DEL PRESENTE CONTRATO SE LE DENOMINARÁ LA PARTE VENDEDORA, Y POR OTRA PARTE COMPARECE <%=@user.nombre.upcase if @user.nombre%> <%=@user.apellido.upcase if @user.apellido%> A QUIEN EN LO SUCESIVO SE LE DENOMINARÁ LA PARTE COMPRADORA, QUIENES MANIFIESTAN QUE OCURREN A CELEBRAR EL PRESENTE CONTRATO MERCANTIL DE COMPRAVENTA CON RESERVA DE DOMINIO, EL CUAL LO IDENTIFICAN ADMINISTRATIVAMENTE, PARA TODOS LOS EFECTOS QUE HAYA LUGAR, CON EL NÚMERO VM1001.';
+		textStr = 'EN LA CIUDAD DE <%=@location.description ? @location.description : "SAN PEDRO"%>, NUEVO LEON, SIENDO EL' + today.getDate() + ' DE ' + months[today.getMonth()].toUpperCase() +' DE ' + today.getFullYear()+', COMPARECEN POR UNA PARTE EL SEÑOR DAVID EDUARDO ARRAMBIDE MONTEMAYOR EN NOMBRE Y REPRESENTACION DE LA EMPRESA VERDE MONARCA S.A.P.I DE C.V. A QUIEN ADELANTE Y PARA EFECTOS DEL PRESENTE CONTRATO SE LE DENOMINARÁ LA PARTE VENDEDORA, Y POR OTRA PARTE COMPARECE <%=@user.nombre.upcase if @user.nombre%> <%=@user.apellido.upcase if @user.apellido%> A QUIEN EN LO SUCESIVO SE LE DENOMINARÁ LA PARTE COMPRADORA, QUIENES MANIFIESTAN QUE OCURREN A CELEBRAR EL PRESENTE CONTRATO MERCANTIL DE COMPRAVENTA CON RESERVA DE DOMINIO, EL CUAL LO IDENTIFICAN ADMINISTRATIVAMENTE, PARA TODOS LOS EFECTOS QUE HAYA LUGAR, CON EL NÚMERO VM1001.';
 		splitText = doc.splitTextToSize(textStr, 280);
 		doc.text(30, 30, splitText);
 		$('#contrato-pdf').attr('src', doc.output('datauristring'));

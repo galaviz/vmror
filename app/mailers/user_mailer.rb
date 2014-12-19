@@ -7,6 +7,8 @@ class UserMailer < ActionMailer::Base
 
   def send_welcome_email(user)
     @user = user
+    @state = State.find_by_id(@user.state_id)
+    @location = Location.find_by_id(@user.location_id)
     @propuesta= @user.crear_propuesta()
     mail(to: @user.email, subject: 'Usuario se ha registrado a verdemonarca')
   end

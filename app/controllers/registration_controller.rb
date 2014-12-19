@@ -151,6 +151,8 @@ class RegistrationController < ApplicationController
   def confirmation
     @user = User.find_by_id(session["user_id"])
     @propuesta= @user.crear_propuesta()
+    @state = State.find_by_id(@user.state_id)
+    @location = Location.find_by_id(@user.location_id)
 	@user.pasos = 4
 	@user.save()
     @signatureDavid = Base64.encode64(File.open("app/assets/customerSignature/signatureDavid.png", "rb").read)
@@ -219,7 +221,7 @@ class RegistrationController < ApplicationController
     UserMailer.send_welcome_email(@user).deliver
 	session["is_residential"] = nil
 	session["rpu"] = nil
-    redirect_to(:action=>:monitoreo,:controller=>:dashboard)
+    redirect_to(:action=>:monitoring,:controller=>:dashboard)
     #else go back to form. display error message
   end
 
