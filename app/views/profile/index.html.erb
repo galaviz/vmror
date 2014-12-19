@@ -33,30 +33,45 @@
 
   <body data-spy="scroll" data-offset="0" data-target=".portal-sidebar">
 
-    <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "users"})%>
+    <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "profiles"})%>
 	<div class="main-dashboard-content">
       <div class="container">
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th>#</th>
-					<th>Nombre</th>
-					<th>Apellido</th>
-					<th>Correo electrónico</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-			<% @users.each do |u|%>
+		<table style="min-height:500px;width:100%;">
 			<tr>
-				<td><%=u.id%></td>
-				<td><%=u.nombre%></td>
-				<td><%=u.apellido%></td>
-				<td><%=u.email%></td>
-				<td><a href="/user/edit/<%=u.id%>">Editar</a></td>
+				<td valign="top">
+					<table class="table table-hover" style="height:100% !important;">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Descripci&oacute;n</th>
+								<th>P&aacute;gina</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+						<% @profiles.each do |p|%>
+						<tr>
+							<td><%=p.id%></td>
+							<td><%=p.pr%></td>
+							<td><%=p.pa%></td>
+							<td><a href="/profile/edit/<%=p.id%>">Editar</a></td>
+						</tr>
+						<% end %>
+						</tbody>
+					</table>
+				</td>
 			</tr>
-			<% end %>
-			</tbody>
+			<tr>
+				<td style="height:50px;">
+					<table class="table">
+						<tr>
+							<td class="text-right">
+								<a href="/profile/new" class="btn btn-theme">Nuevo perfil</a>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
 		</table>
       </div><!--/container-->
     </div>
@@ -81,7 +96,7 @@
     <script>
       $(document).ready(function() {
         $('body').scrollTop(0);
-
+		
         $( "#resetpassword-form" ).submit(function( event ) {
           event.preventDefault();
           $.ajax({
