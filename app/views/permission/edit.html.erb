@@ -19,6 +19,7 @@
     <%= stylesheet_link_tag "font-awesome.min" %>
     <%= stylesheet_link_tag "bootstrapValidator.min" %>
     <%= stylesheet_link_tag "style" %>
+    <%= stylesheet_link_tag "formsStyle" %>
     <!-- Web Fonts -->
     <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
 
@@ -33,31 +34,58 @@
 
   <body data-spy="scroll" data-offset="0" data-target=".portal-sidebar">
 
-    <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "users"})%>
+    <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "permissions"})%>
 	<div class="main-dashboard-content">
       <div class="container">
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th>#</th>
-					<th>Nombre</th>
-					<th>Apellido</th>
-					<th>Correo electrónico</th>
-					<th style="width:80px;"></th>
-				</tr>
-			</thead>
-			<tbody>
-			<% @users.each do |u|%>
-			<tr>
-				<td><%=u.id%></td>
-				<td><%=u.nombre%></td>
-				<td><%=u.apellido%></td>
-				<td><%=u.email%></td>
-				<td><a href="/user/edit/<%=u.id%>">Editar</a></td>
-			</tr>
-			<% end %>
-			</tbody>
-		</table>
+
+		<div class="row">
+			<div class="col-md-12 col-sm-12 animated" data-animtype="flipInY"
+			data-animrepeat="0"
+			data-speed="1s"
+			data-delay="0.5s">
+				<div class="space-sep20"></div>
+				<h2 class="h2-section-title">Permiso <%= @permission.description %></h2>
+
+				<div class="i-section-title">
+					<i class="icon-users-outline">
+
+					</i>
+				</div>
+
+				<div class="space-sep20"></div>
+			</div>
+		</div>
+
+		<div class="row">
+
+			<div class="col-md-6 col-sm-6 centered">
+				<div class="classic-form"><form class="form-horizontal" role="form" id="permission-edit-form" action="/permission/update/<%=@permission.id%>">
+						
+						<div class="form-group">
+							<label for="description" class="col-sm-4 control-label">Descripci&oacute;n</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="description" value="<%=@permission.description%>" placeholder="Descripci&oacute;n" id="description" >
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="description" class="col-sm-4 control-label">Comando</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="command" value="<%=@permission.command%>" placeholder="Comando" id="command" >
+							</div>
+						</div>
+
+						<div class="form-group text-center">
+							<a class="btn btn-theme" href="/permission">Regresar</a>
+							<button type="submit" class="btn btn-theme">Guardar</button>
+						</div>
+
+					</form>
+				</div>
+			</div>
+			<div class="space-sep20"></div>
+		</div> <!-- /row -->
+
       </div><!--/container-->
     </div>
 
@@ -78,45 +106,5 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/drilldown.js"></script>
-    <script>
-      $(document).ready(function() {
-        $('body').scrollTop(0);
-
-        $( "#resetpassword-form" ).submit(function( event ) {
-          event.preventDefault();
-          $.ajax({
-            type: "POST",
-            url: "/dashboard/post_change_password",
-            data: {
-              password_input:$("#password_input").val(),
-              password_input:$("#password_input").val(),
-              password_input_new:$("#password_input_new").val(),
-              password_input_confirm:$("#password_input_confirm").val()
-            },
-            dataType: "json",
-            beforeSend: function(){
-
-            },
-            success: function(pRespuesta) {
-              if(pRespuesta.success == 0){
-                $("#error-label").html(pRespuesta.messages);
-              }
-              else if(pRespuesta.success == 1){
-                window.location = pRespuesta.location;
-              }
-            },
-            error: function(pRespuesta) {
-              alert("error");
-            },
-            complete: function() {
-
-            }
-          });
-        });
-
-
-      });
-
-    </script>
   </body>
 </html>
