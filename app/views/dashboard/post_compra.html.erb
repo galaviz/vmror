@@ -18,6 +18,7 @@
     <%= stylesheet_link_tag "social-icons" %>
     <%= stylesheet_link_tag "font-awesome.min" %>
     <%= stylesheet_link_tag "bootstrapValidator.min" %>
+    <%= stylesheet_link_tag "style" %>
     <!-- Web Fonts -->
     <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
 
@@ -55,9 +56,9 @@
                   <h1>¡Compra Exitosa!</h1>
 
                   <br><br>
-                  <p>Felicidades <%=@user.nombre%> por tu compra! Se ha realizado exitosamente! Se te ha enviado un correo-electrónico a <%=@user.email%> con los detalles.</p>
+                  <p>Felicidades <%=@online_user.nombre%> por tu compra! Se ha realizado exitosamente! Se te ha enviado un correo-electrónico a <%=@user.email%> con los detalles.</p>
 
-                  <p>Se ha enviando un comprobante de confirmación a tu cuenta de email: <%=@user.email%></p>
+                  <p>Se ha enviando un comprobante de confirmación a tu cuenta de email: <%=@online_user.email%></p>
                 </div>
               </div>
               <br><br><br><br><br><br><br><br><br><br><br>
@@ -67,12 +68,12 @@
         </div>
         <div class="col-sm-3 portal-right-sidebar">
           <div class="item">
-            <h3 class="<%=@color_classes[@user.user_tier]%>">VM <%=@user.user_tier%></h3>
-            <h1 class="text-center theme-color bold"><%=@user.puntos_vm%></h1>
+            <h3 class="<%=@color_classes[@online_user.user_tier]%>">VM <%=@online_user.user_tier%></h3>
+            <h1 class="text-center theme-color bold"><%=@online_user.puntos_vm%></h1>
             <h4 class="text-center theme-color bold">Puntos VM</h4>
           </div>
           <div class="item">
-            <h1 class="text-center theme-color bold"><%=@user.creditos_vm%></h1>
+            <h1 class="text-center theme-color bold"><%=@online_user.creditos_vm%></h1>
             <h4 class="text-center theme-color bold">Créditos VM</h4>
           </div>
         </div>
@@ -92,6 +93,7 @@
     <%= javascript_include_tag "animations" %>
     <%= javascript_include_tag "jquery.formatter.min" %>
     <%= javascript_include_tag "legacy" %>
+    <%= javascript_include_tag "ajax" %>
     <script>
     $(document).ready(function() {
       $( "#resetpassword-form" ).submit(function( event ) {
