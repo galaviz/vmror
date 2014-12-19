@@ -86,7 +86,7 @@
                 <h4 class="bold">Invitación de nuevos miembros Verde Monarca</h4>
                 <p class="text-justify"> Para fomentar una sociedad interactiva y unida, por cada persona a quien invites a unirse a Verde Monarca y quien resulte miembro VM, se te premiarán <strong class="theme-color">500 créditos VM y 500 puntos VM</strong>. ¡No se te olvide proporcionarle tu clave de referencia a tu amigo/a!</p>
                 <ul>
-                  <li><strong class="bold">Clave de Referencia:</strong> <%=@user.clave_referencia%></li>
+                  <li><strong class="bold">Clave de Referencia:</strong> <%=@online_user.clave_referencia%></li>
                 </ul>
                 <br><br>
 
@@ -101,11 +101,11 @@
         <div class="col-sm-3 portal-right-sidebar">
           <div class="item">
             <h3 class="<%=@color_classes[@user_tier]%>">VM <%=@user_tier%></h3>
-            <h1 class="text-center theme-color bold"><%=@user.puntos_vm%></h1>
+            <h1 class="text-center theme-color bold"><%=@online_user.puntos_vm%></h1>
             <h4 class="text-center theme-color bold">Puntos VM</h4>
           </div>
           <div class="item">
-            <h1 class="text-center theme-color bold"><%=@user.creditos_vm%></h1>
+            <h1 class="text-center theme-color bold"><%=@online_user.creditos_vm%></h1>
             <h4 class="text-center theme-color bold">Créditos VM</h4>
           </div>
         </div>

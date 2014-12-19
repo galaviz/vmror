@@ -1,12 +1,11 @@
 class DashboardController < ApplicationController
 
   def configuration
-	@method = __method__
     if session["user_id"] and User.find_by_id(session["user_id"])
 	  @pages = Page.select("description, command").where(menu_id: 1, active: true).order(order_by: :asc)
 	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
-      @user = User.find_by_id(session["user_id"])
-      @user_tier = @user.user_tier
+      @online_user = User.find_by_id(session["user_id"])
+      @user_tier = @online_user.user_tier
     else
       redirect_to :action => :index, :controller => :main
     end
@@ -16,8 +15,8 @@ class DashboardController < ApplicationController
     if session["user_id"] and User.find_by_id(session["user_id"])
 	  @pages = Page.select("description, command").where(menu_id: 1, active: true).order(order_by: :asc)
 	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
-      @user = User.find_by_id(session["user_id"])
-      @user_tier = @user.user_tier
+      @online_user = User.find_by_id(session["user_id"])
+      @user_tier = @online_user.user_tier
     else
       redirect_to :action => :index, :controller => :main
     end
@@ -27,8 +26,8 @@ class DashboardController < ApplicationController
     if session["user_id"] and User.find_by_id(session["user_id"])
 	  @pages = Page.select("description, command").where(menu_id: 1, active: true).order(order_by: :asc)
 	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
-      @user = User.find_by_id(session["user_id"])
-      @user_tier = @user.user_tier
+      @online_user = User.find_by_id(session["user_id"])
+      @user_tier = @online_user.user_tier
     else
       redirect_to :action => :index, :controller => :main
     end
@@ -39,14 +38,14 @@ class DashboardController < ApplicationController
     if session["user_id"] and User.find_by_id(session["user_id"])
 	  @pages = Page.select("description, command").where(menu_id: 1, active: true).order(order_by: :asc)
 	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
-      @user = User.find_by_id(session["user_id"])
+      @online_user = User.find_by_id(session["user_id"])
         
       unless session["cart"]
         session["cart"] = Hash.new
       end
-      @user.puntos_vm = 100
-      @user.creditos_vm = 100
-      @user_tier = @user.user_tier
+      @online_user.puntos_vm = 100
+      @online_user.creditos_vm = 100
+      @user_tier = @online_user.user_tier
       @cart = session["cart"]
       @num_items_in_cart = 0
       @cart_total = 0
@@ -64,8 +63,8 @@ class DashboardController < ApplicationController
     if session["user_id"] and User.find_by_id(session["user_id"])
 	  @pages = Page.select("description, command").where(menu_id: 1, active: true).order(order_by: :asc)
 	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
-      @user = User.find_by_id(session["user_id"])
-      @user_tier = @user.user_tier
+      @online_user = User.find_by_id(session["user_id"])
+      @user_tier = @online_user.user_tier
     else
       redirect_to :action => :index, :controller => :main
     end
@@ -75,8 +74,8 @@ class DashboardController < ApplicationController
     if session["user_id"] and User.find_by_id(session["user_id"])
 	  @pages = Page.select("description, command").where(menu_id: 1, active: true).order(order_by: :asc)
 	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
-      @user = User.find_by_id(session["user_id"])
-      @user_tier = @user.user_tier
+      @online_user = User.find_by_id(session["user_id"])
+      @user_tier = @online_user.user_tier
     else
       redirect_to :action => :index, :controller => :main
     end
@@ -84,8 +83,8 @@ class DashboardController < ApplicationController
 
   def post_fundacion
     if session["user_id"] and User.find_by_id(session["user_id"])
-      @user = User.find_by_id(session["user_id"])
-      @user_tier = @user.user_tier
+      @online_user = User.find_by_id(session["user_id"])
+      @user_tier = @online_user.user_tier
       @creditos_vm = params["creditos_vm"]
       @amount = params["amount"]
     else
@@ -94,7 +93,7 @@ class DashboardController < ApplicationController
   end
 
   def process_payment
-    @user = User.find_by_id(session["user_id"])
+    @online_user = User.find_by_id(session["user_id"])
     # Set your secret key: remember to change this to your live secret key in production
     # See your keys here https://dashboard.stripe.com/account
     #Stripe.api_key = "sk_test_WsASCDydj4600M6xEyEclCsU"
@@ -105,7 +104,7 @@ class DashboardController < ApplicationController
     @amount = params[:amount].to_f * 100
 
     customer = Stripe::Customer.create(
-      :email => @user.email,
+      :email => @online_user.email,
       :card  => params[:stripeToken]
     )
 
@@ -115,9 +114,9 @@ class DashboardController < ApplicationController
       :description => 'Verde Monarca',
       :currency    => 'mxn'
     )
-    @user.stripe_id = customer.id
-    @user.save()
-    puts @user.inspect
+    @online_user.stripe_id = customer.id
+    @online_user.save()
+    puts @online_user.inspect
     redirect_to(:action=>params[:redirect_action])
     rescue Stripe::CardError => e
       flash[:error] = e.message
@@ -126,7 +125,7 @@ class DashboardController < ApplicationController
 
 
   def process_donation
-    @user = User.find_by_id(session["user_id"])
+    @online_user = User.find_by_id(session["user_id"])
     # Set your secret key: remember to change this to your live secret key in production
     # See your keys here https://dashboard.stripe.com/account
     #Stripe.api_key = "sk_test_WsASCDydj4600M6xEyEclCsU"
@@ -137,7 +136,7 @@ class DashboardController < ApplicationController
     @amount = (params[:amount].to_f * 100).to_i
 
     customer = Stripe::Customer.create(
-      :email => @user.email,
+      :email => @online_user.email,
       :card  => params[:stripeToken]
     )
 
@@ -147,9 +146,9 @@ class DashboardController < ApplicationController
       :description => 'Verde Monarca',
       :currency    => 'mxn'
     )
-    @user.stripe_id = customer.id
-    @user.save()
-    puts @user.inspect
+    @online_user.stripe_id = customer.id
+    @online_user.save()
+    puts @online_user.inspect
     redirect_to(:action=>"post_fundacion", :amount => params[:amount], :creditos_vm => params[:creditos_vm])
     rescue Stripe::CardError => e
       flash[:error] = e.message
@@ -157,7 +156,7 @@ class DashboardController < ApplicationController
   end
 
   def process_pay_it_forward
-    @user = User.find_by_id(session["user_id"])
+    @online_user = User.find_by_id(session["user_id"])
     # Set your secret key: remember to change this to your live secret key in production
     # See your keys here https://dashboard.stripe.com/account
     #Stripe.api_key = "sk_test_WsASCDydj4600M6xEyEclCsU"
@@ -168,7 +167,7 @@ class DashboardController < ApplicationController
     @amount = (params[:amount].to_f * 100).to_i
 
     customer = Stripe::Customer.create(
-      :email => @user.email,
+      :email => @online_user.email,
       :card  => params[:stripeToken]
     )
 
@@ -178,10 +177,10 @@ class DashboardController < ApplicationController
       :description => 'Verde Monarca',
       :currency    => 'mxn'
     )
-    @user.stripe_id = customer.id
-    @user.save()
-    puts @user.inspect
-    UserMailer.send_donation_confirmation_email(@user, params[:amount], params[:creditos_vm], params[:codigo_vm]).deliver
+    @online_user.stripe_id = customer.id
+    @online_user.save()
+    puts @online_user.inspect
+    UserMailer.send_donation_confirmation_email(@online_user, params[:amount], params[:creditos_vm], params[:codigo_vm]).deliver
     redirect_to(:action=>"post_pay_it_forward", :amount => params[:amount], :creditos_vm => params[:creditos_vm], :codigo_vm => params[:codigo_vm], :titular => params[:titular])
     rescue Stripe::CardError => e
       flash[:error] = e.message
@@ -190,8 +189,8 @@ class DashboardController < ApplicationController
 
   def post_pay_it_forward
     if session["user_id"] and User.find_by_id(session["user_id"])
-      @user = User.find_by_id(session["user_id"])
-      @user_tier = @user.user_tier
+      @online_user = User.find_by_id(session["user_id"])
+      @user_tier = @online_user.user_tier
       @creditos_vm = params["creditos_vm"]
       @amount = params["amount"]
       @titular = params["titular"]
@@ -205,10 +204,12 @@ class DashboardController < ApplicationController
     @item_id = params["id"]
     @item = Item.find_by_id(@item_id)
     if session["user_id"] and User.find_by_id(session["user_id"])
-      @user = User.find_by_id(session["user_id"])
-      @user.puntos_vm = 100
-      @user.creditos_vm = 100
-      @user_tier = @user.user_tier
+	  @pages = Page.select("description, command").where(menu_id: 1, active: true).order(order_by: :asc)
+	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
+      @online_user = User.find_by_id(session["user_id"])
+      @online_user.puntos_vm = 100
+      @online_user.creditos_vm = 100
+      @user_tier = @online_user.user_tier
     else
       redirect_to :action => :index, :controller => :main
     end
@@ -224,12 +225,14 @@ class DashboardController < ApplicationController
     cart[@item_id] = cart[@item_id] + @quantity
     session["cart"] = cart
     puts cart.inspect
-    redirect_to(:action => "tienda")
+    redirect_to(:action => "green_shop")
   end
 
   def carrito
     if session["user_id"] and User.find_by_id(session["user_id"])
-      @user = User.find_by_id(session["user_id"])
+	  @pages = Page.select("description, command").where(menu_id: 1, active: true).order(order_by: :asc)
+	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
+      @online_user = User.find_by_id(session["user_id"])
     else
       redirect_to :action => :index, :controller => :main
     end
@@ -238,7 +241,7 @@ class DashboardController < ApplicationController
     cart.keys.each do |key|
       @items_and_counts_arr << {'item' => Item.find_by_id(key), 'quantity' => cart[key]}
     end
-    @user_tier = @user.user_tier
+    @user_tier = @online_user.user_tier
 
   end
 
@@ -262,7 +265,11 @@ class DashboardController < ApplicationController
   end
 
   def comprar
-    @user = User.find_by_id(session["user_id"])
+    @pages = Page.select("description, command").where(menu_id: 1, active: true).order(order_by: :asc)
+    @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
+    @online_user = User.find_by_id(session["user_id"])
+	@location = Location.find_by_id(@online_user.location_id)
+	@state = State.find_by_id(@location.state_id)
     @cart = session["cart"]
     @cart_total = 0
     @num_items_in_cart = 0
@@ -273,7 +280,7 @@ class DashboardController < ApplicationController
   end
 
   def process_compra
-    @user = User.find_by_id(session["user_id"])
+    @online_user = User.find_by_id(session["user_id"])
     @cart = session["cart"]
     # Set your secret key: remember to change this to your live secret key in production
     # See your keys here https://dashboard.stripe.com/account
@@ -285,7 +292,7 @@ class DashboardController < ApplicationController
     @amount = (params[:amount].to_f * 100).to_i
 
     customer = Stripe::Customer.create(
-      :email => @user.email,
+      :email => @online_user.email,
       :card  => params[:stripeToken]
     )
 
@@ -295,11 +302,11 @@ class DashboardController < ApplicationController
       :description => 'Verde Monarca',
       :currency    => 'mxn'
     )
-    @user.stripe_id = customer.id
-    @user.save()
-    puts @user.inspect
-    UserMailer.send_purchase_confirmation_email_to_user(@user, @cart).deliver
-    UserMailer.send_purchase_confirmation_email_to_admin(@user, @cart).deliver
+    @online_user.stripe_id = customer.id
+    @online_user.save()
+    puts @online_user.inspect
+    UserMailer.send_purchase_confirmation_email_to_user(@online_user, @cart).deliver
+    UserMailer.send_purchase_confirmation_email_to_admin(@online_user, @cart).deliver
     redirect_to(:action=>"post_compra")
     rescue Stripe::CardError => e
       flash[:error] = e.message
@@ -307,17 +314,17 @@ class DashboardController < ApplicationController
   end
 
   def post_compra
-    @user = User.find_by_id(session["user_id"])
+    @online_user = User.find_by_id(session["user_id"])
     session["cart"] = Hash.new
   end
 
   def post_change_password
-    @user = User.find_by_id(session["user_id"])
+    @online_user = User.find_by_id(session["user_id"])
     
-    if @user.authenticate(params["password_input"])
+    if @online_user.authenticate(params["password_input"])
       if params["password_input_new"]==params["password_input_confirm"]
-        @user.password=(params["password_input_new"])
-        @user.save()
+        @online_user.password=(params["password_input_new"])
+        @online_user.save()
         render :json =>  { :success => 1, :location => "/dashboard/monitoring"}.to_json
       else
         render :json =>  { :success => 0, :messages => "¡La contrase&ntilde;a no coincide!"}.to_json

@@ -18,6 +18,7 @@
     <%= stylesheet_link_tag "social-icons" %>
     <%= stylesheet_link_tag "font-awesome.min" %>
     <%= stylesheet_link_tag "bootstrapValidator.min" %>
+    <%= stylesheet_link_tag "style" %>
     <!-- Web Fonts -->
     <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
 
@@ -71,7 +72,7 @@
 
                   <br>
                   <form class="text-center form-horizontal" action="./process_payment?redirect_action=fundacion" method="POST">
-                    <h2>¡Felicidades <strong class="theme-color"><%=@user.nombre%>!<strong class="theme-color"></h2>
+                    <h2>¡Felicidades <strong class="theme-color"><%=@online_user.nombre%>!<strong class="theme-color"></h2>
                     <h3>Has donado exitosamente <strong class="theme-color"><%=@creditos_vm%> Créditos VM</strong> y <strong class="theme-color">$<%=@amount%> MN</strong> al proyecto <strong class="platinum-color">¡Agua para Todos!</strong>
                   </form>
                 </div>
@@ -84,11 +85,11 @@
         <div class="col-sm-3 portal-right-sidebar">
           <div class="item">
             <h3 class="<%=@color_classes[@user_tier]%>">VM <%=@user_tier%></h3>
-            <h1 class="text-center theme-color bold"><%=@user.puntos_vm%></h1>
+            <h1 class="text-center theme-color bold"><%=@online_user.puntos_vm%></h1>
             <h4 class="text-center theme-color bold">Puntos VM</h4>
           </div>
           <div class="item">
-            <h1 class="text-center theme-color bold"><%=@user.creditos_vm%></h1>
+            <h1 class="text-center theme-color bold"><%=@online_user.creditos_vm%></h1>
             <h4 class="text-center theme-color bold">Créditos VM</h4>
           </div>
         </div>
@@ -108,6 +109,7 @@
     <%= javascript_include_tag "animations" %>
     <%= javascript_include_tag "jquery.formatter.min" %>
     <%= javascript_include_tag "legacy" %>
+    <%= javascript_include_tag "ajax" %>
     <script>
     $(document).ready(function() {
       $( "#resetpassword-form" ).submit(function( event ) {
