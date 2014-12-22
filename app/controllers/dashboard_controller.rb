@@ -356,11 +356,11 @@ class DashboardController < ApplicationController
   end
   
   def states
-	redirect_to(:action=>"index", :controller => "state")
+	redirect_to(:action=>"index", :controller => "states")
   end
   
   def locations
-	redirect_to(:action=>"index", :controller => "location")
+	redirect_to(:action=>"index", :controller => "locations")
   end
   
 end
