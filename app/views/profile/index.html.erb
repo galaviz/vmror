@@ -39,12 +39,13 @@
 		<table style="min-height:500px;width:100%;">
 			<tr>
 				<td valign="top">
-					<table class="table table-hover" style="height:100% !important;">
+					<table class="table table-hover">
 						<thead>
 							<tr>
 								<th>#</th>
 								<th>Descripci&oacute;n</th>
 								<th>P&aacute;gina</th>
+								<th style="width:80px;"></th>
 								<th style="width:80px;"></th>
 								<th style="width:80px;"></th>
 							</tr>
@@ -61,6 +62,7 @@
 							<% else %>
 							<td><a href="/profile/deactivate/<%=p.id%>" style="color:red;">Activar</a></td>
 							<% end %>
+							<td><a href="/profile/permissions/<%=p.id%>">Permisos</a></td>
 						</tr>
 						<% end %>
 						</tbody>
