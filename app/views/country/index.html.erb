@@ -44,23 +44,23 @@
 							<tr>
 								<th>#</th>
 								<th>Descripci&oacute;n</th>
-								<th></th>
-                <th></th>
+								<th style="width:80px;"></th>
+								<th style="width:80px;"></th>
 							</tr>
 						</thead>
 						<tbody>
-						<% @countries.each do |c|%>
-						<tr>
-							<td><%=c.id%></td>
-							<td><%=c.description%></td>
-							<td><a style="float:right" href="/country/edit/<%=c.id%>">Editar</a></td>
-              <% if c.active == true%>
-              <td><a style="float:right" href="/country/deactivate/<%=c.id%>">Desactivar</a></td>
-              <% else %>
-              <td><a style="float:right; color:red;" href="/country/deactivate/<%=c.id%>">Activar</a></td>
-              <% end %>
-						</tr>
-						<% end %>
+							<% @countries.each do |c|%>
+							<tr>
+								<td><%=c.id%></td>
+								<td><%=c.description%></td>
+								<td><a style="float:right" href="/country/edit/<%=c.id%>">Editar</a></td>
+								<% if c.active == true%>
+								<td><a style="float:right" href="/country/deactivate/<%=c.id%>">Desactivar</a></td>
+								<% else %>
+								<td><a style="float:right; color:red;" href="/country/deactivate/<%=c.id%>">Activar</a></td>
+								<% end %>
+							</tr>
+							<% end %>
 						</tbody>
 					</table>
 				</td>

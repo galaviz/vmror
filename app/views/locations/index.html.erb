@@ -45,26 +45,24 @@
 								<th>#</th>
 								<th>Descripci&oacute;n</th>
 								<th>Estado</th>
-                <th></th>
-                <th></th>
+								<th style="width:80px;"></th>
+								<th style="width:80px;"></th>
 							</tr>
 						</thead>
 						<tbody>
-						<% @locations.each do |l|%>
-						<tr>
-							<td><%=l.id%></td>
-							<td><%=l.location%></td>
-              
-              <td><%=l.state%></td>
-              
-							<td><a style="float:right" href="/locations/edit/<%=l.id%>">Editar</a></td>
-              <% if l.active == true%>
-              <td><a style="float:right" href="/locations/deactivate/<%=l.id%>">Desactivar</a></td>
-              <% else %>
-              <td><a style="float:right; color:red;" href="/locations/deactivate/<%=l.id%>">Activar</a></td>
-              <% end %>
-						</tr>
-						<% end %>
+							<% @locations.each do |l|%>
+							<tr>
+								<td><%=l.id%></td>
+								<td><%=l.location%></td>
+								<td><%=l.state%></td>
+								<td><a style="float:right" href="/locations/edit/<%=l.id%>">Editar</a></td>
+								<% if l.active == true%>
+								<td><a style="float:right" href="/locations/deactivate/<%=l.id%>">Desactivar</a></td>
+								<% else %>
+								<td><a style="float:right; color:red;" href="/locations/deactivate/<%=l.id%>">Activar</a></td>
+								<% end %>
+							</tr>
+							<% end %>
 						</tbody>
 					</table>
 				</td>
