@@ -45,26 +45,24 @@
 								<th>#</th>
 								<th>Descripci&oacute;n</th>
 								<th>Pa&iacute;s</th>
-                <th></th>
-                <th></th>
+								<th style="width:80px;"></th>
+								<th style="width:80px;"></th>
 							</tr>
 						</thead>
 						<tbody>
-						<% @states.each do |s|%>
-						<tr>
-							<td><%=s.id%></td>
-							<td><%=s.state%></td>
-              
-              <td><%=s.country%></td>
-              
-							<td><a style="float:right" href="/states/edit/<%=s.id%>">Editar</a></td>
-              <% if s.active == true%>
-              <td><a style="float:right" href="/states/deactivate/<%=s.id%>">Desactivar</a></td>
-              <% else %>
-              <td><a style="float:right; color:red;" href="/states/deactivate/<%=s.id%>">Activar</a></td>
-              <% end %>
-						</tr>
-						<% end %>
+							<% @states.each do |s|%>
+							<tr>
+								<td><%=s.id%></td>
+								<td><%=s.state%></td>
+								<td><%=s.country%></td>
+								<td><a style="float:right" href="/states/edit/<%=s.id%>">Editar</a></td>
+								<% if s.active == true%>
+								<td><a style="float:right" href="/states/deactivate/<%=s.id%>">Desactivar</a></td>
+								<% else %>
+								<td><a style="float:right; color:red;" href="/states/deactivate/<%=s.id%>">Activar</a></td>
+								<% end %>
+							</tr>
+							<% end %>
 						</tbody>
 					</table>
 				</td>
