@@ -1,8 +1,8 @@
 class LoadEnergyData < ActiveRecord::Migration
   def up
-    energy = InfoEnergetica.new
+    energy = EnergyInfo.new
     energy.rpu = "376780500123";
-    energy.name = "Patricio";
+    energy.nombre = "Patricio";
     energy.apellido = "Gonzalez";
     energy.tarifa = 7.5;
     energy.cargo_fijo = 78.40;
@@ -12,9 +12,9 @@ class LoadEnergyData < ActiveRecord::Migration
     energy.total_a_pagar = 52834;
     energy.save()
     
-    energy = InfoEnergetica.new
+    energy = EnergyInfo.new
     energy.rpu = "415020400019";
-    energy.name = "Maurizio";
+    energy.nombre = "Maurizio";
     energy.apellido = "Calo";
     energy.tarifa = 15;
     energy.cargo_fijo = 22097.94;
@@ -24,9 +24,9 @@ class LoadEnergyData < ActiveRecord::Migration
     energy.total_a_pagar = 1328240.78;
     energy.save()
 
-    energy = InfoEnergetica.new
+    energy = EnergyInfo.new
     energy.rpu = "415020400119";
-    energy.name = "Celso";
+    energy.nombre = "Celso";
     energy.apellido = "Ramirez";
     energy.tarifa = 15;
     energy.cargo_fijo = 22097.94;
@@ -38,3 +38,4 @@ class LoadEnergyData < ActiveRecord::Migration
     
   end
 end
+

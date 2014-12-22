@@ -1,0 +1,2 @@
+class EnergyInfoController < ApplicationController
+end
