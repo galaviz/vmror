@@ -36,51 +36,91 @@
     <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "profiles"})%>
 	<div class="main-dashboard-content">
       <div class="container">
-		<table style="min-height:500px;width:100%;">
-			<tr>
-				<td valign="top">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>Descripci&oacute;n</th>
-								<th>P&aacute;gina</th>
-								<th style="width:80px;"></th>
-								<th style="width:80px;"></th>
-								<th style="width:80px;"></th>
-							</tr>
-						</thead>
-						<tbody>
-						<% @profiles.each do |p|%>
-						<tr>
-							<td><%=p.id%></td>
-							<td><%=p.pr%></td>
-							<td><%=p.pa%></td>
-							<td><a href="/profile/edit/<%=p.id%>">Editar</a></td>
-							<% if p.active%>
-							<td><a href="/profile/deactivate/<%=p.id%>">Desactivar</a></td>
-							<% else %>
-							<td><a href="/profile/deactivate/<%=p.id%>" style="color:red;">Activar</a></td>
-							<% end %>
-							<td><a href="/profile/permissions/<%=p.id%>">Permisos</a></td>
-						</tr>
-						<% end %>
-						</tbody>
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td style="height:50px;">
-					<table class="table">
-						<tr>
-							<td class="text-right">
-								<a href="/profile/new" class="btn btn-theme">Nuevo perfil</a>
-							</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
+		<div class="row">
+			<div class="col-md-12 col-sm-12 animated text-center" data-animtype="flipInY"
+			data-animrepeat="0"
+			data-speed="1s"
+			data-delay="0.5s">
+				<div class="space-sep20"></div>
+				<h2 class="h2-section-title">Perfil: <%=@profile.description%></h2>
+				<div class="space-sep20"></div>
+			</div>
+		</div>
+	  
+		<!-- Available Permissions -->
+		<div class="row">
+			<div class="col-md-12 col-sm-12 animated" data-animtype="flipInY"
+			data-animrepeat="0"
+			data-speed="1s"
+			data-delay="0.5s">
+				<div class="space-sep20"></div>
+				<h2 class="h2-section-title">Permisos disponibles</h2>
+
+				<div class="i-section-title">
+					<i class="icon-users-outline">
+
+					</i>
+				</div>
+
+				<div class="space-sep20"></div>
+			</div>
+		</div>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>Permiso</th>
+					<th style="width:80px;"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @available_permissions.each do |ap|%>
+				<tr>
+					<td><%=ap.description%></td>
+					<td><a href="/profile/assign_permission?pe=<%=ap.id%>&pr=<%=@profile.id%>">Asignar</a></td>
+				</tr>
+				<% end %>
+			</tbody>
 		</table>
+		
+		<!-- Assigned Permissions -->
+		<div class="row">
+			<div class="col-md-12 col-sm-12 animated" data-animtype="flipInY"
+			data-animrepeat="0"
+			data-speed="1s"
+			data-delay="0.5s">
+				<div class="space-sep20"></div>
+				<h2 class="h2-section-title">Permisos asignados</h2>
+
+				<div class="i-section-title">
+					<i class="icon-users-outline">
+
+					</i>
+				</div>
+
+				<div class="space-sep20"></div>
+			</div>
+		</div>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>Permiso</th>
+					<th style="width:80px;"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @assigned_permissions.each do |ap|%>
+				<tr>
+					<td><%=ap.description%></td>
+					<td><a href="/profile/remove_permission?pe=<%=ap.id%>&pr=<%=@profile.id%>">Quitar</a></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+		
+		<div class="form-group text-center">
+			<a class="btn btn-theme" href="/profile">Regresar</a>
+		</div>
+
       </div><!--/container-->
     </div>
 
@@ -101,45 +141,5 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/drilldown.js"></script>
-    <script>
-      $(document).ready(function() {
-        $('body').scrollTop(0);
-		
-        $( "#resetpassword-form" ).submit(function( event ) {
-          event.preventDefault();
-          $.ajax({
-            type: "POST",
-            url: "/dashboard/post_change_password",
-            data: {
-              password_input:$("#password_input").val(),
-              password_input:$("#password_input").val(),
-              password_input_new:$("#password_input_new").val(),
-              password_input_confirm:$("#password_input_confirm").val()
-            },
-            dataType: "json",
-            beforeSend: function(){
-
-            },
-            success: function(pRespuesta) {
-              if(pRespuesta.success == 0){
-                $("#error-label").html(pRespuesta.messages);
-              }
-              else if(pRespuesta.success == 1){
-                window.location = pRespuesta.location;
-              }
-            },
-            error: function(pRespuesta) {
-              alert("error");
-            },
-            complete: function() {
-
-            }
-          });
-        });
-
-
-      });
-
-    </script>
   </body>
 </html>
