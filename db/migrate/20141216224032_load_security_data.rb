@@ -47,6 +47,15 @@ class LoadSecurityData < ActiveRecord::Migration
 	PagePermission.create(:page_id => 4, :permission_id => 5, :active => true)
 	PagePermission.create(:page_id => 5, :permission_id => 6, :active => true)
 	PagePermission.create(:page_id => 6, :permission_id => 7, :active => true)
+	
+	PagePermission.create(:page_id => 7, :permission_id => 8, :active => true)
+	PagePermission.create(:page_id => 8, :permission_id => 9, :active => true)
+	PagePermission.create(:page_id => 9, :permission_id => 10, :active => true)
+	PagePermission.create(:page_id => 10, :permission_id => 11, :active => true)
+	PagePermission.create(:page_id => 11, :permission_id => 12, :active => true)
+	PagePermission.create(:page_id => 12, :permission_id => 13, :active => true)
+	PagePermission.create(:page_id => 13, :permission_id => 14, :active => true)
+	
   end
   
   def down

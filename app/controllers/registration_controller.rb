@@ -18,7 +18,7 @@ class RegistrationController < ApplicationController
     session["rpu"] = params["rpu"]
 	
 	if params["exists"] == "0"
-		energy_info = InfoEnergetica.new
+		energy_info = EnergyInfo.new
 		energy_info.rpu = params["rpu"]
 		energy_info.tarifa = params["tarifa"]
 		energy_info.cargo_fijo = params["cargo-fijo"]
@@ -36,14 +36,9 @@ class RegistrationController < ApplicationController
     @is_residential = session["is_residential"]
 	@country = Country.select("id, description").where(active: true)
     @state = State.select("id, description").where(active: true)
-<<<<<<< HEAD
     @location = Location.select("id, description").where(active: true, state_id: 19)
 	
-    @rpu=InfoEnergetica.find_by(rpu: session[:rpu]) 
-=======
-    @location = Location.select("id, description").where(active: true)
     @rpu=EnergyInfo.find_by(rpu: session[:rpu]) 
->>>>>>> e422804ccb9e64c01ef34ee73d8572f2d27b7723
     @user = User.new
     @user.nombre = @rpu.nombre
     @user.apellido = @rpu.apellido
@@ -87,11 +82,7 @@ class RegistrationController < ApplicationController
 				render :json =>  { :success => 0, :messages => "¡El correo ya existe!"}.to_json
 			end
 		else
-<<<<<<< HEAD
-			rpu=InfoEnergetica.find_by(rpu: session[:rpu])
-=======
 			rpu=EnergyInfo.find_by(rpu: session[:rpu]) 
->>>>>>> e422804ccb9e64c01ef34ee73d8572f2d27b7723
 			user = User.new
 			puts "params post user info"
 			puts params
