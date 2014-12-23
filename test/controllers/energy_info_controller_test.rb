@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class InfoEnergeticaTest < ActiveSupport::TestCase
+class EnergyInfoControllerTest < ActionController::TestCase
   # test "the truth" do
   #   assert true
   # end
