@@ -1,8 +1,8 @@
-class CreateInfoEnergeticas < ActiveRecord::Migration
+class CreateEnergyInfos < ActiveRecord::Migration
   def change
-    create_table :info_energeticas do |t|
+    create_table :energy_infos do |t|
       t.string :rpu
-      t.string :name
+      t.string :nombre
       t.string :apellido
       t.string :tarifa
       t.float :cargo_fijo

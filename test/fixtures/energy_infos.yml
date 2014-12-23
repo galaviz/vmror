@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  rpu: MyString
+  nombre: MyString
+  apellido: MyString
+  tarifa: MyString
+  cargo_fijo: MyString
+  double: MyString
+  energia: 
+  consumo_total: 
+  importe_total: 
+  total_a_pagar: 
+
+two:
+  rpu: MyString
+  nombre: MyString
+  apellido: MyString
+  tarifa: MyString
+  cargo_fijo: MyString
+  double: MyString
+  energia: 
+  consumo_total: 
+  importe_total: 
+  total_a_pagar: 

@@ -24,9 +24,9 @@ class RegistrationController < ApplicationController
 	@country = Country.select("id, description").where(active: true)
     @state = State.select("id, description").where(active: true)
     @location = Location.select("id, description").where(active: true)
-    @rpu=InfoEnergetica.find_by(rpu: session[:rpu]) 
+    @rpu=EnergyInfo.find_by(rpu: session[:rpu]) 
     @user = User.new
-    @user.nombre = @rpu.name
+    @user.nombre = @rpu.nombre
     @user.apellido = @rpu.apellido
     puts @user.inspect
   end
@@ -36,7 +36,7 @@ class RegistrationController < ApplicationController
 		@user = User.find_by_email(params["email"])
 		if @user
 			if session[:user_id] and @user.id == session[:user_id]
-				rpu=InfoEnergetica.find_by(rpu: session[:rpu]) 
+				rpu=EnergyInfo.find_by(rpu: session[:rpu]) 
 				puts "params post user info"
 				puts params
 				if params["empresa"]
@@ -67,7 +67,7 @@ class RegistrationController < ApplicationController
 				render :json =>  { :success => 0, :messages => "¡El correo ya existe!"}.to_json
 			end
 		else
-			rpu=InfoEnergetica.find_by(rpu: session[:rpu]) 
+			rpu=EnergyInfo.find_by(rpu: session[:rpu]) 
 			user = User.new
 			puts "params post user info"
 			puts params
@@ -232,7 +232,7 @@ class RegistrationController < ApplicationController
     if @user
   		  render :json =>  { :success => 2 }.to_json
   	else
-  		@rpu=InfoEnergetica.find_by(rpu: params[:rpu]) 
+  		@rpu=EnergyInfo.find_by(rpu: params[:rpu]) 
   		if @rpu
   		  render :json =>  { :success => 1 }.to_json
   		else
