@@ -8,7 +8,7 @@ class RegistrationController < ApplicationController
   end
 
   def energy_info
-      @is_residential = session["is_residential"]
+      @is_residential = session["is_residential"].to_b
       @months = @is_residential ? ["Enero", "Febrero", "Marzo", "Abril","Mayo","Junio","Julio","Agosto","Setiembre","Octubre","Noviembre","Diciembre"] :["Enero", "Febrero", "Marzo", "Abril","Abril (2)", "Mayo","Junio","Julio","Agosto","Setiembre","Octubre","Octubre (2)","Noviembre","Diciembre"]
 
   end
@@ -16,6 +16,19 @@ class RegistrationController < ApplicationController
   def post_energy_info
     puts params.inspect
     session["rpu"] = params["rpu"]
+	
+	if params["exists"] == "0"
+		energy_info = EnergyInfo.new
+		energy_info.rpu = params["rpu"]
+		energy_info.tarifa = params["tarifa"]
+		energy_info.cargo_fijo = params["cargo-fijo"]
+		energy_info.energia = params["energia"]
+		energy_info.consumo_total = params["consumo-total"]
+		energy_info.importe_total = params["import-total"]
+		energy_info.total_a_pagar = params["import-total"]
+		energy_info.save()
+	end
+	
     redirect_to(:action=>:user_info)
   end
 
@@ -23,11 +36,13 @@ class RegistrationController < ApplicationController
     @is_residential = session["is_residential"]
 	@country = Country.select("id, description").where(active: true)
     @state = State.select("id, description").where(active: true)
-    @location = Location.select("id, description").where(active: true)
+    @location = Location.select("id, description").where(active: true, state_id: 19)
+	
     @rpu=EnergyInfo.find_by(rpu: session[:rpu]) 
     @user = User.new
     @user.nombre = @rpu.nombre
     @user.apellido = @rpu.apellido
+	
     puts @user.inspect
   end
 
@@ -40,7 +55,7 @@ class RegistrationController < ApplicationController
 				puts "params post user info"
 				puts params
 				if params["empresa"]
-				@user.empresa = params["empresa"]
+					@user.empresa = params["empresa"]
 				end
 				@user.is_residential = session["is_residential"]
 				@user.nombre = params["nombre"]
@@ -50,7 +65,7 @@ class RegistrationController < ApplicationController
 				@user.celular = params["celular"]
 				@user.country_id = params["pais"]
 				@user.state_id = params["estado"]
-        @user.location_id = params["municipio"]
+				@user.location_id = params["municipio"]
 				@user.calle = params["calle"]
 				@user.numero_direccion = params["numero"]
 				@user.colonia = params["colonia"]
@@ -61,7 +76,7 @@ class RegistrationController < ApplicationController
 				@user.consumo_total = rpu.consumo_total
 				@user.importe_total = rpu.importe_total
 				@user.pasos = 0
-        @user.profile_id = 2
+				@user.profile_id = 2
 				@user.save()
 			else 
 				render :json =>  { :success => 0, :messages => "¡El correo ya existe!"}.to_json
@@ -72,7 +87,7 @@ class RegistrationController < ApplicationController
 			puts "params post user info"
 			puts params
 			if params["empresa"]
-			user.empresa = params["empresa"]
+				user.empresa = params["empresa"]
 			end
 			user.is_residential = session["is_residential"]
 			user.nombre = params["nombre"]
@@ -81,8 +96,8 @@ class RegistrationController < ApplicationController
 			user.telefono = params["telefono"]
 			user.celular = params["celular"]
 			user.country_id = params["pais"]
-      user.state_id = params["estado"]
-      user.location_id = params["municipio"]
+			user.state_id = params["estado"]
+			user.location_id = params["municipio"]
 			user.calle = params["calle"]
 			user.numero_direccion = params["numero"]
 			user.colonia = params["colonia"]
@@ -93,11 +108,13 @@ class RegistrationController < ApplicationController
 			user.consumo_total = rpu.consumo_total
 			user.importe_total = rpu.importe_total
 			user.pasos = 0
-      user.profile_id = 2
+			user.profile_id = 2
 			user.save()
 			session[:user_id] = user.id
-			render :json =>  { :success => 1}.to_json
+			render :json =>  { :success => 1, :location => 'propuesta'}.to_json
 		end
+	else
+		render :json =>  { :success => 0, :messages => "Hola"}.to_json
 	end
   end
 

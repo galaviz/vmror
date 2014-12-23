@@ -56,12 +56,12 @@
                     <tr>
                       <td><h4 style='margin-top:20px;'>Resumen de Propuesta</h4></td><td></td>
                     </tr>
-                    <tr><td><span class='bold'>Tamaño:</span></td><td><%= number_with_precision(@propuesta[@user.tipo_membresia]["tamano"], :precision => 1, :delimiter => ',') %> kWp</td></tr>
-                    <tr><td><span class='bold'>Producción Anual (Estimada):</span></td><td><%= number_with_precision(@propuesta[@user.tipo_membresia]["produccion_anual"], :precision => 0, :delimiter => ',') %> kWh</td></tr>
-                    <tr><td><span class='bold'>Ahorro Económico:</span></td><td>$<%= number_with_precision(@propuesta[@user.tipo_membresia]["ahorro_economico"], :precision => 2, :delimiter => ',') %> MN</td></tr>
-                    <tr><td><span class='bold'>Payback (Años):</span></td><td><%= number_with_precision(@propuesta[@user.tipo_membresia]["payback"], :precision => 1, :delimiter => ',') %></td></tr>
-                    <tr><td><span class='bold'>TIR:</span></td><td><%= number_with_precision(@propuesta[@user.tipo_membresia]["tir"], :precision => 1, :delimiter => ',') %>%</td></tr>
-                    <tr><td><span class='bold'>Total:</span></td><td>$<%= number_with_precision(@user.total_a_pagar, :precision => 2, :delimiter => ',') %> USD</td></tr>
+                    <tr><td><span class='bold'>Tamaño:</span></td><td><%= number_with_precision(@propuesta[@user.tipo_membresia]["tamano"], :precision => 1, :delimiter => ",") %> kWp</td></tr>
+                    <tr><td><span class='bold'>Producción Anual (Estimada):</span></td><td><%= number_with_precision(@propuesta[@user.tipo_membresia]["produccion_anual"], :precision => 0, :delimiter => ",") %> kWh</td></tr>
+                    <tr><td><span class='bold'>Ahorro Económico:</span></td><td>$<%= number_with_precision(@propuesta[@user.tipo_membresia]["ahorro_economico"], :precision => 2, :delimiter => ",") %> MN</td></tr>
+                    <tr><td><span class='bold'>Payback (Años):</span></td><td><%= number_with_precision(@propuesta[@user.tipo_membresia]["payback"], :precision => 1, :delimiter => ",") %></td></tr>
+                    <tr><td><span class='bold'>TIR:</span></td><td><%= number_with_precision(@propuesta[@user.tipo_membresia]["tir"], :precision => 1, :delimiter => ",") %>%</td></tr>
+                    <tr><td><span class='bold'>Total:</span></td><td>$<%= number_with_precision(@user.total_a_pagar, :precision => 2, :delimiter => ",") %> USD</td></tr>
                     <tr>
                       <td><h4 style='margin-top:20px;'>Resumen de Visita y Pago</h4></td><td></td>
                     </tr>
