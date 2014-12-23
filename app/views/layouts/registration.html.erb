@@ -51,7 +51,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <%=link_to image_tag("Logo_Verde_Monarca.png", :border => 0), {:action => 'index', :controller => 'main'}, :class => 'navbar-brand smoothScroll'%>
+          <%=link_to image_tag("Logo_Verde_Monarca.png", :border => 0), {:action => "index", :controller => "main"}, :class => "navbar-brand smoothScroll"%>
         </div>
 
         <div class="navbar-collapse collapse">
@@ -78,7 +78,7 @@
             <div id="myTabContent" class="tab-content">
               <!-- Sign In Form -->
               <div class="tab-pane fade active in" id="signin">
-                <form class="form-horizontal" action="<%=url_for controller: 'main', action: 'login'%>" method="post" id="frmSignin">
+                <form class="form-horizontal" action="<%=url_for controller: "main", action: "login"%>" method="post" id="frmSignin">
                   <fieldset>
                     <!-- Text input-->
                     <div class="control-group">
@@ -183,140 +183,122 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
-    <script>
-      $(document).ready(function() {
-        $('.nav li a').on('click',function(){
-          $('.navbar-collapse').collapse('hide');
-        })
+	<script>
+		$(document).ready(function() {
+			$(".nav li a").on("click",function(){
+			$(".navbar-collapse").collapse("hide");
+		})
 
-        $( "#frmSignin" ).submit(function( event ) {
-          event.preventDefault();
-          var pRequestO = new Object();
-          pRequestO.email=$("#sign-in-mail").val();
-          pRequestO.passwordinput=$("#passwordinput").val();
-          
-          Ajax(pRequestO, "/main/login", function(pResponse){window.location = "/dashboard/monitoreo"}, function(pResponse){$("#error-label").html(pResponse.messages);})
-          
-        });
+		$( "#frmSignin" ).submit(function( event ) {
+			event.preventDefault();
+			var pRequestO = new Object();
+			pRequestO.email=$("#sign-in-mail").val();
+			pRequestO.passwordinput=$("#passwordinput").val();
 
-	$( "#registration-form-user" ).submit(function( event ) {
-          event.preventDefault();
-          if ($("#first-name").val() == "") {
-            $("#first-name").css("border", "1px solid red");
-            $('html, body').animate({
-                    scrollTop: $("#registration-form-user").offset().top - 100
-            }, 500);
-          }
-          else
-          {
-            $("#first-name").css("border", "none");
-          }  
-          
-          if ($("#last-name").val() == "") {
-            $("#last-name").css("border", "1px solid red");
-            $('html, body').animate({
-                    scrollTop: $("#registration-form-user").offset().top - 100
-            }, 500);
-          }
-          else
-          {
-            $("#last-name").css("border", "none");
-          }  
-          
-          if ($("#email").val() == "") {
-            $("#email").css("border", "1px solid red");
-            $('html, body').animate({
-                    scrollTop: $("#registration-form-user").offset().top - 100
-            }, 500);
-          }
-          else
-          {
-            $("#email").css("border", "none");
-          }  
-		  
-          if (validateEmail($("#email").val())) {
-            $("#email").css("border", "1px solid red");
-            $('html, body').animate({
-                    scrollTop: $("#registration-form-user").offset().top - 100
-            }, 500);
-			return false;
-          }
-	  if($("#email").val() != "" && $("#first-name").val() != "" && $("#last-name").val() != ""){
-            var pRequestO = new Object();
-            
-            pRequestO.empresa= $('[name="empresa"]').val();
-            pRequestO.nombre= $('[name="nombre"]').val();
-            pRequestO.apellido= $('[name="apellido"]').val();
-            pRequestO.email= $('[name="email"]').val();
-            pRequestO.telefono= $('[name="telefono"]').val();
-            pRequestO.celular= $('[name="celular"]').val();
-            pRequestO.pais= $('[name="pais"]').val();
-            pRequestO.estado= $('[name="estado"]').val();
-            pRequestO.municipio= $('[name="municipio"]').val();
-            pRequestO.calle= $('[name="calle"]').val();
-            pRequestO.numero= $('[name="numero"]').val();
-            pRequestO.colonia= $('[name="colonia"]').val();
-            pRequestO.codigoPostal= $('[name="codigo-postal"]').val();
-            Ajax(pRequestO,
-                 "/Registration/post_user_info",
-                 function(pRespuesta){
-                    window.location = "propuesta"
-                  },
-                function(pRespuesta){
-                  $('[data-toggle="popover"]').popover({
-                          html : true,
-                          content: function() {
-                            return "<div style='color:red;'>" + pRespuesta.messages + "</div>";
-                          }
-                  });
-                  $('[data-toggle="popover"]').popover("show");
-                  $('html, body').animate({
-                          scrollTop: $("#email").offset().top - 100
-                  }, 500);
-                })
-            }
-          });
+			Ajax(pRequestO, "/main/login", function(pResponse){window.location = "/dashboard/monitoreo"}, function(pResponse){$("#error-label").html(pResponse.messages);})
 
-    $('[name="pais"]').on('change', function(){
+		});
 
-      $('[name="estado"]').html("");
-      $('[name="municipio"]').html("");
-      var pRequestO = new Object();
-      pRequestO.country = $(this).val();
-      Ajax(pRequestO,"/states/get_states",function(pResponse){
-        $.each(pResponse.state_list, function(i, state) {
-            var st = '<option value="' + state.id + '">' + state.description + '</option>'
-            $('[name="estado"]').append(st);
-        })
-      },function(pResponse){})
-      
-    });
+		$( "#registration-form-user" ).submit(function( event ) {
+			event.preventDefault();
 
-    $('[name="estado"]').on('change', function(){
+			if (validateEmail($("#email").val())) {
+				$("#email").css("border", "1px solid red");
+				$("html, body").animate({
+					scrollTop: $("#registration-form-user").offset().top - 100
+				}, 500);
+				return false;
+			}
 
-      $('[name="municipio"]').html("");
-      var pRequestO = new Object();
-      pRequestO.state = $(this).val();
-      Ajax(pRequestO,"/locations/get_locations",function(pResponse){
-        $.each(pResponse.location_list, function(i, location) {
-            var lc = '<option value="' + location.id + '">' + location.description + '</option>'
-            $('[name="municipio"]').append(lc);
-        })
-      },function(pResponse){})
+			$(".require").each(function(){
+				if ($(this).val() == "" || $(this).val() == null) {
+					$(this).css("border", "1px solid red");
+					$("html, body").animate({
+						scrollTop: $("#registration-form-user").offset().top - 100
+					}, 500);
+				}
+				else{
+					$(this).css("border", "1px solid transparent");
+				}
+			});
 
-    });
+			if($("#email").val() != "" && $("#first-name").val() != "" && $("#last-name").val() != "" && $('[name="municipio"]').val() != null){
+				var pRequestO = new Object();
 
-	});
-	
-	function validateEmail(email) {
+				pRequestO.empresa= $('[name="empresa"]').val();
+				pRequestO.nombre= $('[name="nombre"]').val();
+				pRequestO.apellido= $('[name="apellido"]').val();
+				pRequestO.email= $('[name="email"]').val();
+				pRequestO.telefono= $('[name="telefono"]').val();
+				pRequestO.celular= $('[name="celular"]').val();
+				pRequestO.pais= $('[name="pais"]').val();
+				pRequestO.estado= $('[name="estado"]').val();
+				pRequestO.municipio= $('[name="municipio"]').val();
+				pRequestO.calle= $('[name="calle"]').val();
+				pRequestO.numero= $('[name="numero"]').val();
+				pRequestO.colonia= $('[name="colonia"]').val();
+				pRequestO.codigoPostal= $('[name="codigo-postal"]').val();
+				Ajax(
+					pRequestO,
+					"/Registration/post_user_info",
+					function(pResponse){
+						window.location = pResponse.location
+					},
+					function(pResponse){
+						$('[data-toggle="popover"]').popover({
+							html : true,
+							content: function() {
+								return "<div style='color:red;'>" + pResponse.messages + "</div>";
+							}
+						});
+						$('[data-toggle="popover"]').popover("show");
+						$('html, body').animate({
+							scrollTop: $("#registration-form-user").offset().top - 100
+						}, 500);
+				})
+			}
+		});
+
+		$('[name="pais"]').on('change', function(){
+
+		$('[name="estado"]').html("");
+		$('[name="municipio"]').html("");
+		var pRequestO = new Object();
+		pRequestO.country = $(this).val();
+		Ajax(pRequestO,"/states/get_states",function(pResponse){
+		$.each(pResponse.state_list, function(i, state) {
+		var st = '<option value="' + state.id + '">' + state.description + '</option>'
+		$('[name="estado"]').append(st);
+		})
+		},function(pResponse){})
+
+		});
+
+		$('[name="estado"]').on('change', function(){
+
+		$('[name="municipio"]').html("");
+		var pRequestO = new Object();
+		pRequestO.state = $(this).val();
+		Ajax(pRequestO,"/locations/get_locations",function(pResponse){
+		$.each(pResponse.location_list, function(i, location) {
+		var lc = '<option value="' + location.id + '">' + location.description + '</option>'
+		$('[name="municipio"]').append(lc);
+		})
+		},function(pResponse){})
+
+		});
+
+		});
+
+		function validateEmail(email) {
 		var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 		if( emailReg.test( email ) ) {
-			return false;
+		return false;
 		} else {
-			return true;
+		return true;
 		}
-	}
-    </script>
+		}
+	</script>
   </body>
 </html>
 

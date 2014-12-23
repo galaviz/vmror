@@ -60,14 +60,16 @@ class LocationsController < ApplicationController
 		@location.save()
 		redirect_to :action => :index
 	end
+	
+	def get_locations
+		locations = Location.select("id, description").where(state_id: params["state"])
+	  	render :json =>  { :success => 1, :location_list => locations }.to_json
+	end
+	
   private
 	# Use callbacks to share common setup or constraints between actions.
 	def set_location
 		@location = Location.find(params[:id])
 	end
 
-	def get_locations
-		locations = Location.select("id, description").where(state_id: params["state"])
-	  	render :json =>  { :success => 1, :location_list => locations }.to_json
-	end
 end
