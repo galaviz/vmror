@@ -31,13 +31,14 @@
                                   <i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-rpu"></i>
                                   <small class="help-block" id="rpu-help-block"></small>
                               </div>
+							  <input type="hidden" id="exists" name="exists" />
                           </div>
 						  
                           <div class="form-group">
                               <div class="col-sm-offset-3 col-sm-9">
                                   <div class="checkbox">
                                       <label>
-                                          <div class="text-justify"><input type="checkbox" id="energy-info-auth" checked="true">  Autorizas a Verde Monarca a obtener tu información de consumo energético para presentarte una propuesta en menos de 5 segundos? (Puedes desmarcar e ingresar información manualmente)</div>
+                                          <div class="text-justify">Autorizas a Verde Monarca a obtener tu información de consumo energético para presentarte una propuesta en menos de 5 segundos? (Puedes desmarcar e ingresar información manualmente)</div>
                                       </label>
                                   </div>
                               </div>
@@ -50,6 +51,7 @@
                                 <div class="col-sm-9">
                                   <div class="pull-left">
                                     <div class="btn-group">
+                                        <%=@is_residential%>
                                       <select class="form-control" name="tarifa" id="tarifa">
                                         <%if @is_residential==true%>
                                           <option>DAC</option>
@@ -67,14 +69,14 @@
                             <div class="form-group has-feedback">
                                 <label class="col-sm-3 control-label">Cargo Fijo (de un mes): </label>
                                 <div class="col-sm-9">
-                                  <input type="text" class="form-control" id="cargo-fijo" name="cargo-fijo" value="" placeholder="Cargo Fijo (MN)">
+                                  <input type="text" class="form-control require" id="cargo-fijo" name="cargo-fijo" value="" placeholder="Cargo Fijo (MN)">
                                   <i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-fixed-charge"></i>
                                 </div>
                             </div>
                             <div class="form-group has-feedback">
                                 <label class="col-sm-3 control-label">Energia (de un mes) </label>
                                 <div class="col-sm-9">
-                                  <input type="text" class="form-control" id="energia" name="energia" value="" placeholder="Energia (de un mes) (MN)">
+                                  <input type="text" class="form-control require" id="energia" name="energia" value="" placeholder="Energia (de un mes) (MN)">
                                   <i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-energy-subtotal"></i>
                                 </div>
                             </div>
@@ -82,14 +84,14 @@
                               <div class="form-group has-feedback">
                                   <label class="col-sm-3 control-label">Demanda Facturable (de un mes) </label>
                                   <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="cargo-fijo" name="cargo-fijo" value="" placeholder="Demanda Facturada (MN)">
+                                    <input type="text" class="form-control require" id="cargo-fijo" name="cargo-fijo" value="" placeholder="Demanda Facturada (MN)">
                                     <i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-fixed-charge"></i>
                                   </div>
                               </div>
                               <div class="form-group has-feedback">
                                   <label class="col-sm-3 control-label">Subtotal (de un mes) </label>
                                   <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="energia" name="energia" value="" placeholder="Subtotal (de un mes) (MN)">
+                                    <input type="text" class="form-control require" id="energia" name="energia" value="" placeholder="Subtotal (de un mes) (MN)">
                                     <i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-energy-subtotal"></i>
                                   </div>
                               </div>
@@ -109,10 +111,10 @@
                               <div class="form-group has-feedback month-row">
                                 <label for="'<%=month%>'" class="col-sm-3 control-label"><%=month%></label>
                                 <div class="col-sm-4">
-                                  <input type="text" class="form-control monthly-consumption" name="<%=month%>" placeholder="Consumo (kWh)"><%if month == @months[0]%><i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-consumption-summary"></i><%end%>
+                                  <input type="text" class="form-control monthly-consumption require" name="<%=month%>" placeholder="Consumo (kWh)"><%if month == @months[0]%><i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-consumption-summary"></i><%end%>
                                 </div>
                                 <div class="col-sm-5">
-                                  <input type="text" class="form-control monthly-import" name="<%=month%>" placeholder="<%=if @is_residential then 'Importe ($MN)' else 'Precio Medio ($MN)' end%>"><%if month == @months[0]%><i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-consumption-summary"></i><%end%>
+                                  <input type="text" class="form-control monthly-import require" name="<%=month%>" placeholder='<%=if @is_residential then "Importe ($MN)" else "Precio Medio ($MN)" end%>'><%if month == @months[0]%><i class="glyphicon glyphicon-question-sign form-control-feedback" data-toggle="modal" data-target="#modal-residential-consumption-summary"></i><%end%>
                                 </div>
                               </div>
                             <%end%>
@@ -159,12 +161,18 @@
 
 		$("#registration-form-energy").submit(function( event ) {
 			var access=0;
-			$("#manual-info > input").each(function() {
+			$(".require").each(function() {
 				if ($(this).val() == "") {
-					$(this).parent().addClass('has-error');
+					$(this).css("border", "1px solid red");
+					$('html, body').animate({
+							scrollTop: $("#tarifa").offset().top - 100
+					}, 500);
 					access=0;
 				}
-				else{access=1;}
+				else{
+					$(this).css("border", "1px solid transparent");
+					access=1;
+				}
 			});
 			if(access==1 || $("#energy-info-auth").is(':checked')){
 				$("#registration-form-energy").attr('action', './post_energy_info');
@@ -262,27 +270,35 @@
 		var pRequestO=new Object();
 		pRequestO.rpu=rpu;
 		if(rpu.length == 12){
-			Ajax(pRequestO,"/registration/rpu_info",function(pResponse){
+			Ajax(pRequestO,"/registration/rpu_info",
+			function(pResponse){
 
+				//El RPU existe en la base de datos!
 				$('#energy-info-next-button').prop('disabled', false);
 				$('#rpu-form-group').addClass('has-success');
 				$('#rpu-form-group').removeClass('has-error');
 				$('#rpu-help-block').hide();
+				$("#exists").val(1);
 			  
-
-			},function(pResponse){
+			},
+			function(pResponse){
 				if (pResponse.success == 0){
+					//El RPU no existe en la base de datos!
 					$('#rpu-form-group').removeClass('has-success');
 					$('#rpu-form-group').addClass('has-error');
-					$('#energy-info-next-button').prop('disabled', true);
 					$('#rpu-help-block').html('¡El RPU no existe en nuestra base de datos!');
 					$('#rpu-help-block').show();
 					$('#manual-info').fadeIn();
 					$('#rpu-form-group').removeClass('has-warning');
 					$("#energy-info-auth").removeAttr('checked');
 					$('#energy-info-next-button').prop('disabled', false);
+					$("#exists").val(0);
+					$('html, body').animate({
+						scrollTop: $("#tarifa").offset().top - 100
+					}, 500);
 				}
 				else if (pResponse.success == 2){
+					//El RPU esta registrado con otro usuario!
 					$('#rpu-form-group').removeClass('has-success');
 					$('#rpu-form-group').addClass('has-error');
 					$('#energy-info-next-button').prop('disabled', true);
@@ -292,6 +308,7 @@
 			})
 		}
 		else{
+			//El RPU no es valido!
 			$('#manual-info').fadeOut();
 			$("#energy-info-auth").prop('checked', true);
 			$('#rpu-form-group').removeClass('has-success');

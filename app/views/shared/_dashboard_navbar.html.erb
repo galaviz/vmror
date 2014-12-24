@@ -25,6 +25,7 @@
             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
               <li><a tabindex="-1" href="#resetpassword" data-toggle="modal" data-target="#resetpassword-modal">Cambiar Contrase&ntilde;a</a></li>
               <li><%=link_to("LOGOUT", {:action => 'logout', :controller => 'main'})%></li>
+			  <% if SecurityController.has_permission(session[:user_id], 'configuration') %>
 			  <li class="divider"></li>
 				<li class="dropdown dropdown-submenu left">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Configuraci&oacute;n</a>
@@ -33,9 +34,10 @@
 							<% if SecurityController.has_permission(session[:user_id], p.command) %>
 							<li <%if active_tab == p.command%> class="active"<%end%>><a href="<%=url_for controller: 'dashboard', action: p.command%>" class="smoothScroll"><%=p.description%></a></li>
 							<% end %>
-						<%end%>
+						<% end %>
 					</ul>
 				</li>
+		      <% end %>
             </ul>        
           </div>
 
