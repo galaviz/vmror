@@ -175,6 +175,7 @@ class RegistrationController < ApplicationController
 	@user.pasos = 4
 	@user.save()
     @signatureDavid = Base64.encode64(File.open("app/assets/customerSignature/signatureDavid.png", "rb").read)
+    @headerImage = Base64.encode64(File.open("app/assets/images/Logo_Verde_Monarca.png", "rb").read)
   end
 
   def post_confirmation
@@ -205,8 +206,8 @@ class RegistrationController < ApplicationController
 	@user.save()
     
     file_name = @user.nombre[0,2] + @user.apellido[0,2]
-    @contract1 = 'data:application/pdf;base64,' + Base64.encode64(File.open("app/assets/contracts/" + file_name + "-Contrato.pdf", "rb").read)
-    @contract2 = 'data:application/pdf;base64,' + Base64.encode64(File.open("app/assets/contracts/" + file_name + "-Otorgacion.pdf", "rb").read)
+    @contract1 = 'data:application/pdf;base64,' + Base64.encode64(File.open("app/assets/contracts/" + file_name + "-Contrato_compraventa.pdf", "rb").read)
+    @contract2 = 'data:application/pdf;base64,' + Base64.encode64(File.open("app/assets/contracts/" + file_name + "-Carta_Poder.pdf", "rb").read)
   end
 
   def send_contract

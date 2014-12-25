@@ -10,7 +10,7 @@ class UserMailer < ActionMailer::Base
     @state = State.find_by_id(@user.state_id)
     @location = Location.find_by_id(@user.location_id)
     @propuesta= @user.crear_propuesta()
-    mail(to: @user.email, subject: 'Usuario se ha registrado a verdemonarca')
+    mail(to: @user.email, subject: 'Registro de verdemonarca')
   end
 
   def send_donation_confirmation_email(user, amount, creditos_vm, codigo_vm)

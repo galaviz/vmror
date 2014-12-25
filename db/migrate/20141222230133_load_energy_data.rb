@@ -2,8 +2,8 @@ class LoadEnergyData < ActiveRecord::Migration
   def up
     energy = EnergyInfo.new
     energy.rpu = "376780500123";
-    energy.nombre = "Patricio";
-    energy.apellido = "Gonzalez";
+    energy.nombre = "Jorge";
+    energy.apellido = "Arrambide";
     energy.tarifa = 7.5;
     energy.cargo_fijo = 78.40;
     energy.energia = 2564.93;
@@ -14,8 +14,8 @@ class LoadEnergyData < ActiveRecord::Migration
     
     energy = EnergyInfo.new
     energy.rpu = "415020400019";
-    energy.nombre = "Maurizio";
-    energy.apellido = "Calo";
+    energy.nombre = "Comercializadora";
+    energy.apellido = "Merco";
     energy.tarifa = 15;
     energy.cargo_fijo = 22097.94;
     energy.energia = 111797.19;
