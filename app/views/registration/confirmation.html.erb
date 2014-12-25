@@ -92,7 +92,7 @@
                   <br>
                   <br>
                   <a href="./forma_pago"><button type="button" class="btn btn-theme">Atr&aacute;s</button></a>
-                  <button type="submit" id="post-confirmation" disabled class="btn btn-theme" data-loading-text="generado contratos">Confirmar</button>
+                  <button type="submit" id="post-confirmation" disabled class="btn btn-theme" data-loading-text="generando contratos">Confirmar</button>
                 </div>
             </div>
           </div> <!-- /row -->
@@ -174,6 +174,16 @@
 		var firma = "<%=if @user.is_residential then @user.nombre + ' ' + @user.apellido else @user.empresa end%>";
 		var firmaVM = "David Eduardo Arrambide Montemayor";
 		var docDefinition = {
+			pageMargins: [ 40, 100, 40, 60 ],
+			header: {
+				columns: [
+				{ image: 'data:image/png;base64,<%=@headerImage.tr("\n", "")%>', 
+				  margin: [40, 15, 10, 10],
+				  width: 100
+				},
+				{ text: 'Contrato de Compraventa de Verde Monarca', alignment: 'right', margin: [10, 40, 40, 20], fontSize: 8 }
+				]
+			},
 			content: [
 				{ text: 'EN LA CIUDAD DE <%=@location.description.upcase%>, <%=@state.description.upcase%>, SIENDO EL ' + today.getDate() + ' DE ' + months[today.getMonth()].toUpperCase() + ' DE ' + today.getFullYear() + ', COMPARECEN POR UNA PARTE EL SEÑOR DAVID EDUARDO ARRAMBIDE MONTEMAYOR EN NOMBRE Y REPRESENTACION DE LA EMPRESA VERDE MONARCA S.A.P.I DE C.V. A QUIEN ADELANTE Y PARA EFECTOS DEL PRESENTE CONTRATO SE LE DENOMINARÁ LA “PARTE VENDEDORA”, Y POR OTRA PARTE COMPARECE <%=if @user.is_residential then @user.nombre.upcase + ' ' + @user.apellido.upcase else @user.empresa.upcase end%>A QUIEN EN LO SUCESIVO SE LE DENOMINARÁ LA “PARTE COMPRADORA”, QUIENES MANIFIESTAN QUE OCURREN A CELEBRAR EL PRESENTE CONTRATO MERCANTIL DE COMPRAVENTA CON RESERVA DE DOMINIO, EL CUAL LO IDENTIFICAN ADMINISTRATIVAMENTE, PARA TODOS LOS EFECTOS QUE HAYA LUGAR, CON EL NÚMERO VM1001.\n\n', style: 'header'},
 				{text: 'CLÁUSULAS\n\n', style: 'title'},
@@ -291,6 +301,9 @@
 					fontSize: 12,
 					alignment: 'justify'
 				},
+				header1: {
+					float: 'right'
+				},
 				title: {
 					alignment: 'center',
 					bold: 'true',
@@ -317,9 +330,9 @@
 			power64PDF = power64PDF.replace(/^data:application\/(png|jpg|pdf);base64,/, "");
 			
 			pRequestO.contract64PDF = contract64PDF;
-			pRequestO.contract64Name = 'Contrato';
+			pRequestO.contract64Name = 'Contrato_Compraventa';
 			pRequestO.power64PDF = power64PDF;
-			pRequestO.power64Name = 'Otorgacion';
+			pRequestO.power64Name = 'Carta_Poder';
 			Ajax(pRequestO, "./post_confirmation",function(pResponse){ window.location = "./contract"}, function(pResponse){$("#clear").click()})
 		});;
 
