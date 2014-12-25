@@ -14,9 +14,9 @@
           <ul class="nav navbar-nav cl-effect-13">
 		  <% @pages.each do |p| %>
 			<% if SecurityController.has_permission(session["user_id"], p.command) %>
-			<li <%if active_tab == p.command%> class="active"<%end%>><a href="<%=url_for controller: 'dashboard', action: p.command%>" class="smoothScroll"><%=p.description%></a></li>
+			<li <% if active_tab == p.command%> class="active"<%end%>><a href="<%=url_for controller: 'dashboard', action: p.command%>" class="smoothScroll"><%=p.description%></a></li>
 			<% end %>
-		  <%end%>
+		  <% end %>
           </ul>
 		  
           <!-- Sign In / Sign Up / Profile-->

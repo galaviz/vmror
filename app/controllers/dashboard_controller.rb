@@ -65,6 +65,11 @@ class DashboardController < ApplicationController
 	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
       @online_user = User.find_by_id(session["user_id"])
       @user_tier = @online_user.user_tier
+	  @country = Country.find_by_id(@online_user.country_id)
+	  @state = State.find_by_id(@online_user.state_id)
+	  @location = Location.find_by_id(@online_user.location_id)
+	  @signatureDavid = Base64.encode64(File.open("app/assets/customerSignature/signatureDavid.png", "rb").read)
+	  @logo_verde_monarca = Base64.encode64(File.open("app/assets/images/Logo_Verde_Monarca.png", "rb").read)
     else
       redirect_to :action => :index, :controller => :main
     end
@@ -83,6 +88,8 @@ class DashboardController < ApplicationController
 
   def post_fundacion
     if session["user_id"] and User.find_by_id(session["user_id"])
+	  @pages = Page.select("description, command").where(menu_id: 1, active: true).order(order_by: :asc)
+	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
       @online_user = User.find_by_id(session["user_id"])
       @user_tier = @online_user.user_tier
       @creditos_vm = params["creditos_vm"]
@@ -92,12 +99,58 @@ class DashboardController < ApplicationController
     end
   end
 
+  def confirm_foundation_donation
+	@online_user = User.find_by_id(session["user_id"])
+	credit = params["pCredit"]
+	amount = params["pAmount"]
+	if credit == "" and amount == ""
+      render :json =>  { :success => 0, :messages => "¡Debes especificar la cantidad de donación!"}.to_json  
+	else
+		if credit.to_i > @online_user.creditos_vm.to_i
+		  render :json =>  { :success => 0, :messages => "¡No tienes los suficientes creditos para donar!"}.to_json  
+		else
+		  render :json =>  { :success => 1, :messages => "" }.to_json  
+		end 
+	end
+  end
+  
+  def process_donation
+    @online_user = User.find_by_id(session["user_id"])
+    # Set your secret key: remember to change this to your live secret key in production
+    # See your keys here https://dashboard.stripe.com/account
+    Stripe.api_key = @stripe_sk_test
+    puts "params is"
+    puts params.inspect
+    # Amount in cents
+    @amount = (params[:amount].to_f * 100).to_i
+	puts @amount
+    customer = Stripe::Customer.create(
+      :email => @online_user.email,
+      :card  => params[:stripeToken]
+    )
+
+    charge = Stripe::Charge.create(
+      :customer    => customer.id,
+      :amount      => @amount,
+      :description => 'Verde Monarca',
+      :currency    => 'mxn'
+    )
+    @online_user.stripe_id = customer.id
+	@online_user.creditos_vm = @online_user.creditos_vm.to_i - params[:creditos_vm].to_i
+    @online_user.save()
+    puts @online_user.inspect
+    redirect_to(:action=>"post_fundacion", :amount => params[:amount], :creditos_vm => params[:creditos_vm])
+    rescue Stripe::CardError => e
+      flash[:error] = e.message
+      redirect_to(:action=>"foundation")
+  end
+
   def process_payment
     @online_user = User.find_by_id(session["user_id"])
     # Set your secret key: remember to change this to your live secret key in production
     # See your keys here https://dashboard.stripe.com/account
-    #Stripe.api_key = "sk_test_WsASCDydj4600M6xEyEclCsU"
-    Stripe.api_key = "sk_live_oxmNmon9IbVu2xBV3xj2YRAn" #TODO: Set environment variable for this
+    Stripe.api_key = "sk_test_WsASCDydj4600M6xEyEclCsU"
+    #Stripe.api_key = "sk_live_oxmNmon9IbVu2xBV3xj2YRAn" #TODO: Set environment variable for this
     puts "params is"
     puts params.inspect
     # Amount in cents
@@ -124,43 +177,12 @@ class DashboardController < ApplicationController
   end
 
 
-  def process_donation
-    @online_user = User.find_by_id(session["user_id"])
-    # Set your secret key: remember to change this to your live secret key in production
-    # See your keys here https://dashboard.stripe.com/account
-    #Stripe.api_key = "sk_test_WsASCDydj4600M6xEyEclCsU"
-    Stripe.api_key = "sk_live_oxmNmon9IbVu2xBV3xj2YRAn" #TODO: Set environment variable for this
-    puts "params is"
-    puts params.inspect
-    # Amount in cents
-    @amount = (params[:amount].to_f * 100).to_i
-
-    customer = Stripe::Customer.create(
-      :email => @online_user.email,
-      :card  => params[:stripeToken]
-    )
-
-    charge = Stripe::Charge.create(
-      :customer    => customer.id,
-      :amount      => @amount,
-      :description => 'Verde Monarca',
-      :currency    => 'mxn'
-    )
-    @online_user.stripe_id = customer.id
-    @online_user.save()
-    puts @online_user.inspect
-    redirect_to(:action=>"post_fundacion", :amount => params[:amount], :creditos_vm => params[:creditos_vm])
-    rescue Stripe::CardError => e
-      flash[:error] = e.message
-      redirect_to(:action=>"fundacion")
-  end
-
   def process_pay_it_forward
     @online_user = User.find_by_id(session["user_id"])
     # Set your secret key: remember to change this to your live secret key in production
     # See your keys here https://dashboard.stripe.com/account
-    #Stripe.api_key = "sk_test_WsASCDydj4600M6xEyEclCsU"
-    Stripe.api_key = "sk_live_oxmNmon9IbVu2xBV3xj2YRAn" #TODO: Set environment variable for this
+    Stripe.api_key = "sk_test_WsASCDydj4600M6xEyEclCsU"
+    # Stripe.api_key = "sk_live_oxmNmon9IbVu2xBV3xj2YRAn" #TODO: Set environment variable for this
     puts "params is"
     puts params.inspect
     # Amount in cents

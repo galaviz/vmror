@@ -79,7 +79,13 @@
                   <br><br>
                   <form class="text-center form-horizontal" action="./process_pay_it_forward" method="POST">
                     <div class="form-group">
-                      <label class="col-sm-4 control-label">Deseo </label><select name="modo-inversion" id="modo-inversion"><option>Donar</option><option>Invertir</option></select>
+                      <label for="modo-inversion" class="col-sm-4 control-label">Deseo </label>
+                      <div class="col-sm-8">
+						  <select name="modo-inversion" id="modo-inversion" class="form-control">
+							  <option>Donar</option>
+							  <option>Invertir</option>
+						  </select>
+                      </div>
                     </div>
                     <div class="form-group">
                       <label for="creditos" class="col-sm-4 control-label">Créditos VM:</label>
