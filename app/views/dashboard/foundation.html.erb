@@ -18,6 +18,7 @@
     <%= stylesheet_link_tag "social-icons" %>
     <%= stylesheet_link_tag "font-awesome.min" %>
     <%= stylesheet_link_tag "bootstrapValidator.min" %>
+    <%= stylesheet_link_tag "jquery.signaturepad" %>
     <%= stylesheet_link_tag "style" %>
     <!-- Web Fonts -->
     <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
@@ -34,6 +35,115 @@
   <body data-spy="scroll" data-offset="0" data-target=".portal-sidebar">
 
     <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "foundation"})%>
+	
+	<!-- Contract Modal -->
+	<div class="modal fade bs-modal-sm in" id="foundation-donation-contract-modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+		<div class="modal-dialog modal-sm" style="width:auto;max-width:700px;">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="tab-content">
+						<!-- Change Password Form -->
+						<div class="tab-pane fade active in" id="foundation-donation-contract">
+							<fieldset>
+
+								<!-- Contract -->
+								<div class="control-group">
+									<h2 class="h2-section-title">Contrato de donación</h2>
+									<hr>
+									<iframe src="" width="100%" style="height:200px;" id="donation-contract-pdf">
+									Tu navegador no puede mostrar documentos pdf
+									</iframe>
+								</div>
+
+								<!-- Signature -->
+								<div class="control-group">
+
+									<div class="sigPad">
+										<ul class="sigNav" style="display: block;width:100%;">
+											<li style="display: list-item;">Firmar contrato</li>
+											<li class="clearButton" style="display: list-item;"><a href="#clear" id="clear">Limpiar</a></li>
+										</ul>
+										<div class="sig sigWrapper">
+											<div class="typed"></div>
+											<canvas class="pad" width="300" height="100" id="canvas"></canvas>
+											<input type="hidden" name="output" id="output" class="output">
+										</div>
+									</div>
+
+								</div>
+								<br/>
+								<!-- Buttons-->
+								<div class="control-group text-center">
+									<div class="controls text-center">
+										<a href="#" disabled id="foundation-donation-contract-accept" class="btn btn-theme">Aceptar</a>
+									</div>
+								</div>
+								<br/>
+								<div class="control-group text-center">
+									<div class="controls text-center">
+										<label id="error" style="color:red;"></label>
+									</div>
+								</div>
+
+							</fieldset>
+						</div><!-- /Change Password Form -->
+					</div><!-- /tab-content -->
+				</div><!-- /modal-body -->
+
+				<div class="modal-footer">
+					<center>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+					</center>
+				</div>
+
+			</div><!-- /modal-content -->
+		</div><!-- /modal-dialog -->
+	</div><!-- /modal -->
+
+	<!-- Payment Modal -->
+	<div class="modal fade bs-modal-sm in" id="payment-modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+		<div class="modal-dialog modal-sm" style="width:auto;max-width:700px;">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="tab-content">
+						<div class="tab-pane fade active in" id="payment">
+							<fieldset>
+								<form class="text-center form-horizontal" action="./process_donation" method="POST">
+									<table align="center" id="user-info-table" style="text-align:left;">
+										<tr><td style="width:250px;"><span class='bold'>Créditos VM:</span></td><td><input name="creditos_vm" type="text" readonly style="background:transparent;border:none;" /></td></tr>
+										<tr><td><span class='bold'>$MN:</span></td><td><input name="amount" type="text" readonly style="background:transparent;border:none;" /></td></tr>
+										<tr><td><span class='bold'>Donar Mensualmente:</span></td><td name="donar-mensualmente"></td></tr>
+										<tr><td><span class='bold'>Dedicar esta donacion a un amigo:</span></td><td name='dedicar-donacion'></td></tr>
+									</table>
+									<br/>
+									<br/>
+									<script
+										src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+										data-key="<%=@stripe_pk_test%>"
+										data-name="Verde Monarca"
+										data-description="Fundacion VM"
+										data-currency="MXN"
+										data-email="<%=@online_user.email%>"
+										data-label="Pagar"
+										data-image="">
+									</script>
+									<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+								</form>
+							</fieldset>
+						</div><!-- /Change Password Form -->
+					</div><!-- /tab-content -->
+				</div><!-- /modal-body -->
+
+				<div class="modal-footer">
+					<center>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+					</center>
+				</div>
+
+			</div><!-- /modal-content -->
+		</div><!-- /modal-dialog -->
+	</div><!-- /modal -->
+
     <div class="main-dashboard-content">
       <div class="container">
         <div class="col-sm-3 portal-sidebar">
@@ -70,46 +180,38 @@
                 <strong>Monto:</strong> $1,000,000 MN <br>
                 <strong>Avance:</strong> $50,000 MN (5%) <br><br>
                 <div class="classic-form">
-
-                  <br><br>
-                  <form class="text-center form-horizontal" action="./process_donation" method="POST">
-                    <div class="form-group">
-                      <label class="col-sm-4 control-label">Deseo Donar: </label>
-                    </div>
-                    <div class="form-group">
-                      <label for="creditos" class="col-sm-4 control-label">Créditos VM:</label>
-                      <div class="col-sm-8">
-                        <input type="text" class="form-control" name="creditos_vm" placeholder="100">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="creditos" class="col-sm-4 control-label">$MN: </label>
-                      <div class="col-sm-8">
-                        <input type="text" class="form-control" name="amount" placeholder="100">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="col-sm-8 col-sm-offset-4">
-                        <div class="pull-left"><input type='checkbox' name='donar-mensualmente'> Donar Mensualmente </div><br>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="col-sm-8 col-sm-offset-4">
-                      <div class="pull-left"><input type='checkbox' name='dedicar-donacion'> Dedicar esta donacion a un amigo </div><br>
-                      </div>
-                    </div>
-                  <script
-                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                    data-key="pk_live_TZMVzigJsplccEBJVDYNjcGQ"
-                    data-name="Verde Monarca"
-                    data-description="Fundacion VM"
-                    data-currency="MXN"
-                    data-email="<%=@online_user.email%>"
-                    data-label="Pagar"
-                    data-image="">
-                  </script>
-                  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-                </form>
+					<form class="text-center form-horizontal" action="" method="POST">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">Deseo Donar: </label>
+						</div>
+						<div class="form-group">
+							<label for="creditos" class="col-sm-4 control-label">Créditos VM:</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="creditos-vm-input" placeholder="100">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="creditos" class="col-sm-4 control-label">$MN: </label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="amount-input" placeholder="100">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-8 col-sm-offset-4">
+								<div class="pull-left"><input type='checkbox' name='donar-mensualmente-input'> Donar Mensualmente </div><br>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-8 col-sm-offset-4">
+								<div class="pull-left"><input type='checkbox' name='dedicar-donacion-input'> Dedicar esta donacion a un amigo </div><br>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-8 col-sm-offset-4">
+								<div class="pull-left"><a href="#foundation-donation-contract" class="btn btn-theme" data-toggle="modal" data-target="#foundation-donation-contract-modal">Firmar contrato</a></div><br>
+							</div>
+						</div>
+					</form>
                 </div>
               </div>
               <br><br><br>
@@ -145,8 +247,39 @@
     <%= javascript_include_tag "jquery.formatter.min" %>
     <%= javascript_include_tag "legacy" %>
     <%= javascript_include_tag "ajax" %>
+    <%= javascript_include_tag "jquery.signaturepad.min" %>
+    <%= javascript_include_tag "json2.min" %>
+	<%= javascript_include_tag "pdfmake.min" %>
+	<%= javascript_include_tag "vfs_fonts" %>
     <script>
     $(document).ready(function() {
+		
+		$('[name="creditos-vm-input"]').on({
+			keypress: function (event) {
+				if (!((event.which >= 48 && event.which <= 57))) {
+					event.preventDefault();
+				}
+			}
+		});
+		
+		$('[name="amount-input"]').on({
+			keypress: function (event) {
+				if (!((event.which >= 48 && event.which <= 57))) {
+					event.preventDefault();
+				}
+			}
+		});
+		
+		$('.sigPad').signaturePad({
+			drawOnly:true,
+			bgColour:'transparent',
+			lineWidth: 0,
+			onDrawEnd: function(){
+				$("#foundation-donation-contract-accept").removeAttr("disabled");
+				generateDonationContract();
+			}
+		});
+
       $( "#resetpassword-form" ).submit(function( event ) {
           event.preventDefault();
           $.ajax({
@@ -177,7 +310,192 @@
             }
           });
         });
-    });      
+		
+		$("#foundation-donation-contract-accept").on('click', function(){
+			var pRequestO = new Object();
+			pRequestO.pCredit = $('[name="creditos-vm-input"]').val();
+			pRequestO.pAmount = $('[name="amount-input"]').val();
+			
+			Ajax(
+			pRequestO, 
+			"confirm_foundation_donation", 
+			function(pResponse){
+				$("#error").html("");
+				$('[name="creditos_vm"]').val($('[name="creditos-vm-input"]').val());
+				$('[name="amount"]').val($('[name="amount-input"]').val());
+				
+				if ($('[name="donar-mensualmente-input"]').is(":checked")){
+					$('[name="donar-mensualmente"]').html("Sí");
+				}
+				else{
+					$('[name="donar-mensualmente"]').html("No");
+				}
+				
+				if ($('[name="dedicar-donacion-input"]').is(":checked")){
+					$('[name="dedicar-donacion"]').html("Sí");
+				}
+				else{
+					$('[name="dedicar-donacion"]').html("No");
+				}
+				
+				$('#foundation-donation-contract-modal').modal('hide');
+				$('#payment-modal').modal('show');
+			}, function(pResponse){
+				$("#error").html(pResponse.messages);
+			})
+		})
+		
+		generateDonationContract();
+    });
+	
+	function generateDonationContract(){
+		
+		var signature = document.getElementById('canvas').toDataURL("image/png");
+		
+		//Generate PDF Contract
+		var today = new Date();
+		var months = ["Enero", "Febrero", "Marzo", "Abril","Mayo","Junio","Julio","Agosto","Setiembre","Octubre","Noviembre","Diciembre"];
+		var firma = "";
+		var firmaVM = "David Eduardo Arrambide Montemayor";
+		var docDefinition = {
+			pageMargins: [ 40, 100, 40, 60 ],
+			header: {
+				columns: [
+					{ image: 'data:image/png;base64,<%=@logo_verde_monarca.tr("\n", "")%>', 
+					  margin: [40, 15, 10, 10],
+					  width: 100
+					},
+					{ text: 'Contrato de Donación Fundación Verde Monarca', alignment: 'right', margin: [10, 60, 40, 20], fontSize: 14 }
+				]
+			},
+			content: [
+				{ 
+					text: [
+						{text: 'Contrato de Donación ', bold: true},
+						'que celebran por una parte <%=@online_user.nombre.upcase + " " + @online_user.apellido.upcase%>, a quien en lo sucesivo se le dominará "El Donante", y por la otra Fundación Verde Monarca, A.C., a quien en lo sucesivo se le denominará "El Donatario", al tenor de las declaraciones y cláusulas siguientes:'
+					]
+				},
+				{ text: '\nDECLARACIONES\n\n', style: 'title', alignment: 'left'},
+				{ ol: [
+						'Declara "El Donante":',
+						{ ul: [
+							'Que celebra el presente contrato con el fin de transmitir a "El Donatario" los fondos en numerario materia de este contrato, de forma gratuita.',
+							'Que los recursos a donar se obtuvieron de forma legal.',
+							'Que con la celebración del presente contrato no afecta los derechos de aquellas otras personas que en su momento tengan derecho a recibir alimentos de éste conforme a lo dispuesto por el Código Civil.',
+							'Que señala como domicilio convencional el ubicado en <%=@online_user.calle + " " + @online_user.numero_direccion.to_s + ", " + @online_user.colonia + ", " + @location.description + ", " + @state.description + ", " + @country.description + " " + @online_user.codigo_postal%> y que cuenta con capacidad legal para celebrar la presente operación.\n',
+						  ]
+						},
+						'Declara "El Donatario":',
+						{ ul: [
+							'Que ha revisado la documentación detallada en las declaraciones que anteceden.',
+							'Que señala como domicilio convencional el ubicado en Notre Dame 115-A, Colonia Valle de San Ángel en San Pedro Garza García, Nuevo León, C.P. 66290.',
+							'Que acepta la donación de los recursos económicos materia del contrato en los términos y condiciones que se establecen en el mismo.\n',
+						  ]
+						},
+						'Ambas partes declaran:',
+						{ ul: [
+							'Que es su libre voluntad celebrar el presente contrato, sin encontrarse limitadas para dar y recibir los bienes a donar, respectivamente.',
+						  ]
+						},
+					]
+				},
+				{ text: '\nCLÁUSULAS\n\n', style: 'title', alignment: 'center'},
+				{
+					text: [
+						{ text: 'PRIMERA.- ', bold: true, fontSize: 14, },
+						'"El Donante" se obliga a transmitir de forma gratuita la cantidad de [Monto de Donación en Moneda Nacional] a "El Donatario", quien manifiesta su aceptación respecto del mismo, recibiéndolos de forma absoluta, al no quedar condicionada su entrega, la cual será utilizada para el [Nombre del Programa Destino de la Donación].'
+					]
+				},
+				{
+					text: [
+						{ text: '\nSEGUNDA.- ', bold: true, fontSize: 14, },
+						'En razón de la transmisión mencionada en el artículo anterior, "El Donante" se obliga a realizar todos los actos jurídicos para ello y a entregarlo a "El Donatario" a la firma del presente contrato.'
+					]
+				},
+				{
+					text: [
+						{ text: '\nTERCERA.- ', bold: true, fontSize: 14, },
+						'"El Donante" se obliga a no imponerle cargas de pago de deudas o de otra índole a "El Donatario" que deriven del presente contrato.',
+						
+					],
+					pageBreak: 'after'
+				},
+				{
+					text: [
+						{ text: '\nCUARTA.- ', bold: true, fontSize: 14, },
+						'De acuerdo con lo expresado en la Declaración I, ambas partes convienen en que “El Donatario” quedará liberado del pago de cualquier deuda adquirida por "el Donante" antes de la celebración del presente contrato, quedando a cargo del mismo el saldo de las que resultaren.'
+					]
+				},
+				{
+					text: [
+						{ text: '\nQUINTA.- ', bold: true, fontSize: 14, },
+						'Las partes expresan que en la celebración del presente contrato no existe dolo, mala fe, violencia, error o cualquier otro vicio de la voluntad que pudiera invalidarlo.'
+					]
+				},
+				{
+					text: [
+						{ text: '\nSEXTA.- ', bold: true, fontSize: 14, },
+						'Ambas partes convienen que en caso de interpretación o controversia suscitada del presente contrato, se someterán a la jurisdicción de los tribunales competentes de Monterrey, Nuevo León, independientemente de la que pudiere corresponderles por razón de su domicilio presente o futuro.'
+					]
+				},
+				{ text: '\nEn dicho acto intervienen como testigos los señores José Alfredo Gallo Camacho, y Victor Hugo Torres Martínez de Pinillos, ambos con domicilio en Notre Dame 115-A, Colonia Valle de San Ángel en San Pedro Garza García, Nuevo León, C.P. 66290.', alignment: 'left'},
+				{ text: '\nLeído el presente contrato, conformes con su contenido valor y fuerza legal, lo firman quienes en él intervinieron, en la ciudad de Monterrey, Nuevo León a los ' + today.getDate() + ' días del mes de ' + months[today.getMonth()].toUpperCase() + ' de ' + today.getFullYear() + '.', alignment: 'left'},
+				{
+					table: {
+						// headers are automatically repeated if the table spans over multiple pages
+						// you can declare how many rows should be treated as headers
+						headerRows: 1,
+						widths: [ '*', '*'],
+
+						body: [
+							[ {text: '', alignment: 'left'}, {text: '', alignment: 'right'}],
+							[ {text: 'Por “El Donante”', alignment: 'left'}, {text: 'Por “El Donatario”', alignment: 'right'}],
+							[ {text: '', alignment: 'left'}, {text: '', alignment: 'right'}],
+							[ { image: 'data:image/png;base64,<%=@signatureDavid.tr("\n", "")%>', width: 200 }, { image: signature, width: 200, alignment: 'right' }],
+							[ {text: '__________________________________', alignment: 'left'}, {text: '__________________________________', alignment: 'right'}],
+							[ {text: '<%=@online_user.nombre + " " + @online_user.apellido%>', alignment: 'left'}, {text: 'David Eduardo Arrambide Montemayor', alignment: 'right'}],
+							[ {text: '', alignment: 'left'}, {text: 'Representante Legal', alignment: 'right'}],
+							[ {text: '', alignment: 'left'}, {text: 'Fundación Verde Monarca, A.C.', alignment: 'right'}],
+						]
+					},
+					layout: 'noBorders'
+				},
+			],
+			footer: {
+				columns: [
+					{ text: 'Verde Monarca, S.A.P.I. de C.V.\n 115-A Notre Dame, Col. Valle de San Ángel\nSan Pedro Garza García, NL, MEX 66290', margin: [40, 0, 0, 0], fontSize: 8},
+					{ text: '\nTel. (81) 8340-8279\nwww.verdemonarca.com', alignment: 'right', margin: [0, 0, 40, 0], fontSize: 8 }
+				]
+			},
+			styles: {
+				header: {
+					fontSize: 12,
+					alignment: 'justify'
+				},
+				title: {
+					alignment: 'center',
+					bold: 'true',
+					fontSize: 14
+				},
+				subtitle: {
+					bold: 'true',
+					fontSize: 13
+				},
+				paragraph: {
+					alignment: 'justify'
+				},
+				tabbed: {
+					margin: [20, 0, 40, 0],
+				}
+			}
+		};
+		pdfMake.createPdf(docDefinition);
+		pdfMake.createPdf(docDefinition).getDataUrl(function(outDoc) {
+			$("#donation-contract-pdf").attr("src", outDoc);
+		});;
+
+		
+	}
     </script>
   </body>
 </html>

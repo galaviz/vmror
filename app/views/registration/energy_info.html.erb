@@ -160,21 +160,27 @@
 		});
 
 		$("#registration-form-energy").submit(function( event ) {
-			var access=0;
-			$(".require").each(function() {
-				if ($(this).val() == "") {
-					$(this).css("border", "1px solid red");
-					$('html, body').animate({
-							scrollTop: $("#tarifa").offset().top - 100
-					}, 500);
-					access=0;
+			if ($("#exists").val() == 0){
+				var access=0;
+				$(".require").each(function() {
+					if ($(this).val() == "") {
+						$(this).css("border", "1px solid red");
+						$('html, body').animate({
+								scrollTop: $("#tarifa").offset().top - 100
+						}, 500);
+						access=0;
+					}
+					else{
+						$(this).css("border", "1px solid transparent");
+						access=1;
+					}
+				});
+				if(access==1 || $("#energy-info-auth").is(':checked')){
+					$("#registration-form-energy").attr('action', './post_energy_info');
+					$("#registration-form-energy").submit();
 				}
-				else{
-					$(this).css("border", "1px solid transparent");
-					access=1;
-				}
-			});
-			if(access==1 || $("#energy-info-auth").is(':checked')){
+			}
+			else{
 				$("#registration-form-energy").attr('action', './post_energy_info');
 				$("#registration-form-energy").submit();
 			}
