@@ -36,7 +36,6 @@ class CreateCheckPermissionFunction < ActiveRecord::Migration
       LANGUAGE plpgsql VOLATILE
       COST 100;
     ALTER FUNCTION permissions(integer, varchar)
-      OWNER TO postgres;"
   end
 
   def down
