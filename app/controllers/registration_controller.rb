@@ -34,7 +34,7 @@ class RegistrationController < ApplicationController
 
   def user_info
     @is_residential = session["is_residential"]
-	@country = Country.select("id, description").where(active: true)
+	  @country = Country.select("id, description").where(active: true)
     @state = State.select("id, description").where(active: true)
     @location = Location.select("id, description").where(active: true, state_id: 19)
 	
@@ -42,6 +42,8 @@ class RegistrationController < ApplicationController
     @user = User.new
     @user.nombre = @rpu.nombre
     @user.apellido = @rpu.apellido
+    @user.codigo_postal = @rpu.codigo_postal
+    @user.calle = @rpu.domicilio
 	
     puts @user.inspect
   end
