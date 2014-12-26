@@ -14,13 +14,18 @@ class PageController < ApplicationController
 	  @pages = Page.select("description, command").where(menu_id: 1, active: true).order(order_by: :asc)
 	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
 	  @online_user = User.find_by_id(session["user_id"])
+	  @menu_type = MenuType.where(active: true)
 	end
 	
 	def create
 	  check_permission()
+	  pages = Page.all
+	  order_by = pages.count
 	  @page = Page.new
 	  @page.description = params["description"]
 	  @page.command = params["command"]
+	  @page.menu_id = params["menu-type"]
+	  @page.order_by = order_by
 	  @page.active = true
 	  @page.save()
 	  redirect_to :action => :index
@@ -31,12 +36,14 @@ class PageController < ApplicationController
 	  @pages = Page.select("description, command").where(menu_id: 1, active: true).order(order_by: :asc)
 	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
 	  @online_user = User.find_by_id(session["user_id"])
+	  @menu_type = MenuType.where(active: true)
 	end 
 	
 	def update
 	  check_permission()
 	  @page.description = params["description"]
 	  @page.command = params["command"]
+	  @page.menu_id = params["menu-type"]
 	  @page.save()
 	  redirect_to :action => :index
 	end 

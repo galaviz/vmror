@@ -34,6 +34,121 @@
   <body data-spy="scroll" data-offset="0" data-target=".portal-sidebar">
 
     <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "pay_it_forward"})%>
+	
+	
+	<!-- Contract Modal -->
+	<div class="modal fade bs-modal-sm in" id="foundation-donation-contract-modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+		<div class="modal-dialog modal-sm" style="width:auto;max-width:700px;">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="tab-content">
+						<!-- Change Password Form -->
+						<div class="tab-pane fade active in" id="foundation-donation-contract">
+							<fieldset>
+
+								<!-- Contract -->
+								<div class="control-group">
+									<h2 class="h2-section-title">Contrato de donación</h2>
+									<hr>
+									<iframe src="" width="100%" style="height:200px;" id="donation-contract-pdf">
+									Tu navegador no puede mostrar documentos pdf
+									</iframe>
+								</div>
+
+								<!-- Signature -->
+								<div class="control-group">
+
+									<div class="sigPad">
+										<ul class="sigNav" style="display: block;width:100%;">
+											<li style="display: list-item;">Firmar contrato</li>
+											<li class="clearButton" style="display: list-item;"><a href="#clear" id="clear">Limpiar</a></li>
+										</ul>
+										<div class="sig sigWrapper">
+											<div class="typed"></div>
+											<canvas class="pad" width="300" height="100" id="canvas"></canvas>
+											<input type="hidden" name="output" id="output" class="output">
+										</div>
+									</div>
+
+								</div>
+								<br/>
+								<!-- Buttons-->
+								<div class="control-group text-center">
+									<div class="controls text-center">
+										<a href="#" disabled id="foundation-donation-contract-accept" class="btn btn-theme">Aceptar</a>
+									</div>
+								</div>
+								<br/>
+								<div class="control-group text-center">
+									<div class="controls text-center">
+										<label id="error" style="color:red;"></label>
+									</div>
+								</div>
+
+							</fieldset>
+						</div><!-- /Change Password Form -->
+					</div><!-- /tab-content -->
+				</div><!-- /modal-body -->
+
+				<div class="modal-footer">
+					<center>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+					</center>
+				</div>
+
+			</div><!-- /modal-content -->
+		</div><!-- /modal-dialog -->
+	</div><!-- /modal -->
+
+	
+	<!-- Payment Modal -->
+	<div class="modal fade bs-modal-sm in" id="payment-modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+		<div class="modal-dialog modal-sm" style="width:auto;max-width:700px;">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="tab-content">
+						<div class="tab-pane fade active in" id="payment">
+							<fieldset>
+								<form class="text-center form-horizontal" action="./process_donation" method="POST">
+									<table align="center" id="user-info-table" style="text-align:left;">
+										<tr><td style="width:250px;"><span class='bold'>Donar a:</span></td><td><input name="program" type="text" readonly style="background:transparent;border:none;" /></td></tr>
+										<tr><td style="width:250px;"><span class='bold'>Créditos VM:</span></td><td><input name="creditos_vm" type="text" readonly style="background:transparent;border:none;" /></td></tr>
+										<tr><td><span class='bold'>$MN:</span></td><td><input name="amount" type="text" readonly style="background:transparent;border:none;" /></td></tr>
+										<tr><td></td><td><input name="contract" type="hidden" style="background:transparent;border:none;" /><input name="project_id" type="hidden" /></td></tr>
+									</table>
+									<br/>
+									<br/>
+									<script
+										src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+										data-key="pk_live_TZMVzigJsplccEBJVDYNjcGQ"
+										data-name="Verde Monarca"
+										data-description="Fundacion VM"
+										data-currency="MXN"
+										data-email="<%=@online_user.email%>"
+										data-label="Pagar"
+										data-image="">
+									</script>
+									<input type="hidden" name="codigo_vm" value="PGON1">
+									<input type="hidden" name="titular" value="Patricio">
+									<input type="hidden" name="avance" value="0">
+									<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+								</form>
+							</fieldset>
+						</div><!-- /Change Password Form -->
+					</div><!-- /tab-content -->
+				</div><!-- /modal-body -->
+
+				<div class="modal-footer">
+					<center>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+					</center>
+				</div>
+
+			</div><!-- /modal-content -->
+		</div><!-- /modal-dialog -->
+	</div><!-- /modal -->
+
+	
     <div class="main-dashboard-content">
       <div class="container">
         <div class="col-sm-3 portal-sidebar">
@@ -104,25 +219,12 @@
                         <div class="pull-left"><input type='checkbox' name='donar-mensualmente'> Acepto los términos y condiciones para donar</div><br>
                       </div>
                     </div>
-                  <script
-                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                    data-key="pk_live_TZMVzigJsplccEBJVDYNjcGQ"
-                    data-name="Verde Monarca"
-                    data-description="Fundacion VM"
-                    data-currency="MXN"
-                    data-email="<%=@online_user.email%>"
-                    data-label="Pagar"
-                    data-image="">
-                  </script>
-                  <input type="hidden" name="codigo_vm" value="PGON1">
-                  <input type="hidden" name="titular" value="Patricio">
-                  <input type="hidden" name="avance" value="0">
-                  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                 </form>
                 </div>
               </div>
               <br><br><br>
               <br>
+			  <a disabled href="#foundation-donation-contract" name="donate" class="btn btn-theme" data-toggle="modal" data-target="#foundation-donation-contract-modal">Donar ahora</a>
           </div><!-- /generacion-solar -->
 
         </div>
