@@ -1,7 +1,7 @@
 class CreateCheckPermissionFunction < ActiveRecord::Migration
   def up
     execute '
-    CREATE OR REPLACE FUNCTION permissions(pProfile_id integer DEFAULT 0, pAction varchar(100) DEFAULT '', OUT UserPermission bigint , OUT ActionPermission bigint , OUT Permission integer )
+    CREATE OR REPLACE FUNCTION permissions(pProfile_id integer DEFAULT 0, pAction varchar(100) DEFAULT '''', OUT UserPermission bigint , OUT ActionPermission bigint , OUT Permission integer )
       RETURNS setof record AS
     $BODY$BEGIN
             return query SELECT 
