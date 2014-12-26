@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141226174539) do
+ActiveRecord::Schema.define(version: 20141226225003) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,11 +46,6 @@ ActiveRecord::Schema.define(version: 20141226174539) do
     t.string   "rpu"
     t.string   "nombre"
     t.string   "apellido"
-    t.string   "domicilio"
-    t.integer  "pais"
-    t.integer  "estado"
-    t.integer  "municipio"
-    t.integer  "codigo_postal"
     t.string   "tarifa"
     t.float    "cargo_fijo"
     t.float    "energia"
@@ -78,6 +73,13 @@ ActiveRecord::Schema.define(version: 20141226174539) do
   create_table "locations", force: true do |t|
     t.string   "description"
     t.integer  "state_id"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "menu_types", force: true do |t|
+    t.string   "description"
     t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
