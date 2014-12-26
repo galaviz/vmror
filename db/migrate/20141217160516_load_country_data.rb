@@ -87,6 +87,7 @@ class LoadCountryData < ActiveRecord::Migration
   	Location.create(:description => "Santiago", :state_id => 19, :active => true)
   	Location.create(:description => "Vallecillo", :state_id => 19, :active => true)
   	Location.create(:description => "Villaldama", :state_id => 19, :active => true)
+    Location.create(:description => "Reynosa", :state_id => 28, :active => true)
 
   end
 
