@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  description: MyString
+  user_id: 1
+  donation_type_id: 1
+  program_id: 1
+  amount_mxn: 1.5
+  credit_vm: 1.5
+  contract_file_name: MyString
+
+two:
+  description: MyString
+  user_id: 1
+  donation_type_id: 1
+  program_id: 1
+  amount_mxn: 1.5
+  credit_vm: 1.5
+  contract_file_name: MyString

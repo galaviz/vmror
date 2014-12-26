@@ -13,6 +13,10 @@ class LoadData < ActiveRecord::Migration
     exampleUser.country_id = 1
     exampleUser.state_id = 19
     exampleUser.location_id = 40
+    exampleUser.calle = "Notre Dame"
+    exampleUser.numero_direccion = 115
+    exampleUser.colonia = "Valle de San Ángel"
+    exampleUser.codigo_postal = "66290"
     exampleUser.save()
 	
     exampleUserResidential =  User.new(:nombre => "VM", :apellido => "Monitoreo", :email => "energymonitoring@verdemonarca.com", :is_residential => true, :consumo_total => 13110, :importe_total => 52834)
@@ -28,6 +32,10 @@ class LoadData < ActiveRecord::Migration
     exampleUserResidential.country_id = 1
     exampleUserResidential.state_id = 19
     exampleUserResidential.location_id = 40
+    exampleUserResidential.calle = "Notre Dame"
+    exampleUserResidential.numero_direccion = 115
+    exampleUserResidential.colonia = "Valle de San Ángel"
+    exampleUserResidential.codigo_postal = "66290"
     exampleUserResidential.save()
   end
 

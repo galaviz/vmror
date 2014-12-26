@@ -195,7 +195,7 @@
 			pRequestO.email=$("#sign-in-mail").val();
 			pRequestO.passwordinput=$("#passwordinput").val();
 
-			Ajax(pRequestO, "/main/login", function(pResponse){window.location = "/dashboard/monitoreo"}, function(pResponse){$("#error-label").html(pResponse.messages);})
+			Ajax(pRequestO, "/main/login", function(pResponse){window.location = "/dashboard/monitoring"}, function(pResponse){$("#error-label").html(pResponse.messages);})
 
 		});
 
