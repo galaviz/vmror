@@ -97,11 +97,11 @@ class LoadStoreItems < ActiveRecord::Migration
     item.save()
 
     item = Item.new
-    item.name = 'York Affinity™ YZH'
+    item.name = 'York Affinity YZH'
     item.watts = 0
     item.lumenes = 0
     item.vida = "25,000 hrs"
-    item.precio = 30,667
+    item.precio = 30667
     item.image_url = "http://www.york.com/images/Residential/Products/Residential%20Prod_Detail/Air%20Conditioners/york-affinity-CZH-air-conditioner-L-ME.png"
     item.disponibilidad = "14 - Enero - 2015"
     item.description = 'El sistema de calefacción y aire acondicionado York® Affinity™ YZH tiene un rendimiento con certificación ENERGY STAR® de hasta 18 SEER y 10.1 HSPF. Las excelentes garantías te permiten una alta confiabilidad con calidad inmejorable. El compresor de dos etapas provee una operación silenciosa y eficiencia. Asimismo, el sistema QuietDrive™ silencia las vibraciones. El refrigerante R-410A utilizado es amigable a la capa de ozono.'
@@ -109,11 +109,11 @@ class LoadStoreItems < ActiveRecord::Migration
     item.save()
 
     item = Item.new
-    item.name = 'York® LX Series YHJF'
+    item.name = 'York LX Series YHJF'
     item.watts = 0
     item.lumenes = 0
     item.vida = "25,000 hrs"
-    item.precio = 47,567
+    item.precio = 47567
     item.image_url = "http://www.york.com/images/Residential/Products/Residential%20Prod_Detail/heat%20pumps/york-LX-series-YHJF-heat-pump-L.png"
     item.disponibilidad = "14 - Enero - 2015"
     item.description = 'El sistema de calefacción y aire acondicionado York® LX Series YHJF tiene un rendimiento con certificación ENERGY STAR® de 14.5 SEER y 8.5 HSPF. Las excelentes garantías te permiten una alta confiabilidad con calidad inmejorable. La tecnología avanzada MicroChannel Coil permite un alto rendimiento en menor espacio. El refrigerante R-410A utilizado es amigable a la capa de ozono.'
@@ -121,11 +121,11 @@ class LoadStoreItems < ActiveRecord::Migration
     item.save()
 
     item = Item.new
-    item.name = 'York® Latitude™ TCGF'
+    item.name = 'York Latitude TCGF'
     item.watts = 0
     item.lumenes = 0
     item.vida = "25,000 hrs"
-    item.precio = 19,227
+    item.precio = 19227
     item.image_url = "http://www.york.com/images/Residential/Products/Residential%20Prod_Detail/heat%20pumps/york-latitude-THGF-heat-pump-L.png"
     item.disponibilidad = "14 - Enero - 2015"
     item.description = 'El sistema de calefacción y aire acondicionado York® Latitude™ THGF tiene un rendimiento con certificación ENERGY STAR® de 14.5 SEER y 8.5 HSPF. Las excelentes garantías te permiten una alta confiabilidad con calidad inmejorable. El control Demand Defrost permite mantener la bobina descongelada en temperaturas bajas. El refrigerante R-410A utilizado es amigable a la capa de ozono.'
@@ -137,7 +137,7 @@ class LoadStoreItems < ActiveRecord::Migration
     item.watts = 0
     item.lumenes = 0
     item.vida = "25,000 hrs"
-    item.precio = 34,957
+    item.precio = 34957
     item.image_url = "http://www.york.com/images/Residential/Products/Residential%20Prod_Detail/Air%20Conditioners/york-affinity-CZH-air-conditioner-L-ME.png"
     item.disponibilidad = "14 - Enero - 2015"
     item.description = 'El aire acondicionado York® Affinity™ CZH tiene un rendimiento de hasta 18 SEER y certificación ENERGY STAR® para mantener tu casa fría pagando menos. Las excelentes garantías te permiten una alta confiabilidad con calidad inmejorable. El compresor de dos etapas provee una operación silenciosa y eficiencia. Asimismo, el sistema QuietDrive™ silencia las vibraciones. El refrigerante R-410A utilizado es amigable a la capa de ozono.'
@@ -149,7 +149,7 @@ class LoadStoreItems < ActiveRecord::Migration
     item.watts = 0
     item.lumenes = 0
     item.vida = "25,000 hrs"
-    item.precio = 21,697
+    item.precio = 21697
     item.image_url = "http://www.york.com/images/Residential/Products/Residential%20Prod_Detail/Air%20Conditioners/york-LX-Series-YCJF-air-conditioner-L.png"
     item.disponibilidad = "14 - Enero - 2015"
     item.description = 'El aire acondicionado York® LX Series YCJF tiene un rendimiento de hasta 14.5 SEER y certificación ENERGY STAR® para mantener tu casa fría pagando menos. Las excelentes garantías te permiten una alta confiabilidad con calidad inmejorable. La tecnología avanzada MicroChannel Coil permite un alto rendimiento en menor espacio. El refrigerante R-410A utilizado es amigable a la capa de ozono.'
@@ -157,11 +157,11 @@ class LoadStoreItems < ActiveRecord::Migration
     item.save()
 
     item = Item.new
-    item.name = 'York® Latitude™ TCG'
+    item.name = 'York Latitude TCG'
     item.watts = 0
     item.lumenes = 0
     item.vida = "25,000 hrs"
-    item.precio = 19,357
+    item.precio = 19357
     item.image_url = "http://www.york.com/images/Residential/Products/Residential%20Prod_Detail/Air%20Conditioners/York-latitude-TCGF-air-conditioner-L.png"
     item.disponibilidad = "14 - Enero - 2015"
     item.description = 'El aire acondicionado York® Latitude™ TCGF tiene un rendimiento de 14.5 SEER y certificación ENERGY STAR® para mantener tu casa fría pagando menos. Las excelentes garantías te permiten una alta confiabilidad con calidad inmejorable. La tecnología avanzada MicroChannel Coil permite un alto rendimiento en menor espacio. El refrigerante R-410A utilizado es amigable a la capa de ozono.'
