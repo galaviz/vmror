@@ -406,5 +406,9 @@ class DashboardController < ApplicationController
   def locations
 	redirect_to(:action=>"index", :controller => "locations")
   end
+
+  def categories
+  redirect_to(:action=>"index", :controller => "category")
+  end
   
 end
