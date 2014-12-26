@@ -1,5 +1,5 @@
 class CreateCheckPermissionFunction < ActiveRecord::Migration
-  def up
+  def change
     execute "
     CREATE OR REPLACE FUNCTION permissions(pProfile_id integer DEFAULT 0, pAction varchar(100) DEFAULT '', OUT UserPermission bigint , OUT ActionPermission bigint , OUT Permission integer )
       RETURNS setof record AS
@@ -37,9 +37,5 @@ class CreateCheckPermissionFunction < ActiveRecord::Migration
       COST 100;
     ALTER FUNCTION permissions(integer, varchar)
       OWNER TO postgres;"
-  end
-
-  def down
-    execute "DROP FUNCTION IF EXISTS permissions(integer, varchar)"
   end
 end
