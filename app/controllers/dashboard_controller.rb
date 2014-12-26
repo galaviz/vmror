@@ -70,6 +70,7 @@ class DashboardController < ApplicationController
 	  @location = Location.find_by_id(@online_user.location_id)
 	  @signatureDavid = Base64.encode64(File.open("app/assets/customerSignature/signatureDavid.png", "rb").read)
 	  @logo_verde_monarca = Base64.encode64(File.open("app/assets/images/Logo_Verde_Monarca.png", "rb").read)
+	  
     else
       redirect_to :action => :index, :controller => :main
     end
@@ -154,8 +155,8 @@ class DashboardController < ApplicationController
 	donation_history.description = "Generado por sistema"
 	donation_history.user_id = @online_user.id
 	donation_history.donation_type_id = 1
-	donation_history.program_id = params[:program_id]
-	donation_history.amount_mxn = @amount # el monto se guarda multiplicado * 100
+	donation_history.project_id  = params["project_id"]
+	donation_history.amount_mxn = @amount
 	donation_history.credit_vm = params["creditos_vm"]
 	donation_history.contract_file_name = contract
 	donation_history.save()
