@@ -139,6 +139,27 @@ class DashboardController < ApplicationController
 	@online_user.creditos_vm = @online_user.creditos_vm.to_i - params[:creditos_vm].to_i
     @online_user.save()
     puts @online_user.inspect
+	
+	donation_serie = DonationHistory.find_by_sql("SELECT id FROM donation_histories WHERE user_id=" + @online_user.id.to_s + " AND donation_type_id=1")
+	serie = (donation_serie.count + 1).to_s
+	serie = serie.rjust(3, '0')
+	
+	contractPDF = params["contract"]
+	contract = @online_user.id.to_s + "-" + @online_user.clave_referencia + "-Contrato_Donación_Fundación_VM-" + serie
+	File.open('app/assets/contracts/' + contract + '.pdf',"wb") do |file|
+		file.write(Base64.decode64(contractPDF))
+	end
+	
+	donation_history = DonationHistory.new
+	donation_history.description = "Generado por sistema"
+	donation_history.user_id = @online_user.id
+	donation_history.donation_type_id = 1
+	donation_history.program_id = params[:program_id]
+	donation_history.amount_mxn = @amount # el monto se guarda multiplicado * 100
+	donation_history.credit_vm = params["creditos_vm"]
+	donation_history.contract_file_name = contract
+	donation_history.save()
+	
     redirect_to(:action=>"post_fundacion", :amount => params[:amount], :creditos_vm => params[:creditos_vm])
     rescue Stripe::CardError => e
       flash[:error] = e.message

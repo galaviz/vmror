@@ -110,10 +110,10 @@
 							<fieldset>
 								<form class="text-center form-horizontal" action="./process_donation" method="POST">
 									<table align="center" id="user-info-table" style="text-align:left;">
+										<tr><td style="width:250px;"><span class='bold'>Donar a:</span></td><td><input name="program" type="text" readonly style="background:transparent;border:none;" /></td></tr>
 										<tr><td style="width:250px;"><span class='bold'>Créditos VM:</span></td><td><input name="creditos_vm" type="text" readonly style="background:transparent;border:none;" /></td></tr>
 										<tr><td><span class='bold'>$MN:</span></td><td><input name="amount" type="text" readonly style="background:transparent;border:none;" /></td></tr>
-										<tr><td><span class='bold'>Donar Mensualmente:</span></td><td name="donar-mensualmente"></td></tr>
-										<tr><td><span class='bold'>Dedicar esta donacion a un amigo:</span></td><td name='dedicar-donacion'></td></tr>
+										<tr><td></td><td><input name="contract" type="hidden" style="background:transparent;border:none;" /><input name="program_id" type="hidden" style="background:transparent;border:none;" /></td></tr>
 									</table>
 									<br/>
 									<br/>
@@ -182,7 +182,12 @@
                 <div class="classic-form">
 					<form class="text-center form-horizontal" action="" method="POST">
 						<div class="form-group">
-							<label class="col-sm-4 control-label">Deseo Donar: </label>
+							<label class="col-sm-4 control-label">Deseo Donar a: </label>
+							<div class="col-sm-8">
+								<select class="form-control" name="program-input" >
+									<option value="1">Agua Para Todos</option>
+								</select>
+							</div>
 						</div>
 						<div class="form-group">
 							<label for="creditos" class="col-sm-4 control-label">Créditos VM:</label>
@@ -198,17 +203,12 @@
 						</div>
 						<div class="form-group">
 							<div class="col-sm-8 col-sm-offset-4">
-								<div class="pull-left"><input type='checkbox' name='donar-mensualmente-input'> Donar Mensualmente </div><br>
+								<div class="pull-left"><input type='checkbox' name='donation-accept'> Acepto Contrato de Donación </div><br>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-sm-8 col-sm-offset-4">
-								<div class="pull-left"><input type='checkbox' name='dedicar-donacion-input'> Dedicar esta donacion a un amigo </div><br>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-sm-8 col-sm-offset-4">
-								<div class="pull-left"><a href="#foundation-donation-contract" class="btn btn-theme" data-toggle="modal" data-target="#foundation-donation-contract-modal">Firmar contrato</a></div><br>
+								<div class="pull-left"><a disabled href="#foundation-donation-contract" name="donate" class="btn btn-theme" data-toggle="modal" data-target="#foundation-donation-contract-modal">Donar ahora</a></div><br>
 							</div>
 						</div>
 					</form>
@@ -253,6 +253,8 @@
 	<%= javascript_include_tag "vfs_fonts" %>
     <script>
     $(document).ready(function() {
+		
+		$("#clear").on('click', function(){ $("#foundation-donation-contract-accept").attr("disabled", "disabled"); });
 		
 		$('[name="creditos-vm-input"]').on({
 			keypress: function (event) {
@@ -311,46 +313,34 @@
           });
         });
 		
-		$("#foundation-donation-contract-accept").on('click', function(){
-			var pRequestO = new Object();
-			pRequestO.pCredit = $('[name="creditos-vm-input"]').val();
-			pRequestO.pAmount = $('[name="amount-input"]').val();
-			
-			Ajax(
-			pRequestO, 
-			"confirm_foundation_donation", 
-			function(pResponse){
-				$("#error").html("");
-				$('[name="creditos_vm"]').val($('[name="creditos-vm-input"]').val());
-				$('[name="amount"]').val($('[name="amount-input"]').val());
-				
-				if ($('[name="donar-mensualmente-input"]').is(":checked")){
-					$('[name="donar-mensualmente"]').html("Sí");
-				}
-				else{
-					$('[name="donar-mensualmente"]').html("No");
-				}
-				
-				if ($('[name="dedicar-donacion-input"]').is(":checked")){
-					$('[name="dedicar-donacion"]').html("Sí");
-				}
-				else{
-					$('[name="dedicar-donacion"]').html("No");
-				}
-				
-				$('#foundation-donation-contract-modal').modal('hide');
-				$('#payment-modal').modal('show');
-			}, function(pResponse){
-				$("#error").html(pResponse.messages);
-			})
+		$('[name="donation-accept"]').on( "click", function(){
+			if($('[name="donation-accept"]').is(":checked")){
+				$('[name="donate"]').attr('disabled', false);
+			}
+			else{
+				$('[name="donate"]').attr('disabled', true);
+			}
+		});
+		
+		$('[name="donate"]').on('click', function(){
+			generateDonationContract();
 		})
 		
+		contract64 = ""; 
 		generateDonationContract();
     });
 	
 	function generateDonationContract(){
-		
+		var donationAmount = $("#").val() + $("#").val();
 		var signature = document.getElementById('canvas').toDataURL("image/png");
+		var creditos = "";
+		var monto = "";
+		if($('[name="creditos-vm-input"]').val() == ''){
+			creditos = "0";
+		}else{ creditos = $('[name="creditos-vm-input"]').val(); }
+		if($('[name="amount-input"]').val() == ''){
+			monto = "0";
+		}else{ monto = $('[name="amount-input"]').val(); }
 		
 		//Generate PDF Contract
 		var today = new Date();
@@ -403,7 +393,7 @@
 				{
 					text: [
 						{ text: 'PRIMERA.- ', bold: true, fontSize: 14, },
-						'"El Donante" se obliga a transmitir de forma gratuita la cantidad de [Monto de Donación en Moneda Nacional] a "El Donatario", quien manifiesta su aceptación respecto del mismo, recibiéndolos de forma absoluta, al no quedar condicionada su entrega, la cual será utilizada para el [Nombre del Programa Destino de la Donación].'
+						'"El Donante" se obliga a transmitir de forma gratuita la cantidad de $' + monto + ' MXN, ' + creditos + ' créditos a "El Donatario", quien manifiesta su aceptación respecto del mismo, recibiéndolos de forma absoluta, al no quedar condicionada su entrega, la cual será utilizada para ' + $('[name="program-input"] option:selected').text() + '.'
 					]
 				},
 				{
@@ -451,7 +441,7 @@
 							[ {text: '', alignment: 'left'}, {text: '', alignment: 'right'}],
 							[ {text: 'Por “El Donante”', alignment: 'left'}, {text: 'Por “El Donatario”', alignment: 'right'}],
 							[ {text: '', alignment: 'left'}, {text: '', alignment: 'right'}],
-							[ { image: 'data:image/png;base64,<%=@signatureDavid.tr("\n", "")%>', width: 200 }, { image: signature, width: 200, alignment: 'right' }],
+							[ { image: signature, width: 200, alignment: 'left' }, { image: 'data:image/png;base64,<%=@signatureDavid.tr("\n", "")%>', width: 200, alignment: 'right' }],
 							[ {text: '__________________________________', alignment: 'left'}, {text: '__________________________________', alignment: 'right'}],
 							[ {text: '<%=@online_user.nombre + " " + @online_user.apellido%>', alignment: 'left'}, {text: 'David Eduardo Arrambide Montemayor', alignment: 'right'}],
 							[ {text: '', alignment: 'left'}, {text: 'Representante Legal', alignment: 'right'}],
@@ -492,10 +482,33 @@
 		pdfMake.createPdf(docDefinition);
 		pdfMake.createPdf(docDefinition).getDataUrl(function(outDoc) {
 			$("#donation-contract-pdf").attr("src", outDoc);
-		});;
-
-		
+			var contract64 = outDoc.replace(/^data:application\/(png|jpg|pdf);base64,/, "");
+			$('[name="contract"]').val(contract64);
+		});
 	}
+	
+	$("#foundation-donation-contract-accept").on('click', function(){
+		var pRequestO = new Object();
+		pRequestO.pCredit = $('[name="creditos-vm-input"]').val();
+		pRequestO.pAmount = $('[name="amount-input"]').val();
+		
+		Ajax(
+		pRequestO, 
+		"confirm_foundation_donation", 
+		function(pResponse){
+			$("#error").html("");
+			$('[name="program"]').val($('[name="program-input"] option:selected').text());
+			$('[name="program_id"]').val($('[name="program-input"]').val());
+			$('[name="creditos_vm"]').val($('[name="creditos-vm-input"]').val());
+			$('[name="amount"]').val($('[name="amount-input"]').val());
+			
+			$('#foundation-donation-contract-modal').modal('hide');
+			$('#payment-modal').modal('show');
+		}, function(pResponse){
+			$("#error").html(pResponse.messages);
+		})
+	})
+	
     </script>
   </body>
 </html>
