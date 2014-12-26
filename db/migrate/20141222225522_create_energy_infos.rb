@@ -4,6 +4,11 @@ class CreateEnergyInfos < ActiveRecord::Migration
       t.string :rpu
       t.string :nombre
       t.string :apellido
+      t.string :domicilio
+      t.integer :pais
+      t.integer :estado
+      t.integer :municipio
+      t.integer :codigo_postal
       t.string :tarifa
       t.float :cargo_fijo
       t.float :energia

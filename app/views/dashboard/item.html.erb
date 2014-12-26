@@ -39,7 +39,8 @@
         <div class="col-sm-3 portal-sidebar">
           <ul class="nav nav-list portal-sidenav affix cl-effect-13">
             <li class="active"><a href="#iluminacion" class="smoothScroll">Iluminación</a></li>
-
+            <li class="active"><a href="#calefaccion" class="smoothScroll">Calefacción</a></li>
+            <li class="active"><a href="#aire_acondicionado" class="smoothScroll">Aire Acondicionado</a></li>
           </ul>
         </div>
 
@@ -66,8 +67,23 @@
             </div>
             <div class="row store-item-add-to-cart">
               <form role="form" class="form-inline pull-right" action="<%=url_for controller: 'dashboard', action: 'add_to_cart'%>">
-                <input type="hidden" name="item_id" value="<%=@item_id%>">
-                Cantidad: <input type="number" min=0 name="quantity" value=1>
+              <table>
+                <tr style="color:#fff; font-weight: bold;">
+                  <th style="width: 170px; background-color:#1D64BE; text-align:center">Nombre</th>
+                  <th style="width: 100px; background-color:#1D64BE; text-align:center">Precio</th>
+                  <th style="width: 100px; background-color:#1D64BE; text-align:center">Existencia</th>
+                  <!--<th align="center" style="width: 100px; background-color:#1D64BE;">Cantidad</td>
+                  <td rowspan="2"><button type="submit" class="btn btn-theme">Añadir al Carrito</button></th>-->
+                </tr>
+                <tr>
+                  <td><%=@item.name%></td>
+                  <td><center>$<%=@item.precio%>MN</center></td>
+                  <td><center>En Existencia</center></td>
+                  <!--<td><center><input type="number" min="0" name="quantity" value="1" style="width: 50px; font-weight: bold;"></center></td>-->
+                </tr>
+              </table>
+               <input type="hidden" name="item_id" value="<%=@item_id%>">
+                 Cantidad: <input type="number" min=0 name="quantity" value=1>
                 <button type="submit" class="btn btn-theme">Añadir al Carrito</button>
               </form>
             </div>

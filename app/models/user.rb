@@ -46,9 +46,12 @@ class User < ActiveRecord::Base
     end
   end
 
-  #STUB method. TODO: Implement this to prevent duplicates
   def crear_clave_referencia
-    self.clave_referencia = self.nombre[0] + self.apellido[0..2].upcase + "001"
+    clave_referencia_increment = User.find_by_sql("SELECT clave_referencia FROM users WHERE clave_referencia LIKE '"+ self.nombre[0] + self.apellido[0..2].upcase+"%' ")
+    cr_increment = (clave_referencia_increment.count + 1).to_s
+    cr_increment = cr_increment.rjust(3, '0')
+    self.clave_referencia = self.nombre[0] + self.apellido[0..2].upcase + cr_increment
+
   end
 
   def crear_propuesta
