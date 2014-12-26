@@ -430,7 +430,7 @@ a:after {
 .divider01 {
 	background: url("/assets/divider/divider-1.jpg") no-repeat center center;
 	/* background: url("../img/Solar-Wind-Energy.jpg") no-repeat center center; */
-	background-color: rgb(6, 151, 158, 0.5);
+	background-color: rgb(6, 151, 158);
 	background-size: cover;
 	min-height: 400px;
 	padding-top: 120px;
