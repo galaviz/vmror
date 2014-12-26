@@ -36,14 +36,14 @@ input {
   width: auto;
   vertical-align: middle;
   /*height: 34px;*/
-  border: 1px solid rgb(204, 204, 204, 0.5);
+  border: 1px solid rgb(204, 204, 204);
   border-radius: 4px 4px 4px 4px;
-  color: rgb(85, 85, 85, 0.5);
+  color: rgb(85, 85, 85);
 }
 
 input:focus {
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(102, 175, 233, 0.6);
-  border-color: rgb(102, 175, 233, 0.5);
+  border-color: rgb(102, 175, 233);
   outline: 0px none;
 }
 
@@ -528,7 +528,7 @@ a:after {
 .divider01 {
   background: url("../img/divider/divider-1.jpg") no-repeat center center;
   /* background: url("../img/Solar-Wind-Energy.jpg") no-repeat center center; */
-  background-color: rgb(6, 151, 158, 0.5);
+  background-color: rgb(6, 151, 158);
   background-size: cover;
   min-height: 400px;
   padding-top: 120px;
