@@ -6,8 +6,8 @@ class LoadData < ActiveRecord::Migration
     exampleUser.puntos_vm = 100
     exampleUser.creditos_vm = 100
     exampleUser.clave_referencia = "PGON1"
-    exampleUser.hashed_password = "13dc42d325db5ea37c635086877b0c3fe293a391"
-    exampleUser.salt = "10.8679645728665945"
+    exampleUser.hashed_password = "e4df635c3914bfe704f6398831497977ccfba1e7"
+    exampleUser.salt = "456"
     exampleUser.pasos = 0
     exampleUser.profile_id = 1
     exampleUser.country_id = 1
@@ -23,8 +23,8 @@ class LoadData < ActiveRecord::Migration
     exampleUserResidential.clave_referencia = "MCAL001"
     exampleUserResidential.cargo_fijo = 78.40
     exampleUserResidential.energia = 2564.93
-    exampleUserResidential.hashed_password = "ecc4e9fb67a8e0e7bdd021a6c40fc0f25dc2c03d"
-    exampleUserResidential.salt = "20.09982087988296706"
+    exampleUserResidential.hashed_password = "e4df635c3914bfe704f6398831497977ccfba1e7"
+    exampleUserResidential.salt = "456"
     exampleUserResidential.puntos_vm = 100
     exampleUserResidential.creditos_vm = 100
     exampleUserResidential.pasos = 0
