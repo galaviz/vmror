@@ -1,4 +1,4 @@
-class StatesController < ApplicationController
+class StateController < ApplicationController
 	before_action :set_state, only: [:edit, :update, :deactivate]
 	
 	def index
@@ -45,12 +45,6 @@ class StatesController < ApplicationController
 	  redirect_to :action => :index
 	end 
 
-	def check_permission
-		if SecurityController.has_permission(session[:user_id], "states") == false
-			redirect_to :action => :monitoring, :controller => :dashboard
-		end
-	end
-	
 	def deactivate
 		if @state.active
 			@state.active = false
@@ -64,6 +58,12 @@ class StatesController < ApplicationController
 	def get_states
 		states = State.select("id, description").where(state_id: params["state"])
 	  	render :json =>  { :success => 1, :state_list => states }.to_json
+	end
+	
+	def check_permission
+		if SecurityController.has_permission(session[:user_id], "state") == false
+			redirect_to :action => :monitoring, :controller => :dashboard
+		end
 	end
 	
   private

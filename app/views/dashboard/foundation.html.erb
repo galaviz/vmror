@@ -203,7 +203,7 @@
 						</div>
 						<div class="form-group">
 							<div class="col-sm-8 col-sm-offset-4">
-								<div class="pull-left"><input type='checkbox' name='donation-accept'> Acepto Contrato de Donación </div><br>
+								<div class="pull-left"><input type='checkbox' name='donation-accept'> Acepto los términos y condiciones para donar </div><br>
 							</div>
 						</div>
 						<div class="form-group">
@@ -331,7 +331,6 @@
     });
 	
 	function generateDonationContract(){
-		var donationAmount = $("#").val() + $("#").val();
 		var signature = document.getElementById('canvas').toDataURL("image/png");
 		var creditos = "";
 		var monto = "";
@@ -494,7 +493,7 @@
 		
 		Ajax(
 		pRequestO, 
-		"confirm_foundation_donation", 
+		"check_credits", 
 		function(pResponse){
 			$("#error").html("");
 			$('[name="program"]').val($('[name="program-input"] option:selected').text());

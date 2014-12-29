@@ -1,4 +1,4 @@
-class LocationsController < ApplicationController
+class LocationController < ApplicationController
 	before_action :set_location, only: [:edit, :update, :deactivate]
 	
 	def index
@@ -45,12 +45,6 @@ class LocationsController < ApplicationController
 	  redirect_to :action => :index
 	end 
 
-	def check_permission
-		if SecurityController.has_permission(session[:user_id], "locations") == false
-			redirect_to :action => :monitoring, :controller => :dashboard
-		end
-	end
-	
 	def deactivate
 		if @location.active
 			@location.active = false
@@ -64,6 +58,12 @@ class LocationsController < ApplicationController
 	def get_locations
 		locations = Location.select("id, description").where(state_id: params["state"])
 	  	render :json =>  { :success => 1, :location_list => locations }.to_json
+	end
+	
+	def check_permission
+		if SecurityController.has_permission(session[:user_id], "location") == false
+			redirect_to :action => :monitoring, :controller => :dashboard
+		end
 	end
 	
   private

@@ -80,6 +80,11 @@ class DashboardController < ApplicationController
 	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
       @online_user = User.find_by_id(session["user_id"])
       @user_tier = @online_user.user_tier
+	  @country = Country.find_by_id(@online_user.country_id)
+	  @state = State.find_by_id(@online_user.state_id)
+	  @location = Location.find_by_id(@online_user.location_id)
+	  @signatureDavid = Base64.encode64(File.open("app/assets/customerSignature/signatureDavid.png", "rb").read)
+	  @logo_verde_monarca = Base64.encode64(File.open("app/assets/images/Logo_Verde_Monarca.png", "rb").read)
     else
       redirect_to :action => :index, :controller => :main
     end
@@ -98,7 +103,7 @@ class DashboardController < ApplicationController
     end
   end
 
-  def confirm_foundation_donation
+  def check_credits
 	@online_user = User.find_by_id(session["user_id"])
 	credit = params["pCredit"]
 	amount = params["pAmount"]
@@ -381,37 +386,4 @@ class DashboardController < ApplicationController
     end
   end
 
-  #Configurations Methods
-  def users
-	redirect_to(:action=>"index", :controller => "user")
-  end
-  
-  def profiles
-	redirect_to(:action=>"index", :controller => "profile")
-  end
-  
-  def pages
-	redirect_to(:action=>"index", :controller => "page")
-  end
-  
-  def permissions
-	redirect_to(:action=>"index", :controller => "permission")
-  end
-  
-  def countries
-	redirect_to(:action=>"index", :controller => "country")
-  end
-  
-  def states
-	redirect_to(:action=>"index", :controller => "states")
-  end
-  
-  def locations
-	redirect_to(:action=>"index", :controller => "locations")
-  end
-
-  def categories
-  redirect_to(:action=>"index", :controller => "category")
-  end
-  
 end
