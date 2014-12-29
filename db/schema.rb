@@ -155,6 +155,7 @@ ActiveRecord::Schema.define(version: 20141229183040) do
   end
 
   create_table "projects", force: true do |t|
+    t.boolean  "active"
     t.string   "description"
     t.string   "holder"
     t.string   "vm_code"

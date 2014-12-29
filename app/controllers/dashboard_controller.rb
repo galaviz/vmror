@@ -85,6 +85,7 @@ class DashboardController < ApplicationController
 	  @location = Location.find_by_id(@online_user.location_id)
 	  @signatureDavid = Base64.encode64(File.open("app/assets/customerSignature/signatureDavid.png", "rb").read)
 	  @logo_verde_monarca = Base64.encode64(File.open("app/assets/images/Logo_Verde_Monarca.png", "rb").read)
+	  @projects = Project.where(project_type_id: 2, active: true)
     else
       redirect_to :action => :index, :controller => :main
     end
