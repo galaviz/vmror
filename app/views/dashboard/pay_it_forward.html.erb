@@ -182,56 +182,61 @@
                 <h2 class="text-center">Proyectos</h2>
                 <hr>
               </div><!-- /row -->
+			<% @projects.each do |p| %>
               <div class="row">
-                <strong>Titular:</strong> Ezequiel Álvarez Medina<br>
-                <strong>Codigo VM:</strong> EALV1<br>
-                <strong>Descripción:</strong>Instalación de sistema solar residencial propio<br>
-                <strong>Monto:</strong>  $122,000 MN <br>
-                <strong>TIR:</strong> 29% <br>
-                <strong>Payback:</strong> 4 años <br>
-                <strong>Avance:</strong> $0 MN (0%) <br><br>
-                <div class="classic-form">
-
-                  <br><br>
-                  <form class="text-center form-horizontal" action="./process_pay_it_forward" method="POST">
-                    <div class="form-group">
-                      <label for="modo-inversion" class="col-sm-4 control-label">Deseo: </label>
-                      <div class="col-sm-8">
-						  <select name="modo-inversion" id="modo-inversion" class="form-control">
-							  <option value="2">Donar</option>
-							  <option value="3">Invertir</option>
-						  </select>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="project-input" class="col-sm-4 control-label">Proyecto: </label>
-                      <div class="col-sm-8">
-						  <select name="project-input" id="project-input" class="form-control">
-							  <option value="1">Proyecto 1</option>
-						  </select>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="creditos" class="col-sm-4 control-label">Créditos VM:</label>
-                      <div class="col-sm-8">
-                        <input type="text" class="form-control" name="creditos-vm-input" placeholder="100">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="creditos" class="col-sm-4 control-label">$MN: </label>
-                      <div class="col-sm-8">
-                        <input type="text" class="form-control" name="amount-input" placeholder="100">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="col-sm-8 col-sm-offset-4">
-                        <div class="pull-left"><input type='checkbox' name='donation-accept'> Acepto los términos y condiciones para donar</div><br>
-                      </div>
-                    </div>
-					<a disabled href="#donation-contract" name="donate" class="btn btn-theme" data-toggle="modal" data-target="#donation-contract-modal">Donar ahora</a>
-                </form>
-                </div>
+                <strong>Titular: </strong><span><%=p.holder%></span><br/>
+                <strong>Codigo VM: </strong><span><%=p.vm_code%></span><br/>
+                <strong>Descripción: </strong><span><%=p.description%></span><br/>
+                <strong>Monto: </strong><span>$ <%=p.amount%> MN</span><br/>
+                <strong>TIR: </strong><span><%=p.tir%>%</span><br/>
+                <strong>Payback: </strong><span><%=p.payback%></span><br/>
+                <strong>Avance: </strong><span>$<%=p.progress_amount%> MN (<%=p.progress_percent%>%)</span><br/>
               </div>
+			  <hr>
+			<% end %>
+                <br><br>
+			<div class="classic-form">
+				<br><br>
+				<form class="text-center form-horizontal" action="./process_pay_it_forward" method="POST">
+					<div class="form-group">
+						<label for="modo-inversion" class="col-sm-4 control-label">Deseo: </label>
+						<div class="col-sm-8">
+							<select name="modo-inversion" id="modo-inversion" class="form-control">
+								<option value="2">Donar</option>
+								<option value="3">Invertir</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="project-input" class="col-sm-4 control-label">Proyecto: </label>
+						<div class="col-sm-8">
+							<select name="project-input" id="project-input" class="form-control">
+								<% @projects.each do |p| %>
+								<option value="<%=p.id%>"><%=p.description%></option>
+								<% end %>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="creditos" class="col-sm-4 control-label">Créditos VM:</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" name="creditos-vm-input" placeholder="100">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="creditos" class="col-sm-4 control-label">$MN: </label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" name="amount-input" placeholder="100">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-8 col-sm-offset-4">
+							<div class="pull-left"><input type='checkbox' name='donation-accept'> Acepto los términos y condiciones para donar</div><br>
+						</div>
+					</div>
+					<a disabled href="#donation-contract" name="donate" class="btn btn-theme" data-toggle="modal" data-target="#donation-contract-modal">Donar ahora</a>
+				</form>
+			</div>
               <br><br><br><br>
 			  
           </div><!-- /generacion-solar -->
