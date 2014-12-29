@@ -7,8 +7,9 @@ class CreateProjects < ActiveRecord::Migration
 	  t.float :amount
 	  t.float :progress_amount
 	  t.integer :progress_percent
-	  t.integer :payback
+	  t.string :payback
 	  t.integer :tir
+	  t.integer :project_type_id
       
 	  t.timestamps
     end
