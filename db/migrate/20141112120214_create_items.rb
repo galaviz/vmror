@@ -9,7 +9,15 @@ class CreateItems < ActiveRecord::Migration
       t.string :lumenes
       t.float :precio
       t.string :vida
+      t.string :fase
+      t.string :configuracion
+      t.string :bobina
+      t.string :motor_ventilador
+      t.string :garantia
+      t.string :capacidad
+      t.string :eficiencia
       t.string :disponibilidad
+      t.integer :id_category
       t.timestamps
     end
   end

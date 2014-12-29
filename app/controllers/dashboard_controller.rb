@@ -43,8 +43,6 @@ class DashboardController < ApplicationController
       unless session["cart"]
         session["cart"] = Hash.new
       end
-      @online_user.puntos_vm = 100
-      @online_user.creditos_vm = 100
       @user_tier = @online_user.user_tier
       @cart = session["cart"]
       @num_items_in_cart = 0
@@ -251,9 +249,14 @@ class DashboardController < ApplicationController
 	  @pages = Page.select("description, command").where(menu_id: 1, active: true).order(order_by: :asc)
 	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
       @online_user = User.find_by_id(session["user_id"])
-      @online_user.puntos_vm = 100
-      @online_user.creditos_vm = 100
       @user_tier = @online_user.user_tier
+      @cart = session["cart"]
+      @num_items_in_cart = 0
+      @cart_total = 0
+      @cart.keys.each do |key|
+        @num_items_in_cart = @num_items_in_cart + @cart[key]
+        @cart_total = @cart_total +  (@cart[key] * Item.find_by_id(key).precio)
+      end
     else
       redirect_to :action => :index, :controller => :main
     end

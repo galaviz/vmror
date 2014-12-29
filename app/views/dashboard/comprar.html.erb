@@ -39,7 +39,8 @@
         <div class="col-sm-3 portal-sidebar">
           <ul class="nav nav-list portal-sidenav affix cl-effect-13">
             <li class="active"><a href="#iluminacion" class="smoothScroll">Iluminación</a></li>
-
+            <li class="active"><a href="#calefaccion" class="smoothScroll">Calefacción</a></li>
+            <li class="active"><a href="#aire_acondicionado" class="smoothScroll">Aire Acondicionado</a></li>
           </ul>
         </div>
 
@@ -48,7 +49,7 @@
           <section id="iluminacion" name="iluminacion"></section>
           <div class="iluminacion">
               <div class="row">
-                <h2 class="text-center">Comprar</h2>
+                <h2 class="text-center platinum-color">Comprar</h2>
                 <hr>
               </div><!-- /row -->
               <div class="row">
@@ -116,13 +117,16 @@
           <div class="item">
             <h4 class="text-center theme-color bold"><a href="./carrito">Carrito de Compras</a></h4>
             <h1 class="text-center theme-color bold"><a href="./carrito"><%=@num_items_in_cart%> artículo<%unless @num_items_in_cart==1%>s<%end%> </a></h1>
-            <h4 class="text-center theme-color bold"><a href="./carrito">Comprar ($<%=number_with_precision(@cart_total, :precision => 2, :delimiter => ',')
-%> MN)</a></h4>
+            <h4 class="text-center theme-color bold"><a href="./carrito">Comprar ($<%=number_with_precision(@cart_total, :precision => 2, :delimiter => ',')%> MN)</a></h4>
           </div>
           <div class="item">
-            <h3 class="<%=@color_classes[@user_tier]%>">VM <%=@user_tier%></h3>
+            <h3 class="<%=@color_classes[@online_user.user_tier]%>">VM <%=@online_user.user_tier%></h3>
             <h1 class="text-center theme-color bold"><%=@online_user.puntos_vm%></h1>
             <h4 class="text-center theme-color bold">Puntos VM</h4>
+          </div>
+          <div class="item">
+            <h1 class="text-center theme-color bold"><%=@online_user.creditos_vm%></h1>
+            <h4 class="text-center theme-color bold">Créditos VM</h4>
           </div>
         </div>
       </div><!--/container-->
