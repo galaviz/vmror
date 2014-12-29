@@ -14,10 +14,10 @@ class LoadSecurityData < ActiveRecord::Migration
 	Page.create(:description => "Paises", :command => "country", :order_by => 10, :menu_id => 2, :active => true)
 	Page.create(:description => "Estados", :command => "state", :order_by => 11, :menu_id => 2, :active => true)
 	Page.create(:description => "Municipios", :command => "location", :order_by => 12, :menu_id => 2, :active => true)
-	Page.create(:description => "Categorias", :command => "category", :order_by => 12, :menu_id => 2, :active => true)
+	Page.create(:description => "Categorías", :command => "category", :order_by => 12, :menu_id => 2, :active => true)
 	Page.create(:description => "Productos", :command => "product", :order_by => 12, :menu_id => 2, :active => true)
 	Page.create(:description => "Proyectos", :command => "project", :order_by => 12, :menu_id => 2, :active => true)
-	
+
 	Profile.create(:description => "Administrador", :page_id => 7, :active => true)
 	Profile.create(:description => "Cliente", :page_id => 2, :active => true)
 	

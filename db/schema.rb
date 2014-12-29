@@ -16,6 +16,13 @@ ActiveRecord::Schema.define(version: 20141226225003) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "categories", force: true do |t|
+    t.string   "description"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "countries", force: true do |t|
     t.string   "description"
     t.boolean  "active"
@@ -70,7 +77,15 @@ ActiveRecord::Schema.define(version: 20141226225003) do
     t.string   "lumenes"
     t.float    "precio"
     t.string   "vida"
+    t.string   "fase"
+    t.string   "configuracion"
+    t.string   "bobina"
+    t.string   "motor_ventilador"
+    t.string   "garantia"
+    t.string   "capacidad"
+    t.string   "eficiencia"
     t.string   "disponibilidad"
+    t.integer  "id_category"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -33,72 +33,50 @@
 
   <body data-spy="scroll" data-offset="0" data-target=".portal-sidebar">
 
-    <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "tienda"})%>
-    <div class="main-dashboard-content">
+    <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "categories"})%>
+	<div class="main-dashboard-content">
       <div class="container">
-        <div class="col-sm-3 portal-sidebar">
-          <ul class="nav nav-list portal-sidenav affix cl-effect-13">
-            <li class="active"><a href="#iluminacion" class="smoothScroll">Iluminación</a></li>
-            <li class="active"><a href="#calefaccion" class="smoothScroll">Calefacción</a></li>
-            <li class="active"><a href="#aire_acondicionado" class="smoothScroll">Aire Acondicionado</a></li>
-
-          </ul>
-        </div>
-
-        <div class="col-sm-6">
-          <h2 class="text-center theme-color">Tienda Verde</h2>
-          <section id="iluminacion" name="iluminacion"></section>
-          <div class="iluminacion">
-              <div class="row">
-                <h2 class="text-center platinum-color">Carrito de Compras</h2>
-                <hr>
-              </div><!-- /row -->
-              <div class="row">
-                <form clas="form" type="POST" action="post_carrito">
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>Artículo</th>
-                      <th>Precio Unitario</th>
-                      <th>Cantidad</th>
-                      <th>Total</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <%@items_and_counts_arr.each do |entry|%>
-                      <tr>
-                        <td><%=entry['item'].name%></td>
-                        <td>$<%= number_with_precision(entry['item'].precio, :precision => 2, :delimiter => ',') %> MN</td>
-                        <td><input type="number" min=0 name="item<%=entry['item'].id%>" value="<%=entry['quantity']%>"></td>
-                        <td>$<%= number_with_precision(entry['item'].precio * entry['quantity'], :precision => 2, :delimiter => ',') %> MN</td>
-
-                      </tr>
-
-                    <%end%>
-                  </tbody>
-                </table>
-                <div class="pull-right">
-                <button class="btn btn-large btn-theme" name="actualizar" type="submit">Actualizar carrito</button>
-                <button class="btn btn-large btn-theme" name="comprar" type="submit">Comprar</button>
-                </div>
-                </form>
-              </div>
-              <br><br><br><br><br><br><br><br><br><br><br>
-              <br>
-          </div>
-
-        </div>
-        <div class="col-sm-3 portal-right-sidebar">
-          <div class="item">
-            <h3 class="<%=@color_classes[@user_tier]%>">VM <%=@user_tier%></h3>
-            <h1 class="text-center theme-color bold"><%=@online_user.puntos_vm%></h1>
-            <h4 class="text-center theme-color bold">Puntos VM</h4>
-          </div>
-          <div class="item">
-            <h1 class="text-center theme-color bold"><%=@online_user.creditos_vm%></h1>
-            <h4 class="text-center theme-color bold">Créditos VM</h4>
-          </div>
-        </div>
+		<table style="min-height:500px;width:100%;">
+			<tr>
+				<td valign="top">
+					<table class="table table-hover" style="height:100% !important;">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Descripci&oacute;n</th>
+								<th style="width:80px;"></th>
+								<th style="width:80px;"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<% @categories.each do |c|%>
+							<tr>
+								<td><%=c.id%></td>
+								<td><%=c.description%></td>
+								<td><a style="float:right" href="/category/edit/<%=c.id%>">Editar</a></td>
+								<% if c.active == true%>
+								<td><a style="float:right" href="/category/deactivate/<%=c.id%>">Desactivar</a></td>
+								<% else %>
+								<td><a style="float:right; color:red;" href="/category/deactivate/<%=c.id%>">Activar</a></td>
+								<% end %>
+							</tr>
+							<% end %>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td style="height:50px;">
+					<table class="table">
+						<tr>
+							<td class="text-right">
+								<a href="/category/new" class="btn btn-theme">Nueva categoría</a>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
       </div><!--/container-->
     </div>
 
@@ -116,9 +94,14 @@
     <%= javascript_include_tag "jquery.formatter.min" %>
     <%= javascript_include_tag "legacy" %>
     <%= javascript_include_tag "ajax" %>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
     <script>
-    $(document).ready(function() {
-      $( "#resetpassword-form" ).submit(function( event ) {
+      $(document).ready(function() {
+        $('body').scrollTop(0);
+		
+        $( "#resetpassword-form" ).submit(function( event ) {
           event.preventDefault();
           $.ajax({
             type: "POST",
@@ -138,7 +121,7 @@
                 $("#error-label").html(pRespuesta.messages);
               }
               else if(pRespuesta.success == 1){
-                window.location = "/dashboard/monitoreo"
+                window.location = pRespuesta.location;
               }
             },
             error: function(pRespuesta) {
@@ -149,7 +132,10 @@
             }
           });
         });
-    });      
+
+
+      });
+
     </script>
   </body>
 </html>
