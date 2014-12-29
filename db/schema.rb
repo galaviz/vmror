@@ -46,6 +46,11 @@ ActiveRecord::Schema.define(version: 20141226225003) do
     t.string   "rpu"
     t.string   "nombre"
     t.string   "apellido"
+    t.string   "domicilio"
+    t.integer  "pais"
+    t.integer  "estado"
+    t.integer  "municipio"
+    t.integer  "codigo_postal"
     t.string   "tarifa"
     t.float    "cargo_fijo"
     t.float    "energia"
@@ -128,6 +133,14 @@ ActiveRecord::Schema.define(version: 20141226225003) do
   end
 
   create_table "projects", force: true do |t|
+    t.string   "description"
+    t.string   "holder"
+    t.string   "vm_code"
+    t.float    "amount"
+    t.float    "progress_amount"
+    t.integer  "progress_percent"
+    t.integer  "payback"
+    t.integer  "tir"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

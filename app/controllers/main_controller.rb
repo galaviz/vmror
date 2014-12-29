@@ -20,7 +20,11 @@ class MainController < ApplicationController
 			if @user.authenticate(params["passwordinput"])
 				profile = Profile.find_by_id(@user.profile_id)
 				page = Page.find_by_id(profile.page_id)
-				location = "/dashboard/" + page.command
+				if page.menu_id == 1
+					location = "/dashboard/" + page.command
+				else 
+					location = "/" + page.command
+				end 
 				success = 1
 			else
 				session["user_id"] = nil

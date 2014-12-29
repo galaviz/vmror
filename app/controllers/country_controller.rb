@@ -41,7 +41,7 @@ class CountryController < ApplicationController
 	end 
 
 	def check_permission
-		if SecurityController.has_permission(session[:user_id], "countries") == false
+		if SecurityController.has_permission(session[:user_id], "country") == false
 			redirect_to :action => :monitoring, :controller => :dashboard
 		end
 	end

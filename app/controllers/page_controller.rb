@@ -91,7 +91,7 @@ class PageController < ApplicationController
 	end
 	
 	def check_permission
-		if SecurityController.has_permission(session[:user_id], "permissions") == false
+		if SecurityController.has_permission(session[:user_id], "page") == false
 			redirect_to :action => :monitoring, :controller => :dashboard
 		end
 	end
