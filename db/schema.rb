@@ -85,7 +85,8 @@ ActiveRecord::Schema.define(version: 20141226225003) do
     t.string   "capacidad"
     t.string   "eficiencia"
     t.string   "disponibilidad"
-    t.integer  "id_category"
+    t.integer  "category_id"
+    t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

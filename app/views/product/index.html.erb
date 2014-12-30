@@ -33,61 +33,52 @@
 
   <body data-spy="scroll" data-offset="0" data-target=".portal-sidebar">
 
-    <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "green_shop"})%>
-    <div class="main-dashboard-content">
+    <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "products"})%>
+	<div class="main-dashboard-content">
       <div class="container">
-        <div class="col-sm-3 portal-sidebar">
-          <ul class="nav nav-list portal-sidenav affix cl-effect-13">
-            <li class="active"><a href="#iluminacion" class="smoothScroll">Iluminación</a></li>
-            <li class="active"><a href="#calefaccion" class="smoothScroll">Calefacción</a></li>
-            <li class="active"><a href="#aire_acondicionado" class="smoothScroll">Aire Acondicionado</a></li>
-          </ul>
-        </div>
-
-        <div class="col-sm-6">
-          <h2 class="text-center theme-color">Tienda Verde</h2>
-          <section id="iluminacion" name="iluminacion"></section>
-          <div class="iluminacion">
-              <div class="row">
-                <h2 class="platinum-color">Iluminación LED</h2>
-                <hr>
-              </div><!-- /row -->
-              <div class="row">
-                <%@items.each do |item|%>
-                <div class="col-sm-4">
-                  <div class="item-tienda">
-                    <a href="<%=url_for controller: 'dashboard', action: 'item', id: item.id%>"><img height=180 src="/assets/products_images/<%=item.image_url%>"></a><br>
-                    <a href="<%=url_for controller: 'dashboard', action: 'item', id: item.id%>" class="item-name"><%=item.name%></a><br>
-                    <strong>Watts:</strong> <%=item.watts%><br>
-                    <strong>Lúmenes:</strong> <%=item.lumenes%><br>
-                    <strong>Vida:</strong> <%=item.vida%><br>
-                    <strong>Precio:</strong> $<%=item.precio%>MN<br>
-                    <br>
-                  </div>
-                </div>
-                <%end%>
-              </div>
-              <br><br><br>
-              <br>
-          </div>
-
-        </div>
-        <div class="col-sm-3 portal-right-sidebar">
-          <div class="item">
-            <h4 class="text-center theme-color bold"><a href="./carrito">Carrito de Compras</a></h4>
-            <h1 class="text-center theme-color bold"><a href="./carrito"><%=@num_items_in_cart%> artículo<%unless @num_items_in_cart==1%>s<%end%> </a></h1>
-            <h4 class="text-center theme-color bold"><a href="./carrito">Comprar ($<%=number_with_precision(@cart_total, :precision => 2, :delimiter => ',')%> MN)</a></h4>
-          </div>
-          <div class="item">
-            <h3 class="<%=@color_classes[@user_tier]%>">VM <%=@online_user.user_tier%></h3>
-            <h1 class="text-center theme-color bold"><%=@online_user.puntos_vm%></h1>
-            <h4 class="text-center theme-color bold">Puntos VM</h4>
-          </div>
-          <div class="item">
-            <h1 class="text-center theme-color bold"><%=@online_user.creditos_vm%></h1>
-            <h4 class="text-center theme-color bold">Créditos VM</h4>
-          </div>
-        </div>
+		<table style="min-height:500px;width:100%;">
+			<tr>
+				<td valign="top">
+					<table class="table table-hover" style="height:100% !important;">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Producto</th>
+                <th>Categor&iacute;a</th>
+								<th style="width:80px;"></th>
+								<th style="width:80px;"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<% @products.each do |p|%>
+							<tr>
+								<td><%=p.id%></td>
+								<td><%=p.name%></td>
+                <td><%=p.category%></td>
+								<td><a style="float:right" href="/product/edit/<%=p.id%>">Editar</a></td>
+								<% if p.active == true%>
+								<td><a style="float:right" href="/product/deactivate/<%=p.id%>">Desactivar</a></td>
+								<% else %>
+								<td><a style="float:right; color:red;" href="/product/deactivate/<%=p.id%>">Activar</a></td>
+								<% end %>
+							</tr>
+							<% end %>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td style="height:50px;">
+					<table class="table">
+						<tr>
+							<td class="text-right">
+								<a href="/product/new" class="btn btn-theme">Nuevo producto</a>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
       </div><!--/container-->
     </div>
 
@@ -105,14 +96,20 @@
     <%= javascript_include_tag "jquery.formatter.min" %>
     <%= javascript_include_tag "legacy" %>
     <%= javascript_include_tag "ajax" %>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
     <script>
-    $(document).ready(function() {
-      $( "#resetpassword-form" ).submit(function( event ) {
+      $(document).ready(function() {
+        $('body').scrollTop(0);
+		
+        $( "#resetpassword-form" ).submit(function( event ) {
           event.preventDefault();
           $.ajax({
             type: "POST",
             url: "/dashboard/post_change_password",
             data: {
+              password_input:$("#password_input").val(),
               password_input:$("#password_input").val(),
               password_input_new:$("#password_input_new").val(),
               password_input_confirm:$("#password_input_confirm").val()
@@ -137,7 +134,10 @@
             }
           });
         });
-    });      
+
+
+      });
+
     </script>
   </body>
 </html>
