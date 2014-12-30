@@ -13,12 +13,22 @@ class UserMailer < ActionMailer::Base
     mail(to: @user.email, subject: 'Registro de verdemonarca')
   end
 
-  def send_donation_confirmation_email(user, amount, creditos_vm, codigo_vm)
+  def send_donation_confirmation_email_to_admin(user, amount, creditos_vm, codigo_vm, donation_type)
     @user = user
     @amount = amount
     @creditos_vm = creditos_vm
     @codigo_vm = codigo_vm
-    mail(to: "yalmasri@keepmoving.com.mx", subject: 'Contribución Pay-It-Forward')
+	@donation_type = donation_type.to_s
+    mail(to: "yalmasri@keepmoving.com.mx", subject: 'Contribución Verde Monarca')
+  end
+
+  def send_donation_confirmation_email_to_user(user, amount, creditos_vm, codigo_vm, donation_type)
+    @user = user
+    @amount = amount
+    @creditos_vm = creditos_vm
+    @codigo_vm = codigo_vm
+	@donation_type = donation_type.to_s
+    mail(to: @user.email, subject: 'Contribución Verde Monarca')
   end
 
   def send_purchase_confirmation_email_to_user(user, cart)
