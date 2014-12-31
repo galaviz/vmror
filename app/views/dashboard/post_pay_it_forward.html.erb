@@ -50,9 +50,13 @@
               </div><!-- /row -->
               <div class="row">
                 <div class="classic-form">
-
                     <h2>¡Felicidades <strong class="theme-color"><%=@online_user.nombre%>!<strong class="theme-color"></h2>
+					<% if @donation_type == "2" %>
                     <h3>Has donado exitosamente <strong class="theme-color"><%=@creditos_vm%> Créditos VM</strong> y <strong class="theme-color">$<%=@amount%> MN</strong> al proyecto <strong class="theme-color"><%=@codigo_vm%></strong>
+					<% end 
+					if @donation_type == "3" %>
+                    <h3>Has invertido exitosamente <strong class="theme-color"><%=@creditos_vm%> Créditos VM</strong> y <strong class="theme-color">$<%=@amount%> MN</strong> al proyecto <strong class="theme-color"><%=@codigo_vm%></strong>
+					<% end %>
                     <h3><strong class="theme-color"><%=@titular%></strong> estará muy agradecido contigo!</h3>
                 </div>
               </div>
@@ -88,7 +92,7 @@
     <%= javascript_include_tag "animations" %>
     <%= javascript_include_tag "jquery.formatter.min" %>
     <%= javascript_include_tag "legacy" %>
-    <%= javascript_include_tag "ajax" %>
+    <%= javascript_include_tag "verdemonarca" %>
     <script>
     $(document).ready(function() {
       $( "#resetpassword-form" ).submit(function( event ) {

@@ -51,7 +51,9 @@ class DashboardController < ApplicationController
         @num_items_in_cart = @num_items_in_cart + @cart[key]
         @cart_total = @cart_total +  (@cart[key] * Item.find_by_id(key).precio)
       end
-      @items = Item.all.where(active: true)
+      @items_category1 = Item.all.where(active: true, category_id:1)
+      @items_category2 = Item.all.where(active: true, category_id:2)
+      @items_category3 = Item.all.where(active: true, category_id:3)
     else
       redirect_to :action => :index, :controller => :main
     end
@@ -80,25 +82,18 @@ class DashboardController < ApplicationController
 	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
       @online_user = User.find_by_id(session["user_id"])
       @user_tier = @online_user.user_tier
+	  @country = Country.find_by_id(@online_user.country_id)
+	  @state = State.find_by_id(@online_user.state_id)
+	  @location = Location.find_by_id(@online_user.location_id)
+	  @signatureDavid = Base64.encode64(File.open("app/assets/customerSignature/signatureDavid.png", "rb").read)
+	  @logo_verde_monarca = Base64.encode64(File.open("app/assets/images/Logo_Verde_Monarca.png", "rb").read)
+	  @projects = Project.where(project_type_id: 2, active: true)
     else
       redirect_to :action => :index, :controller => :main
     end
   end
 
-  def post_fundacion
-    if session["user_id"] and User.find_by_id(session["user_id"])
-	  @pages = Page.select("description, command").where(menu_id: 1, active: true).order(order_by: :asc)
-	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
-      @online_user = User.find_by_id(session["user_id"])
-      @user_tier = @online_user.user_tier
-      @creditos_vm = params["creditos_vm"]
-      @amount = params["amount"]
-    else
-      redirect_to :action => :index, :controller => :main
-    end
-  end
-
-  def confirm_foundation_donation
+  def check_credits
 	@online_user = User.find_by_id(session["user_id"])
 	credit = params["pCredit"]
 	amount = params["pAmount"]
@@ -121,20 +116,25 @@ class DashboardController < ApplicationController
     puts "params is"
     puts params.inspect
     # Amount in cents
-    @amount = (params[:amount].to_f * 100).to_i
-	puts @amount
-    customer = Stripe::Customer.create(
-      :email => @online_user.email,
-      :card  => params[:stripeToken]
-    )
+	@amount = 0
+	@customer_id = ""
+	if params[:amount] != "0"
+		@amount = (params[:amount].to_f * 100).to_i
+		customer = Stripe::Customer.create(
+		  :email => @online_user.email,
+		  :card  => params[:stripeToken]
+		)
 
-    charge = Stripe::Charge.create(
-      :customer    => customer.id,
-      :amount      => @amount,
-      :description => 'Verde Monarca',
-      :currency    => 'mxn'
-    )
-    @online_user.stripe_id = customer.id
+		charge = Stripe::Charge.create(
+		  :customer    => customer.id,
+		  :amount      => @amount,
+		  :description => 'Verde Monarca',
+		  :currency    => 'mxn'
+		)
+		@customer_id = customer.id
+	end
+
+    @online_user.stripe_id = @customer_id
 	@online_user.creditos_vm = @online_user.creditos_vm.to_i - params[:creditos_vm].to_i
     @online_user.save()
     puts @online_user.inspect
@@ -159,10 +159,25 @@ class DashboardController < ApplicationController
 	donation_history.contract_file_name = contract
 	donation_history.save()
 	
+    UserMailer.send_donation_confirmation_email_to_admin(@online_user, params[:amount], params[:creditos_vm], '¡Agua Para Todos!', 1).deliver
+    UserMailer.send_donation_confirmation_email_to_user(@online_user, params[:amount], params[:creditos_vm], '¡Agua Para Todos!', 1).deliver
     redirect_to(:action=>"post_fundacion", :amount => params[:amount], :creditos_vm => params[:creditos_vm])
     rescue Stripe::CardError => e
       flash[:error] = e.message
       redirect_to(:action=>"foundation")
+  end
+
+  def post_fundacion
+    if session["user_id"] and User.find_by_id(session["user_id"])
+	  @pages = Page.select("description, command").where(menu_id: 1, active: true).order(order_by: :asc)
+	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
+      @online_user = User.find_by_id(session["user_id"])
+      @user_tier = @online_user.user_tier
+      @creditos_vm = params["creditos_vm"]
+      @amount = params["amount"]
+    else
+      redirect_to :action => :index, :controller => :main
+    end
   end
 
   def process_payment
@@ -201,29 +216,68 @@ class DashboardController < ApplicationController
     @online_user = User.find_by_id(session["user_id"])
     # Set your secret key: remember to change this to your live secret key in production
     # See your keys here https://dashboard.stripe.com/account
-    Stripe.api_key = "sk_test_WsASCDydj4600M6xEyEclCsU"
-    # Stripe.api_key = "sk_live_oxmNmon9IbVu2xBV3xj2YRAn" #TODO: Set environment variable for this
+    Stripe.api_key = @stripe_sk_test
     puts "params is"
     puts params.inspect
     # Amount in cents
-    @amount = (params[:amount].to_f * 100).to_i
+	@amount = 0
+	@customer_id = ""
+	if params[:amount] != "0"
+		@amount = (params[:amount].to_f * 100).to_i
+		customer = Stripe::Customer.create(
+		  :email => @online_user.email,
+		  :card  => params[:stripeToken]
+		)
 
-    customer = Stripe::Customer.create(
-      :email => @online_user.email,
-      :card  => params[:stripeToken]
-    )
+		charge = Stripe::Charge.create(
+		  :customer    => customer.id,
+		  :amount      => @amount,
+		  :description => 'Verde Monarca',
+		  :currency    => 'mxn'
+		)
+		@customer_id = customer.id
+	end
 
-    charge = Stripe::Charge.create(
-      :customer    => customer.id,
-      :amount      => @amount,
-      :description => 'Verde Monarca',
-      :currency    => 'mxn'
-    )
-    @online_user.stripe_id = customer.id
+    @online_user.stripe_id = @customer_id
+	@online_user.creditos_vm = @online_user.creditos_vm.to_i - params[:creditos_vm].to_i
     @online_user.save()
     puts @online_user.inspect
-    UserMailer.send_donation_confirmation_email(@online_user, params[:amount], params[:creditos_vm], params[:codigo_vm]).deliver
-    redirect_to(:action=>"post_pay_it_forward", :amount => params[:amount], :creditos_vm => params[:creditos_vm], :codigo_vm => params[:codigo_vm], :titular => params[:titular])
+	
+	@donation_type = params["donation_type"].to_s
+	contractPDF = params["contract"]
+	@contract = ""
+	if @donation_type == "2"
+	
+		donation_serie = DonationHistory.find_by_sql("SELECT id FROM donation_histories WHERE user_id=" + @online_user.id.to_s + " AND donation_type_id=2")
+		serie = (donation_serie.count + 1).to_s
+		serie = serie.rjust(3, '0')
+		
+		@contract = @online_user.id.to_s + "-" + @online_user.clave_referencia + "-Contrato_Donación_Entre_Usuarios-" + serie
+	elsif @donation_type == "3"
+	
+		donation_serie = DonationHistory.find_by_sql("SELECT id FROM donation_histories WHERE user_id=" + @online_user.id.to_s + " AND donation_type_id=3")
+		serie = (donation_serie.count + 1).to_s
+		serie = serie.rjust(3, '0')
+		
+		@contract = @online_user.id.to_s + "-" + @online_user.clave_referencia + "-Contrato_Inversión_Entre_Usuarios-" + serie
+	end
+	File.open('app/assets/contracts/' + @contract + '.pdf',"wb") do |file|
+		file.write(Base64.decode64(contractPDF))
+	end
+	
+	donation_history = DonationHistory.new
+	donation_history.description = "Generado por sistema"
+	donation_history.user_id = @online_user.id
+	donation_history.donation_type_id = @donation_type
+	donation_history.project_id  = params["project_id"]
+	donation_history.amount_mxn = @amount
+	donation_history.credit_vm = params["creditos_vm"]
+	donation_history.contract_file_name = @contract
+	donation_history.save()
+	
+    UserMailer.send_donation_confirmation_email_to_admin(@online_user, params[:amount], params[:creditos_vm], params[:codigo_vm], @donation_type).deliver
+    UserMailer.send_donation_confirmation_email_to_user(@online_user, params[:amount], params[:creditos_vm], params[:codigo_vm], @donation_type).deliver
+    redirect_to(:action=>"post_pay_it_forward", :amount => params[:amount], :creditos_vm => params[:creditos_vm], :codigo_vm => params[:codigo_vm], :titular => params[:titular], :donation_type => @donation_type)
     rescue Stripe::CardError => e
       flash[:error] = e.message
       redirect_to(:action=>"pay_it_forward")
@@ -231,12 +285,16 @@ class DashboardController < ApplicationController
 
   def post_pay_it_forward
     if session["user_id"] and User.find_by_id(session["user_id"])
+	  @pages = Page.select("description, command").where(menu_id: 1, active: true).order(order_by: :asc)
+	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
+      @online_user = User.find_by_id(session["user_id"])
       @online_user = User.find_by_id(session["user_id"])
       @user_tier = @online_user.user_tier
       @creditos_vm = params["creditos_vm"]
       @amount = params["amount"]
       @titular = params["titular"]
       @codigo_vm = params["codigo_vm"]
+      @donation_type = params["donation_type"].to_s
     else
       redirect_to :action => :index, :controller => :main
     end

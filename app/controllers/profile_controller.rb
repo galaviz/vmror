@@ -86,7 +86,7 @@ class ProfileController < ApplicationController
 	end
 	
 	def check_permission
-		if SecurityController.has_permission(session[:user_id], "profiles") == false
+		if SecurityController.has_permission(session[:user_id], "profile") == false
 			redirect_to :action => :monitoring, :controller => :dashboard
 		end
 	end

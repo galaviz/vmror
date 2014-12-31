@@ -18,6 +18,7 @@
     <%= stylesheet_link_tag "social-icons" %>
     <%= stylesheet_link_tag "font-awesome.min" %>
     <%= stylesheet_link_tag "bootstrapValidator.min" %>
+    <%= stylesheet_link_tag "jquery.signaturepad" %>
     <%= stylesheet_link_tag "style" %>
     <!-- Web Fonts -->
     <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
@@ -37,7 +38,7 @@
 	
 	
 	<!-- Contract Modal -->
-	<div class="modal fade bs-modal-sm in" id="foundation-donation-contract-modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+	<div class="modal fade bs-modal-sm in" id="donation-contract-modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
 		<div class="modal-dialog modal-sm" style="width:auto;max-width:700px;">
 			<div class="modal-content">
 				<div class="modal-body">
@@ -75,7 +76,7 @@
 								<!-- Buttons-->
 								<div class="control-group text-center">
 									<div class="controls text-center">
-										<a href="#" disabled id="foundation-donation-contract-accept" class="btn btn-theme">Aceptar</a>
+										<a href="#" disabled id="donation-contract-accept" class="btn btn-theme">Aceptar</a>
 									</div>
 								</div>
 								<br/>
@@ -102,36 +103,57 @@
 
 	
 	<!-- Payment Modal -->
-	<div class="modal fade bs-modal-sm in" id="payment-modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+	<div class="modal fade bs-modal-sm in" data-backdrop="static" data-keyboard="false" id="payment-modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
 		<div class="modal-dialog modal-sm" style="width:auto;max-width:700px;">
 			<div class="modal-content">
 				<div class="modal-body">
 					<div class="tab-content">
 						<div class="tab-pane fade active in" id="payment">
 							<fieldset>
-								<form class="text-center form-horizontal" action="./process_donation" method="POST">
+								<form class="text-center form-horizontal card-payment" action="./process_pay_it_forward" method="POST">
 									<table align="center" id="user-info-table" style="text-align:left;">
-										<tr><td style="width:250px;"><span class='bold'>Donar a:</span></td><td><input name="program" type="text" readonly style="background:transparent;border:none;" /></td></tr>
+										<tr><td style="width:250px;"><span class='bold donation-label'></span></td><td><input name="codigo_vm" type="text" readonly style="background:transparent;border:none;" /></td></tr>
 										<tr><td style="width:250px;"><span class='bold'>Créditos VM:</span></td><td><input name="creditos_vm" type="text" readonly style="background:transparent;border:none;" /></td></tr>
 										<tr><td><span class='bold'>$MN:</span></td><td><input name="amount" type="text" readonly style="background:transparent;border:none;" /></td></tr>
 										<tr><td></td><td><input name="contract" type="hidden" style="background:transparent;border:none;" /><input name="project_id" type="hidden" /></td></tr>
 									</table>
-									<br/>
-									<br/>
-									<script
-										src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-										data-key="pk_live_TZMVzigJsplccEBJVDYNjcGQ"
-										data-name="Verde Monarca"
-										data-description="Fundacion VM"
-										data-currency="MXN"
-										data-email="<%=@online_user.email%>"
-										data-label="Pagar"
-										data-image="">
-									</script>
-									<input type="hidden" name="codigo_vm" value="PGON1">
-									<input type="hidden" name="titular" value="Patricio">
-									<input type="hidden" name="avance" value="0">
+									<input type="hidden" name="donation_type">
+									<input type="hidden" name="titular">
+									<input type="hidden" name="avance">
 									<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+									<br/>
+									<br/>
+									<div class="form-group">
+										<script
+											src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+											data-key=<%=@stripe_pk_test%>
+											data-name="Verde Monarca"
+											data-description="Fundacion VM"
+											data-currency="MXN"
+											data-email="<%=@online_user.email%>"
+											data-label="Pagar"
+											data-image="">
+										</script>
+									</div>
+								</form>
+								<form class="text-center form-horizontal credit-payment" action="./process_pay_it_forward" method="POST">
+									<table align="center" id="user-info-table" style="text-align:left;">
+										<tr><td style="width:250px;"><span class='bold donation-label'></span></td><td><input name="codigo_vm" type="text" readonly style="background:transparent;border:none;" /></td></tr>
+										<tr><td style="width:250px;"><span class='bold'>Créditos VM:</span></td><td><input name="creditos_vm" type="text" readonly style="background:transparent;border:none;" /></td></tr>
+										<tr><td><span class='bold'>$MN:</span></td><td><input name="amount" type="text" readonly style="background:transparent;border:none;" /></td></tr>
+										<tr><td></td><td><input name="contract" type="hidden" style="background:transparent;border:none;" /><input name="project_id" type="hidden" /></td></tr>
+									</table>
+									<input type="hidden" name="donation_type">
+									<input type="hidden" name="titular">
+									<input type="hidden" name="avance">
+									<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+									<br/>
+									<br/>
+									<div class="form-group">
+										<button type="submit" class="btn btn-theme">
+											Aceptar
+										</button>
+									</div>
 								</form>
 							</fieldset>
 						</div><!-- /Change Password Form -->
@@ -181,50 +203,68 @@
                 <h2 class="text-center">Proyectos</h2>
                 <hr>
               </div><!-- /row -->
+			<% @projects.each do |p| %>
               <div class="row">
-                <strong>Titular:</strong> Ezequiel Álvarez Medina<br>
-                <strong>Codigo VM:</strong> EALV1<br>
-                <strong>Descripción:</strong>Instalación de sistema solar residencial propio<br>
-                <strong>Monto:</strong>  $122,000 MN <br>
-                <strong>TIR:</strong> 29% <br>
-                <strong>Payback:</strong> 4 años <br>
-                <strong>Avance:</strong> $0 MN (0%) <br><br>
-                <div class="classic-form">
-
-                  <br><br>
-                  <form class="text-center form-horizontal" action="./process_pay_it_forward" method="POST">
-                    <div class="form-group">
-                      <label for="modo-inversion" class="col-sm-4 control-label">Deseo </label>
-                      <div class="col-sm-8">
-						  <select name="modo-inversion" id="modo-inversion" class="form-control">
-							  <option>Donar</option>
-							  <option>Invertir</option>
-						  </select>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="creditos" class="col-sm-4 control-label">Créditos VM:</label>
-                      <div class="col-sm-8">
-                        <input type="text" class="form-control" name="creditos_vm" placeholder="100">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="creditos" class="col-sm-4 control-label">$MN: </label>
-                      <div class="col-sm-8">
-                        <input type="text" class="form-control" name="amount" placeholder="100">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="col-sm-8 col-sm-offset-4">
-                        <div class="pull-left"><input type='checkbox' name='donar-mensualmente'> Acepto los términos y condiciones para donar</div><br>
-                      </div>
-                    </div>
-                </form>
-                </div>
+                <strong>Titular: </strong><span><%=p.holder%></span><br/>
+                <strong>Codigo VM: </strong><span><%=p.vm_code%></span><br/>
+                <strong>Descripción: </strong><span><%=p.description%></span><br/>
+                <strong>Monto: </strong><span>$ <%=p.amount%> MN</span><br/>
+                <strong>TIR: </strong><span><%=p.tir%>%</span><br/>
+                <strong>Payback: </strong><span><%=p.payback%></span><br/>
+                <strong>Avance: </strong><span>$<%=p.progress_amount%> MN (<%=p.progress_percent%>%)</span><br/>
               </div>
-              <br><br><br>
-              <br>
-			  <a disabled href="#foundation-donation-contract" name="donate" class="btn btn-theme" data-toggle="modal" data-target="#foundation-donation-contract-modal">Donar ahora</a>
+			  <hr>
+			<% end %>
+                <br><br>
+			<div class="classic-form">
+				<br><br>
+				<form class="text-center form-horizontal" action="" method="POST">
+					<div class="form-group">
+						<label for="modo-inversion" class="col-sm-4 control-label">Deseo: </label>
+						<div class="col-sm-8">
+							<select name="modo-inversion" id="modo-inversion" class="form-control">
+								<option value="2">Donar</option>
+								<option value="3">Invertir</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="project-input" class="col-sm-4 control-label">Proyecto: </label>
+						<div class="col-sm-8">
+							<select name="project-input" id="project-input" class="form-control">
+								<% @projects.each do |p| %>
+								<option value="<%=p.id%>" holder="<%=p.holder%>"><%=p.vm_code%></option>
+								<% end %>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="creditos" class="col-sm-4 control-label">Créditos VM:</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" name="creditos-vm-input" placeholder="100">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="creditos" class="col-sm-4 control-label">$MN: </label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" name="amount-input" placeholder="100">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-8 col-sm-offset-4">
+							<div class="pull-left">
+								<label>
+									<input type='checkbox' name='donation-accept'> Acepto los términos y condiciones para donar
+								</label>
+							</div>
+							<br>
+						</div>
+					</div>
+					<a disabled href="#donation-contract" name="donate" class="btn btn-theme" data-toggle="modal" data-target="#donation-contract-modal">Donar ahora</a>
+				</form>
+			</div>
+              <br><br><br><br>
+			  
           </div><!-- /generacion-solar -->
 
         </div>
@@ -255,40 +295,475 @@
     <%= javascript_include_tag "animations" %>
     <%= javascript_include_tag "jquery.formatter.min" %>
     <%= javascript_include_tag "legacy" %>
-    <%= javascript_include_tag "ajax" %>
+    <%= javascript_include_tag "verdemonarca" %>
+    <%= javascript_include_tag "jquery.signaturepad.min" %>
+    <%= javascript_include_tag "json2.min" %>
+	<%= javascript_include_tag "pdfmake.min" %>
+	<%= javascript_include_tag "vfs_fonts" %>
     <script>
     $(document).ready(function() {
-      $( "#resetpassword-form" ).submit(function( event ) {
-          event.preventDefault();
-          $.ajax({
-            type: "POST",
-            url: "/dashboard/post_change_password",
-            data: {
-              password_input:$("#password_input").val(),
-              password_input_new:$("#password_input_new").val(),
-              password_input_confirm:$("#password_input_confirm").val()
-            },
-            dataType: "json",
-            beforeSend: function(){
+		project_info = "";
+	
+		$( "#resetpassword-form" ).submit(function( event ) {
+			event.preventDefault();
+			$.ajax({
+				type: "POST",
+				url: "/dashboard/post_change_password",
+				data: {
+					password_input:$("#password_input").val(),
+					password_input_new:$("#password_input_new").val(),
+					password_input_confirm:$("#password_input_confirm").val()
+				},
+				dataType: "json",
+				beforeSend: function(){
 
-            },
-            success: function(pRespuesta) {
-              if(pRespuesta.success == 0){
-                $("#error-label").html(pRespuesta.messages);
-              }
-              else if(pRespuesta.success == 1){
-                window.location = pRespuesta.location;
-              }
-            },
-            error: function(pRespuesta) {
-              alert("error");
-            },
-            complete: function() {
+				},
+				success: function(pRespuesta) {
+					if(pRespuesta.success == 0){
+						$("#error-label").html(pRespuesta.messages);
+					}
+					else if(pRespuesta.success == 1){
+						window.location = pRespuesta.location;
+					}
+				},
+				error: function(pRespuesta) {
+					alert("error");
+				},
+				complete: function() {
 
-            }
-          });
-        });
-    });      
+				}
+			});
+		});
+
+		$("#clear").on('click', function(){ $("#foundation-donation-contract-accept").attr("disabled", "disabled"); });
+		
+		$('[name="creditos-vm-input"]').on({
+			keypress: function (event) {
+				if (!((event.which >= 48 && event.which <= 57))) {
+					event.preventDefault();
+				}
+			}
+		});
+		
+		$('[name="amount-input"]').on({
+			keypress: function (event) {
+				if (!((event.which >= 48 && event.which <= 57))) {
+					event.preventDefault();
+				}
+			}
+		});
+		
+		$('.sigPad').signaturePad({
+			drawOnly:true,
+			bgColour:'transparent',
+			lineWidth: 0,
+			onDrawEnd: function(){
+				$("#donation-contract-accept").removeAttr("disabled");
+				if ($('[name="modo-inversion"]').val() == 2){
+					$("#donation-contract-pdf").attr("src", "");
+					generateDonationContract();
+				}
+				else if ($('[name="modo-inversion"]').val() == 3) {
+					$("#donation-contract-pdf").attr("src", "");
+					generateInvestmentContract();
+				}
+			}
+		});
+
+		$('[name="donation-accept"]').on( "click", function(){
+			if($(this).is(":checked")){
+				$('[name="donate"]').attr('disabled', false);
+			}
+			else{
+				$('[name="donate"]').attr('disabled', true);
+			}
+		});
+		
+		$('[name="donate"]').on('click', function(){
+			if ($('[name="modo-inversion"]').val() == 2){
+				$("#donation-contract-pdf").attr("src", "");
+				generateDonationContract();
+			}
+			else if ($('[name="modo-inversion"]').val() == 3) {
+				$("#donation-contract-pdf").attr("src", "");
+				generateInvestmentContract();
+			}
+		})
+		
+		$('[name="project-input"]').on('change', function(){
+			projectInfo();
+		});
+		
+		$('.stripe-button-el').on('disable', function(){
+			$('.btn').each(function(){
+				$(this).attr('disabled', true);
+			})
+		});
+		
+		$('form').submit(function( event ){
+			$('.btn').each(function(){
+				$(this).attr('disabled', true);
+			})
+		});
+		$('.stripe-button-el').watch('disabled', function(){
+			$('.btn').each(function(){
+				$(this).attr('disabled', true);
+			})
+		});
+		
+		projectInfo();
+    });
+	
+	function projectInfo(){
+		var pRequestO = new Object();
+		pRequestO.id = $('[name="project-input"]').val();
+		Ajax(pRequestO, "/project/project_info", function(pResponse){ project_info = pResponse.project; }, function(pResponse){})
+	}
+	
+	function generateDonationContract(){
+		var signature = document.getElementById('canvas').toDataURL("image/png");
+		
+		var creditos = "";
+		var monto = "";
+		if($('[name="creditos-vm-input"]').val() == ''){
+			creditos = "0";
+		}else{ creditos = $('[name="creditos-vm-input"]').val(); }
+		if($('[name="amount-input"]').val() == ''){
+			monto = "0";
+		}else{ monto = $('[name="amount-input"]').val(); }
+		
+		//Generate PDF Contract
+		var today = new Date();
+		var months = ["Enero", "Febrero", "Marzo", "Abril","Mayo","Junio","Julio","Agosto","Setiembre","Octubre","Noviembre","Diciembre"];
+		var firma = "";
+		var firmaVM = "David Eduardo Arrambide Montemayor";
+		var docDefinition = {
+			pageMargins: [ 40, 100, 40, 60 ],
+			header: {
+				columns: [
+					{ image: 'data:image/png;base64,<%=@logo_verde_monarca.tr("\n", "")%>', 
+					  margin: [40, 15, 10, 10],
+					  width: 100
+					},
+					{ text: 'Contrato de Donación Entre Usuarios Verde Monarca', alignment: 'right', margin: [10, 60, 40, 20], fontSize: 14 }
+				]
+			},
+			content: [
+				{ 
+					text: [
+						{text: 'Contrato de Donación ', bold: true},
+						'que emite y acepta <%=@online_user.nombre.upcase + " " + @online_user.apellido.upcase%>, a quien en lo sucesivo se le dominará "El Donante" dirigida a ' + project_info.holder.toUpperCase() + ', a quien en lo sucesivo se le denominará "El Donatario", al tenor de las declaraciones y cláusulas siguientes:'
+					]
+				},
+				{ text: '\nDECLARACIONES\n\n', style: 'title', alignment: 'left'},
+				{ ul: [
+						'Declara "El Donante":',
+						{ ol: [
+							'Que emite y firma la presente carta con el fin de transmitir a "El Donatario" los fondos en numerario materia de esta carta, de forma gratuita.\n',
+							'Que los recursos a donar se obtuvieron de forma legal.\n',
+							'Que con la celebración del presente contrato no afecta los derechos de aquellas otras personas que en su momento tengan derecho a recibir alimentos de éste conforme a lo dispuesto por el Código Civil.\n',
+							'Que señala como domicilio convencional el ubicado en <%=@online_user.calle + " " + @online_user.numero_direccion.to_s + ", " + @online_user.colonia + ", " + @location.description + ", " + @state.description + ", " + @country.description + " " + @online_user.codigo_postal%> y que cuenta con capacidad legal para celebrar la presente operación.\n',
+							'Que es su libre voluntad celebrar la presente carta, sin encontrarse limitado para dar los bienes a donar.\n',
+						  ]
+						},
+					]
+				},
+				{ text: '\nCLÁUSULAS\n\n', style: 'title', alignment: 'center'},
+				{
+					text: [
+						{ text: 'PRIMERA.- ', bold: true, fontSize: 14, },
+						'"El Donante" se obliga a transmitir de forma gratuita la cantidad de $' + monto + ' MXN, ' + creditos + ' créditos a "El Donatario".'
+					]
+				},
+				{
+					text: [
+						{ text: '\nSEGUNDA.- ', bold: true, fontSize: 14, },
+						'En razón de la transmisión mencionada en el artículo anterior, "El Donante" se obliga a realizar todos los actos jurídicos para ello y a entregarlo a "El Donatario" a la firma de la presente carta.'
+					]
+				},
+				{
+					text: [
+						{ text: '\nTERCERA.- ', bold: true, fontSize: 14, },
+						'"El Donante" se obliga a no imponerle cargas de pago de deudas o de otra índole a "El Donatario" que deriven de la presente carta.',
+						
+					]
+				},
+				{
+					text: [
+						{ text: '\nCUARTA.- ', bold: true, fontSize: 14, },
+						'De acuerdo con lo expresado en la Declaración I, “El Donante” conviene en que “El Donatario” quedará liberado del pago de cualquier deuda adquirida por "El Donante" antes de la firma de la presente carta, quedando a cargo del mismo el saldo de las que resultaren.'
+					]
+				},
+				{
+					text: [
+						{ text: '\nQUINTA.- ', bold: true, fontSize: 14, },
+						'“El Donante” expresa que en la firma de la presente carta no existe dolo, mala fe, violencia, error o cualquier otro vicio de la voluntad que pudiera invalidarlo.'
+					]
+				},
+				{ text: '\nLeída la presente carta, conforme con su contenido valor y fuerza legal, lo firma quien en ella intervino, en la ciudad de Monterrey, Nuevo León a los ' + today.getDate() + ' días del mes de ' + months[today.getMonth()].toUpperCase() + ' de ' + today.getFullYear() + '.', alignment: 'left'},
+				{
+					pageBreak: 'before',
+					table: {
+						// headers are automatically repeated if the table spans over multiple pages
+						// you can declare how many rows should be treated as headers
+						headerRows: 1,
+						widths: [ '*'],
+
+						body: [
+							[ {text: '', alignment: 'center'}],
+							[ {text: 'Por “El Donante”', alignment: 'center'}],
+							[ {text: '', alignment: 'center'}],
+							[ { image: signature, width: 200, alignment: 'center' }],
+							[ {text: '__________________________________', alignment: 'center'}],
+							[ {text: '<%=@online_user.nombre + " " + @online_user.apellido%>', alignment: 'center'}],
+							[ {text: '', alignment: 'center'}],
+							[ {text: '', alignment: 'center'}],
+						]
+					},
+					layout: 'noBorders'
+				},
+			],
+			footer: {
+				columns: [
+					{ text: 'Verde Monarca, S.A.P.I. de C.V.\n 115-A Notre Dame, Col. Valle de San Ángel\nSan Pedro Garza García, NL, MEX 66290', margin: [40, 0, 0, 0], fontSize: 8},
+					{ text: '\nTel. (81) 8340-8279\nwww.verdemonarca.com', alignment: 'right', margin: [0, 0, 40, 0], fontSize: 8 }
+				]
+			},
+			styles: {
+				header: {
+					fontSize: 12,
+					alignment: 'justify'
+				},
+				title: {
+					alignment: 'center',
+					bold: 'true',
+					fontSize: 14
+				},
+				subtitle: {
+					bold: 'true',
+					fontSize: 13
+				},
+				paragraph: {
+					alignment: 'justify'
+				},
+				tabbed: {
+					margin: [20, 0, 40, 0],
+				}
+			}
+		};
+		pdfMake.createPdf(docDefinition);
+		pdfMake.createPdf(docDefinition).getDataUrl(function(outDoc) {
+			$("#donation-contract-pdf").attr("src", outDoc);
+			var contract64 = outDoc.replace(/^data:application\/(png|jpg|pdf);base64,/, "");
+			$('[name="contract"]').val(contract64);
+		});
+	}
+	
+	function generateInvestmentContract(){
+		
+		var signature = document.getElementById('canvas').toDataURL("image/png");
+		
+		var creditos = "";
+		var monto = "";
+		if($('[name="creditos-vm-input"]').val() == ''){
+			creditos = "0";
+		}else{ creditos = $('[name="creditos-vm-input"]').val(); }
+		if($('[name="amount-input"]').val() == ''){
+			monto = "0";
+		}else{ monto = $('[name="amount-input"]').val(); }
+		
+		//Generate PDF Contract
+		var today = new Date();
+		var months = ["Enero", "Febrero", "Marzo", "Abril","Mayo","Junio","Julio","Agosto","Setiembre","Octubre","Noviembre","Diciembre"];
+		var firma = "";
+		var firmaVM = "David Eduardo Arrambide Montemayor";
+		var docDefinition = {
+			pageMargins: [ 40, 100, 40, 60 ],
+			header: {
+				columns: [
+					{ image: 'data:image/png;base64,<%=@logo_verde_monarca.tr("\n", "")%>', 
+					  margin: [40, 15, 10, 10],
+					  width: 100
+					},
+					{ text: 'Contrato de Inversión Entre Usuarios Verde Monarca', alignment: 'right', margin: [10, 60, 40, 20], fontSize: 14 }
+				]
+			},
+			content: [
+				{ 
+					text: [
+						{text: 'Contrato de Inversión ', bold: true},
+						'que celebran por una parte <%=@online_user.nombre.upcase + " " + @online_user.apellido.upcase%>, a quien en lo sucesivo se le dominará "El Inversionista", y por la otra ' + project_info.holder.toUpperCase() + ', a quien en lo sucesivo se le denominará "El Beneficiario", al tenor de las declaraciones y cláusulas siguientes:'
+					]
+				},
+				{ text: '\nDECLARACIONES\n\n', style: 'title', alignment: 'left'},
+				{ ul: [
+						'Declara "El Inversionista":',
+						{ ol: [
+							'Que celebra el presente contrato con el fin de transmitir a "El Beneficiario" los fondos en numerario materia de este contrato, de forma de inversión pagadera a [Meses de Préstamo], incluyendo un interés anual del [Interés%].\n',
+							'Que los recursos a invertir se obtuvieron de forma legal.\n',
+							'Que con la celebración del presente contrato no afecta los derechos de aquellas otras personas que en su momento tengan derecho a recibir alimentos de éste conforme a lo dispuesto por el Código Civil.\n',
+							'Que señala como domicilio convencional el ubicado en <%=@online_user.calle + " " + @online_user.numero_direccion.to_s + ", " + @online_user.colonia + ", " + @location.description + ", " + @state.description + ", " + @country.description + " " + @online_user.codigo_postal%> y que cuenta con capacidad legal para celebrar la presente operación.\n',
+						  ]
+						},
+						'Declara "El Beneficiario":',
+						{ ol: [
+							'Promete incondicionalmente pagar a la orden de “El Inversionista” los fondos en numerario materia de este contrato, pagaderos a [Meses de Préstamo], incluyendo un interés anual del [Interés%].\n',
+							'Promete además pagar intereses moratorios desde la fecha del vencimiento del plazo de pago hasta la fecha de su pago total a una tasa mensual del 6% (Seis Por Ciento).\n',
+							'Que señala como domicilio convencional el ubicado en [Domicilio del Usuario Beneficiario] y que cuenta con capacidad legal para celebrar la presente operación.\n',
+							'Que acepta la inversión de los recursos económicos materia del contrato en los términos y condiciones que se establecen en el mismo.\n',
+						  ]
+						},
+						'Ambas partes declaran:',
+						{ ol: [
+							'Que es su libre voluntad celebrar el presente contrato, sin encontrarse limitadas para dar y recibir los bienes a invertir, respectivamente.\n',
+						  ]
+						},
+					]
+				},
+				{ text: '\nCLÁUSULAS\n\n', style: 'title', alignment: 'center'},
+				{
+					text: [
+						{ text: 'PRIMERA.- ', bold: true, fontSize: 14, },
+						'"El Inversionista" se obliga a transmitir de forma de inversión la cantidad de $' + monto + ' MXN, ' + creditos + ' créditos a "El Beneficiario", quien manifiesta su aceptación respecto del mismo, recibiéndolos de forma absoluta para la instalación de un sistema solar fotovoltaico de [Tamaño del Sistema Solar], la cual será pagadera a [Meses de Préstamo], incluyendo un interés anual del [Interés%]..'
+					]
+				},
+				{
+					text: [
+						{ text: '\nSEGUNDA.- ', bold: true, fontSize: 14, },
+						'En razón de la transmisión mencionada en el artículo anterior, "El Inversionista" se obliga a realizar todos los actos jurídicos para ello y a entregarlo a "El Beneficiario" a la firma del presente contrato.'
+					]
+				},
+				{
+					text: [
+						{ text: '\nTERCERA.- ', bold: true, fontSize: 14, },
+						'“El Beneficiario” se obliga a pagar intereses moratorios desde la fecha del vencimiento del plazo de pago hasta la fecha de su pago total a una tasa mensual del 6% (Seis Por Ciento).',
+						
+					]
+				},
+				{
+					text: [
+						{ text: '\nCUARTA.- ', bold: true, fontSize: 14, },
+						'De acuerdo con lo expresado en la Declaración I, ambas partes convienen en que “El Beneficiario” quedará liberado del pago de cualquier deuda adquirida por "El Inversionista" antes de la celebración del presente contrato, quedando a cargo del mismo el saldo de las que resultaren.'
+					]
+				},
+				{
+					text: [
+						{ text: '\nQUINTA.- ', bold: true, fontSize: 14, },
+						'Las partes expresan que en la celebración del presente contrato no existe dolo, mala fe, violencia, error o cualquier otro vicio de la voluntad que pudiera invalidarlo.'
+					]
+				},
+				{
+					text: [
+						{ text: '\nSEXTA.- ', bold: true, fontSize: 14, },
+						'Ambas partes convienen que en caso de interpretación o controversia suscitada del presente contrato, se someterán a la jurisdicción de los tribunales competentes de Monterrey, Nuevo León, independientemente de la que pudiere corresponderles por razón de su domicilio presente o futuro.'
+					]
+				},
+				{ text: '\nEn dicho acto intervienen como testigos los señores José Alfredo Gallo Camacho, y Victor Hugo Torres Martínez de Pinillos, ambos con domicilio en Notre Dame 115-A, Colonia Valle de San Ángel en San Pedro Garza García, Nuevo León, C.P. 66290.', alignment: 'left'},
+				{ text: '\nLeído el presente contrato, conformes con su contenido valor y fuerza legal, lo firman quienes en él intervinieron, en la ciudad de Monterrey, Nuevo León a los ' + today.getDate() + ' días del mes de ' + months[today.getMonth()].toUpperCase() + ' de ' + today.getFullYear() + '.', alignment: 'left'},
+				{
+					table: {
+						// headers are automatically repeated if the table spans over multiple pages
+						// you can declare how many rows should be treated as headers
+						headerRows: 1,
+						widths: [ '*', '*'],
+
+						body: [
+							[ {text: '', alignment: 'left'}, {text: '', alignment: 'right'}],
+							[ {text: 'Por “El Inversionista”', alignment: 'left'}, {text: 'Por “El Beneficiario”', alignment: 'right'}],
+							[ {text: '', alignment: 'left'}, {text: '', alignment: 'right'}],
+							[ { image: signature, width: 200, alignment: 'left' }, { image: 'data:image/png;base64,<%=@signatureDavid.tr("\n", "")%>', width: 200, alignment: 'right' }],
+							[ {text: '__________________________________', alignment: 'left'}, {text: '__________________________________', alignment: 'right'}],
+							[ {text: '<%=@online_user.nombre + " " + @online_user.apellido%>', alignment: 'left'}, {text: 'David Eduardo Arrambide Montemayor', alignment: 'right'}],
+							[ {text: '', alignment: 'left'}, {text: 'Representante Legal', alignment: 'right'}],
+							[ {text: '', alignment: 'left'}, {text: 'Fundación Verde Monarca, A.C.', alignment: 'right'}],
+						]
+					},
+					layout: 'noBorders'
+				},
+			],
+			footer: {
+				columns: [
+					{ text: 'Verde Monarca, S.A.P.I. de C.V.\n 115-A Notre Dame, Col. Valle de San Ángel\nSan Pedro Garza García, NL, MEX 66290', margin: [40, 0, 0, 0], fontSize: 8},
+					{ text: '\nTel. (81) 8340-8279\nwww.verdemonarca.com', alignment: 'right', margin: [0, 0, 40, 0], fontSize: 8 }
+				]
+			},
+			styles: {
+				header: {
+					fontSize: 12,
+					alignment: 'justify'
+				},
+				title: {
+					alignment: 'center',
+					bold: 'true',
+					fontSize: 14
+				},
+				subtitle: {
+					bold: 'true',
+					fontSize: 13
+				},
+				paragraph: {
+					alignment: 'justify'
+				},
+				tabbed: {
+					margin: [20, 0, 40, 0],
+				}
+			}
+		};
+		pdfMake.createPdf(docDefinition);
+		pdfMake.createPdf(docDefinition).getDataUrl(function(outDoc) {
+			$("#donation-contract-pdf").attr("src", outDoc);
+			var contract64 = outDoc.replace(/^data:application\/(png|jpg|pdf);base64,/, "");
+			$('[name="contract"]').val(contract64);
+		});
+	}
+	
+	$("#donation-contract-accept").on('click', function(){
+		var pRequestO = new Object();
+		pRequestO.pCredit = $('[name="creditos-vm-input"]').val();
+		pRequestO.pAmount = $('[name="amount-input"]').val();
+		
+		Ajax(
+		pRequestO, 
+		"check_credits", 
+		function(pResponse){
+			$("#error").html("");
+			$('[name="codigo_vm"]').val($('[name="project-input"] option:selected').text());
+			$('[name="project_id"]').val($('[name="project-input"]').val());
+			
+			$('[name="donation_type"]').val($('[name="modo-inversion"]').val());
+			$('[name="titular"]').val($('[name="project-input"] option:selected').attr('holder'));
+			
+			if($('[name="modo-inversion"]').val()=="2"){
+				$('.donation-label').html('Donar a:');
+			}
+			else if($('[name="modo-inversion"]').val()=="3"){
+				$('.donation-label').html('Invertir en:');
+			}
+			
+			if($('[name="creditos-vm-input"]').val()==""){
+				$('[name="creditos_vm"]').val(0);
+			}
+			else{
+				$('[name="creditos_vm"]').val($('[name="creditos-vm-input"]').val());
+			}
+			
+			if($('[name="amount-input"]').val()==""){
+				$('[name="amount"]').val(0);
+				$('.card-payment').css('display', 'none');
+				$('.credit-payment').css('display', 'block');
+			}
+			else{
+				$('[name="amount"]').val($('[name="amount-input"]').val());
+				$('.credit-payment').css('display', 'none');
+				$('.card-payment').css('display', 'block');
+			}
+			
+			$('#donation-contract-modal').modal('hide');
+			$('#payment-modal').modal('show');
+		}, function(pResponse){
+			$("#error").html(pResponse.messages);
+		})
+	})
     </script>
   </body>
 </html>

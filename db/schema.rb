@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141226225003) do
+ActiveRecord::Schema.define(version: 20141229183040) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 20141226225003) do
     t.string   "name"
     t.text     "description"
     t.text     "image_url"
-    t.string   "brand_image_url"
+    t.text     "brand_image_url"
     t.float    "watts"
     t.string   "lumenes"
     t.float    "precio"
@@ -148,7 +148,24 @@ ActiveRecord::Schema.define(version: 20141226225003) do
     t.datetime "updated_at"
   end
 
+  create_table "project_types", force: true do |t|
+    t.string   "description"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "projects", force: true do |t|
+    t.boolean  "active"
+    t.string   "description"
+    t.string   "holder"
+    t.string   "vm_code"
+    t.float    "amount"
+    t.float    "progress_amount"
+    t.integer  "progress_percent"
+    t.string   "payback"
+    t.integer  "tir"
+    t.integer  "project_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
