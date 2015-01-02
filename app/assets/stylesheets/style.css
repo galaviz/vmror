@@ -15,7 +15,7 @@ body {
 
 hr {
 	display: block;
-	width: 600px;
+	width: 90%;
 	height: 1px;
 	border: 0;
 	border-top: 1px solid #0074D9;
@@ -605,3 +605,12 @@ a:after {
 .dropdown-submenu.left{float:none;}
 .pull-left.dropdown-menu{left:-100%;width:100%;-webkit-border-radius:0 0 6px 6px;-moz-border-radius:6px 0 6px 6px;border-radius:6px 0 6px 6px;}
 
+@media (max-width:768px){
+	.portal-sidebar{
+		display:none;
+	}
+}
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus{
+	background-color:transparent;
+	color: #bdc3c7;
+}

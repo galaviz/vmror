@@ -7,41 +7,41 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <%=link_to image_tag("Logo_Verde_Monarca.png", :border => 0), {:action => 'index', :controller => 'main'}, :class => 'navbar-brand smoothScroll'%>
+          <%=link_to image_tag("Logo_Verde_Monarca.png", :border => 0), {:action => "index", :controller => "main"}, :class => "navbar-brand smoothScroll"%>
         </div>
 
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav cl-effect-13">
 		  <% @pages.each do |p| %>
 			<% if SecurityController.has_permission(session["user_id"], p.command) %>
-			<li <% if active_tab == p.command%> class="active"<%end%>><a href="<%=url_for controller: 'dashboard', action: p.command%>" class="smoothScroll"><%=p.description%></a></li>
+			<li <% if active_tab == p.command%> class="active"<%end%>><a href="<%=url_for controller: "dashboard", action: p.command%>" class="smoothScroll"><%=p.description%></a></li>
 			<% end %>
 		  <% end %>
           </ul>
 		  
-          <!-- Sign In / Sign Up / Profile-->
-          <div class="dropdown navbar-right" style="cursor:pointer; color:#3D9970; margin-top:16px; margin-right:20px;">
-            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><%=@online_user.nombre + " " + @online_user.apellido %>&nbsp;<span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-              <li><a tabindex="-1" href="#resetpassword" data-toggle="modal" data-target="#resetpassword-modal">Cambiar Contrase&ntilde;a</a></li>
-              <li><%=link_to("MIS CONTRATOS", {:action => 'myContract', :controller => 'dashboard'})%></li>
-              <li><%=link_to("LOGOUT", {:action => 'logout', :controller => 'main'})%></li>
-			  <% if SecurityController.has_permission(session[:user_id], 'configuration') %>
-			  <li class="divider"></li>
-				<li class="dropdown dropdown-submenu left">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Configuraci&oacute;n</a>
-					<ul class="dropdown-menu pull-left">
-						<% @configurations.each do |p| %>
-							<% if SecurityController.has_permission(session[:user_id], p.command) %>
-							<li <%if active_tab == p.command%> class="active"<%end%>><a href="/<%=p.command%>" class="smoothScroll"><%=p.description%></a></li>
-							<% end %>
+			<ul class="nav navbar-nav navbar-right" style="cursor:pointer; color:#3D9970; margin-right:20px;">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true"><%=@online_user.nombre + " " + @online_user.apellido %>&nbsp;<span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a tabindex="-1" href="#resetpassword" data-toggle="modal" data-target="#resetpassword-modal">Cambiar Contrase&ntilde;a</a></li>
+						<li><%=link_to("MIS CONTRATOS", {:action => "myContract", :controller => "dashboard"})%></li>
+						<li><%=link_to("LOGOUT", {:action => "logout", :controller => "main"})%></li>
+						<% if SecurityController.has_permission(session[:user_id], "configuration") %>
+						<li class="divider"></li>
+						<li class="dropdown dropdown-submenu left">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Configuraci&oacute;n</a>
+							<ul class="dropdown-menu pull-left">
+								<% @configurations.each do |p| %>
+									<% if SecurityController.has_permission(session[:user_id], p.command) %>
+									<li <%if active_tab == p.command%> class="active"<%end%>><a href="/<%=p.command%>" class="smoothScroll"><%=p.description%></a></li>
+									<% end %>
+								<% end %>
+							</ul>
+						</li>
 						<% end %>
 					</ul>
 				</li>
-		      <% end %>
-            </ul>        
-          </div>
-
+			</ul>
         </div><!--/nav-collapse -->
       </div><!-- /container -->
     </div><!-- /top-navbar -->
