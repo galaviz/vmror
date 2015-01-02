@@ -157,6 +157,7 @@ class DashboardController < ApplicationController
 	donation_history.amount_mxn = @amount
 	donation_history.credit_vm = params["creditos_vm"]
 	donation_history.contract_file_name = contract
+	donation_history.active = true
 	donation_history.save()
 	
     UserMailer.send_donation_confirmation_email_to_admin(@online_user, params[:amount], params[:creditos_vm], '¡Agua Para Todos!', 1).deliver
@@ -273,6 +274,7 @@ class DashboardController < ApplicationController
 	donation_history.amount_mxn = @amount
 	donation_history.credit_vm = params["creditos_vm"]
 	donation_history.contract_file_name = @contract
+	donation_history.active = true
 	donation_history.save()
 	
     UserMailer.send_donation_confirmation_email_to_admin(@online_user, params[:amount], params[:creditos_vm], params[:codigo_vm], @donation_type).deliver
@@ -439,4 +441,20 @@ class DashboardController < ApplicationController
     end
   end
   
+  def myContract
+    if session["user_id"] and User.find_by_id(session["user_id"])
+	  if SecurityController.has_permission(session[:user_id], "myContract") == false
+		redirect_to :action => :monitoring, :controller => :dashboard
+	  end
+	  @pages = Page.select("description, command").where(menu_id: 1, active: true).order(order_by: :asc)
+	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
+      @online_user = User.find_by_id(session["user_id"])
+      @user_tier = @online_user.user_tier
+	  
+	  sql = "SELECT dh.id, dh.active, dh.description, dh.amount_mxn, dh.credit_vm, dh.contract_file_name, us.nombre, us.apellido, pj.description as project, dt.description as donation_type FROM donation_histories dh LEFT JOIN users us ON dh.user_id = us.id LEFT JOIN donation_types dt ON dh.donation_type_id = dt.id LEFT JOIN projects pj ON dh.project_id = pj.id"
+	  @dh = DonationHistory.find_by_sql(sql)
+	else
+	  redirect_to :action => :index, :controller => :main
+	end
+  end 
 end

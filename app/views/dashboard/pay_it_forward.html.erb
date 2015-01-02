@@ -599,7 +599,7 @@
 				{ ul: [
 						'Declara "El Inversionista":',
 						{ ol: [
-							'Que celebra el presente contrato con el fin de transmitir a "El Beneficiario" los fondos en numerario materia de este contrato, de forma de inversión pagadera a [Meses de Préstamo], incluyendo un interés anual del [Interés%].\n',
+							'Que celebra el presente contrato con el fin de transmitir a "El Beneficiario" los fondos en numerario materia de este contrato, de forma de inversión pagadera a 12 meses, incluyendo un interés anual del 6%.\n',
 							'Que los recursos a invertir se obtuvieron de forma legal.\n',
 							'Que con la celebración del presente contrato no afecta los derechos de aquellas otras personas que en su momento tengan derecho a recibir alimentos de éste conforme a lo dispuesto por el Código Civil.\n',
 							'Que señala como domicilio convencional el ubicado en <%=@online_user.calle + " " + @online_user.numero_direccion.to_s + ", " + @online_user.colonia + ", " + @location.description + ", " + @state.description + ", " + @country.description + " " + @online_user.codigo_postal%> y que cuenta con capacidad legal para celebrar la presente operación.\n',
@@ -607,9 +607,9 @@
 						},
 						'Declara "El Beneficiario":',
 						{ ol: [
-							'Promete incondicionalmente pagar a la orden de “El Inversionista” los fondos en numerario materia de este contrato, pagaderos a [Meses de Préstamo], incluyendo un interés anual del [Interés%].\n',
+							'Promete incondicionalmente pagar a la orden de “El Inversionista” los fondos en numerario materia de este contrato, pagaderos a 12 meses, incluyendo un interés anual del 6%.\n',
 							'Promete además pagar intereses moratorios desde la fecha del vencimiento del plazo de pago hasta la fecha de su pago total a una tasa mensual del 6% (Seis Por Ciento).\n',
-							'Que señala como domicilio convencional el ubicado en [Domicilio del Usuario Beneficiario] y que cuenta con capacidad legal para celebrar la presente operación.\n',
+							'Que señala como domicilio convencional el ubicado en <%=@online_user.calle + " " + @online_user.numero_direccion.to_s + ", " + @online_user.colonia + ", " + @location.description + ", " + @state.description + ", " + @country.description + " " + @online_user.codigo_postal%> y que cuenta con capacidad legal para celebrar la presente operación.\n',
 							'Que acepta la inversión de los recursos económicos materia del contrato en los términos y condiciones que se establecen en el mismo.\n',
 						  ]
 						},
@@ -624,7 +624,7 @@
 				{
 					text: [
 						{ text: 'PRIMERA.- ', bold: true, fontSize: 14, },
-						'"El Inversionista" se obliga a transmitir de forma de inversión la cantidad de $' + monto + ' MXN, ' + creditos + ' créditos a "El Beneficiario", quien manifiesta su aceptación respecto del mismo, recibiéndolos de forma absoluta para la instalación de un sistema solar fotovoltaico de [Tamaño del Sistema Solar], la cual será pagadera a [Meses de Préstamo], incluyendo un interés anual del [Interés%]..'
+						'"El Inversionista" se obliga a transmitir de forma de inversión la cantidad de $' + monto + ' MXN, ' + creditos + ' créditos a "El Beneficiario", quien manifiesta su aceptación respecto del mismo, recibiéndolos de forma absoluta para la instalación de un sistema solar fotovoltaico de tamaño mediano, la cual será pagadera a 12 meses, incluyendo un interés anual del 6%.'
 					]
 				},
 				{
