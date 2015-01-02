@@ -107,7 +107,7 @@ class ProductController < ApplicationController
 	end 
 	
 	def check_permission
-		if SecurityController.has_permission(session[:user_id], "products") == false
+		if SecurityController.has_permission(session[:user_id], "product") == false
 			redirect_to :action => :monitoring, :controller => :dashboard
 		end
 	end

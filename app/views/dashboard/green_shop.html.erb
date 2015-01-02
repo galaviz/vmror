@@ -53,10 +53,14 @@
                 <hr>
               </div><!-- /row -->
               <div class="row">
-                <%@items_category2.each do |item|%>
+                <%@items_category1.each do |item|%>
                 <div class="col-sm-4">
                   <div class="item-tienda">
-                    <a href="<%=url_for controller: 'dashboard', action: 'item', id: item.id%>"><img height=180 src="/assets/products_images/<%=item.image_url%>"></a><br>
+                    <%if item.image_url==nil %>
+                        <a href="<%=url_for controller: 'dashboard', action: 'item', id: item.id%>"><img height=180 src="/assets/products_images/sin_imagen.png" /></a><br>
+                    <%else%>
+                        <a href="<%=url_for controller: 'dashboard', action: 'item', id: item.id%>"><img height=180 src="/assets/products_images/<%=item.image_url%>" /></a><br>
+                    <%end%>
                     <a href="<%=url_for controller: 'dashboard', action: 'item', id: item.id%>" class="item-name"><%=item.name%></a><br>
                     <strong>Watts:</strong> <%=item.watts%><br>
                     <strong>Lúmenes:</strong> <%=item.lumenes%><br>
@@ -67,8 +71,42 @@
                 </div>
                 <%end%>
               </div>
-              <br><br><br>
-              <br>
+              <section id="calefaccion" name="calefaccion"></section>
+              <div class="row">
+                <h2 class="platinum-color">Calefacci&oacute;n</h2>
+                <hr>
+                <%@items_category2.each do |item|%>
+                <div class="col-sm-4">
+                  <div class="item-tienda">
+                    <a href="<%=url_for controller: 'dashboard', action: 'item', id: item.id%>"><img height=180 src="/assets/products_images/<%=item.image_url%>"></a><br>
+                    <a href="<%=url_for controller: 'dashboard', action: 'item', id: item.id%>" class="item-name"><%=item.name%></a><br>
+                    <strong>Fase:</strong> <%=item.fase%><br>
+                    <strong>Configuraci&oacute;n:</strong> <%=item.configuracion%><br>
+                    <strong>Eficiencia:</strong> <%=item.eficiencia%><br>
+                    <strong>Precio:</strong> $<%=item.precio%>MN<br>
+                    <br>
+                  </div>
+                </div>
+                <%end%>
+              </div>
+              <section id="aire_acondicionado" name="aire_acondicionado"></section>
+              <div class="row">
+                <h2 class="platinum-color">Aire Acondicionado</h2>
+                <hr>
+                <%@items_category3.each do |item|%>
+                <div class="col-sm-4">
+                  <div class="item-tienda">
+                    <a href="<%=url_for controller: 'dashboard', action: 'item', id: item.id%>"><img height=180 src="/assets/products_images/<%=item.image_url%>"></a><br>
+                    <a href="<%=url_for controller: 'dashboard', action: 'item', id: item.id%>" class="item-name"><%=item.name%></a><br>
+                    <strong>Fase:</strong> <%=item.fase%><br>
+                    <strong>Configuraci&oacute;n:</strong> <%=item.configuracion%><br>
+                    <strong>Eficiencia:</strong> <%=item.eficiencia%><br>
+                    <strong>Precio:</strong> $<%=item.precio%>MN<br>
+                    <br>
+                  </div>
+                </div>
+                <%end%>
+              </div>
           </div>
 
         </div>

@@ -58,21 +58,30 @@
 
 		<div class="row">
             
-			<div class="col-md-6 col-sm-6 centered">
-				<div class="classic-form" style="width: 700px;">
+			<div class="centered">
+				<div class="classic-form centered" style="width: 710px;">
                     <form enctype="multipart/form-data" method="post" class="form-horizontal" role="form" id="product-edit-form" action="/product/update/<%=@product.id%>">
                         <table>
                             <tr>
                                 <td valign="top">
                                     <%if @product.image_url==nil %>
                                         <img src="/assets/products_images/sin_imagen.png" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="130px" height="auto" title="sin imagen"/>
+                                        <div><label>Foto del producto</label></div>
                                     <%else%>
-                                        <img src="/assets/products_images/<%= @product.image_url%>" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="90px" height="auto" title="imagen del producto"/>
+                                        <div>
+                                            <img src="/assets/products_images/<%= @product.image_url%>" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="120px" height="auto" title="imagen del producto"/>
+                                            
+                                        </div>
+                                        <div><label>Foto del producto</label></div>
                                     <%end%>
-                                    <%if @product.image_url==nil %>
+                                    <%if @product.brand_image_url==nil %>
                                         <img src="/assets/brands_images/sin_imagen.png" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="130px" height="auto" title="sin imagen"/>
+                                        <div><label>Marca</label></div>
                                     <%else%>
-                                        <img src="/assets/brands_images/<%= @product.brand_image_url%>" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="120px" height="auto" title="imagen de la marca"/>
+                                        <div>
+                                            <img src="/assets/brands_images/<%= @product.brand_image_url%>" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="120px" height="auto" title="imagen de la marca"/>
+                                        </div>
+                                        <div><label>Marca</label></div>
                                     <%end%>
                                 </td>
                                 <td>
@@ -198,15 +207,14 @@
                                             <input type="file" name="datafile_brand" id="datafile_brand" />
                                         </div>
                                     </div>
-
-            						<div class="form-group text-center">
-            							<a class="btn btn-theme" href="/product">Regresar</a>
-            							<button type="submit" class="btn btn-theme">Guardar</button>
-            						</div>
                                 </td>
                             </tr>
                         </table>
-
+                        <br/>
+                        <div class="form-group text-center">
+                            <a class="btn btn-theme" href="/product">Regresar</a>
+                            <button type="submit" class="btn btn-theme">Guardar</button>
+                        </div>
 					</form>
 				</div>
 			</div>
@@ -229,7 +237,7 @@
     <%= javascript_include_tag "animations" %>
     <%= javascript_include_tag "jquery.formatter.min" %>
     <%= javascript_include_tag "legacy" %>
-    <%= javascript_include_tag "ajax" %>
+    <%= javascript_include_tag "verdemonarca" %>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/drilldown.js"></script>

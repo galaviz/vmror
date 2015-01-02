@@ -58,14 +58,22 @@
 
 		<div class="row">
 
-			<div class="col-md-6 col-sm-6 centered">
-				<div class="classic-form" style="width: 710px;">
+			<div class="centered">
+				<div class="classic-form centered" style="width: 710px;">
 					<form enctype="multipart/form-data" method="post" class="form-horizontal" role="form" id="product-edit-form" action="/product/create">
 					   <table>
                             <tr>
                                 <td valign="top">
+                                    <div>
                                         <img src="/assets/products_images/sin_imagen.png" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="130px" height="auto" title="sin imagen"/>
-                                        <img src="/assets/brands_images/sin_imagen.png" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="130px" height="auto" title="sin imagen"/>
+                                    </div>
+                                    <div><label>Foto del producto</label></div>
+
+                                    <div>
+                                         <img src="/assets/brands_images/sin_imagen.png" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="130px" height="auto" title="sin imagen"/>
+                                    </div>
+                                    <div><label>Marca</label></div>
+                                        
                                 </td>
                                 <td>	
             						<div class="form-group">
@@ -190,14 +198,14 @@
                                             <input type="file" name="datafile_brand" id="datafile_brand" />
                                         </div>
                                     </div>
-
-            						<div class="form-group text-center">
-            							<a class="btn btn-theme" href="/product">Regresar</a>
-            							<button type="submit" class="btn btn-theme">Guardar</button>
-            						</div>
                                 </td>
                             </tr>
                         </table>
+                        <br/>
+                        <div class="form-group text-center">
+                            <a class="btn btn-theme" href="/product">Regresar</a>
+                            <button type="submit" class="btn btn-theme">Guardar</button>
+                        </div>
 					</form>
 				</div>
 			</div>
@@ -220,7 +228,7 @@
     <%= javascript_include_tag "animations" %>
     <%= javascript_include_tag "jquery.formatter.min" %>
     <%= javascript_include_tag "legacy" %>
-    <%= javascript_include_tag "ajax" %>
+    <%= javascript_include_tag "verdemonarca" %>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/drilldown.js"></script>

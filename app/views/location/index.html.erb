@@ -55,11 +55,11 @@
 								<td><%=l.id%></td>
 								<td><%=l.location%></td>
 								<td><%=l.state%></td>
-								<td><a style="float:right" href="/locations/edit/<%=l.id%>">Editar</a></td>
+								<td><a style="float:right" href="/location/edit/<%=l.id%>">Editar</a></td>
 								<% if l.active == true%>
-								<td><a style="float:right" href="/locations/deactivate/<%=l.id%>">Desactivar</a></td>
+								<td><a style="float:right" href="/location/deactivate/<%=l.id%>">Desactivar</a></td>
 								<% else %>
-								<td><a style="float:right; color:red;" href="/locations/deactivate/<%=l.id%>">Activar</a></td>
+								<td><a style="float:right; color:red;" href="/location/deactivate/<%=l.id%>">Activar</a></td>
 								<% end %>
 							</tr>
 							<% end %>
@@ -72,7 +72,7 @@
 					<table class="table">
 						<tr>
 							<td class="text-right">
-								<a href="/locations/new" class="btn btn-theme">Nuevo Municipio</a>
+								<a href="/location/new" class="btn btn-theme">Nuevo Municipio</a>
 							</td>
 						</tr>
 					</table>

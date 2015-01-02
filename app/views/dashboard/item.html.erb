@@ -38,9 +38,9 @@
       <div class="container">
         <div class="col-sm-3 portal-sidebar">
           <ul class="nav nav-list portal-sidenav affix cl-effect-13">
-            <li class="active"><a href="#iluminacion" class="smoothScroll">Iluminación</a></li>
-            <li class="active"><a href="#calefaccion" class="smoothScroll">Calefacción</a></li>
-            <li class="active"><a href="#aire_acondicionado" class="smoothScroll">Aire Acondicionado</a></li>
+            <li class="active"><a href="/dashboard/green_shop/#iluminacion" class="smoothScroll">Iluminación</a></li>
+            <li class="active"><a href="/dashboard/green_shop/#calefaccion" class="smoothScroll">Calefacción</a></li>
+            <li class="active"><a href="/dashboard/green_shop/#aire_acondicionado" class="smoothScroll">Aire Acondicionado</a></li>
           </ul>
         </div>
 
@@ -54,12 +54,20 @@
               </div><!-- /row -->
               <div class="row store-item-description-and-images">
                 <div class="col-sm-3">
-                    <img class="store-item-image" src="/assets/products_images/<%=@item.image_url%>"></img><br>
+                  <%if @item.image_url==nil %>
+                      <img class="store-item-image" src="/assets/products_images/sin_imagen.png" /><br>
+                  <%else%>
+                      <img class="store-item-image" src="/assets/products_images/<%=@item.image_url%>" />
+                  <%end%>
                 </div>
                 <div class="col-sm-9">
                   <div class="row store-item-logos-row">
-                    <img class="store-item-energy-star-logo" src="http://blog.dtappliance.com/wp-content/uploads/2014/05/energy-star-logo.png"></img>
-                    <img class="store-item-brand-logo" src="/assets/brands_images/<%=@item.brand_image_url%>"></img>
+                    <img class="store-item-energy-star-logo" src="http://blog.dtappliance.com/wp-content/uploads/2014/05/energy-star-logo.png" />
+                    <%if @item.image_url==nil %>
+                      <img class="store-item-brand-logo" src="/assets/products_images/sin_imagen.png" /><br>
+                    <%else%>
+                      <img class="store-item-brand-logo" src="/assets/products_images/<%=@item.image_url%>" />
+                    <%end%>
                   </div>
                   <p class="store-item-description text-justify" style="font-size:10 !important;"><%=@item.description%></p>
                 </div>

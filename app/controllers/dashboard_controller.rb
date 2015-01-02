@@ -438,42 +438,5 @@ class DashboardController < ApplicationController
       render :json =>  { :success => 0, :messages => "¡la contraseña anterior no coincide!"}.to_json  
     end
   end
-
-  #Configurations Methods
-  def users
-	redirect_to(:action=>"index", :controller => "user")
-  end
-  
-  def profiles
-	redirect_to(:action=>"index", :controller => "profile")
-  end
-  
-  def pages
-	redirect_to(:action=>"index", :controller => "page")
-  end
-  
-  def permissions
-	redirect_to(:action=>"index", :controller => "permission")
-  end
-  
-  def countries
-	redirect_to(:action=>"index", :controller => "country")
-  end
-  
-  def states
-	redirect_to(:action=>"index", :controller => "states")
-  end
-  
-  def locations
-	redirect_to(:action=>"index", :controller => "locations")
-  end
-
-  def categories
-  redirect_to(:action=>"index", :controller => "category")
-  end
-
-  def products
-  redirect_to(:action=>"index", :controller => "product")
-  end
   
 end
