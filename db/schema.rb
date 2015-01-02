@@ -35,9 +35,10 @@ ActiveRecord::Schema.define(version: 20141229183040) do
     t.integer  "user_id"
     t.integer  "donation_type_id"
     t.integer  "project_id"
-    t.float    "amount_mxn"
-    t.float    "credit_vm"
+    t.integer  "amount_mxn"
+    t.integer  "credit_vm"
     t.string   "contract_file_name"
+    t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
