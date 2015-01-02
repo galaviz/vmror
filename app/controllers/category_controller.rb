@@ -41,7 +41,7 @@ class CategoryController < ApplicationController
 	end 
 
 	def check_permission
-		if SecurityController.has_permission(session[:user_id], "categories") == false
+		if SecurityController.has_permission(session[:user_id], "category") == false
 			redirect_to :action => :monitoring, :controller => :dashboard
 		end
 	end

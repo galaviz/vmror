@@ -4,7 +4,7 @@ class CreateItems < ActiveRecord::Migration
       t.string :name
       t.text :description
       t.text :image_url
-      t.string :brand_image_url
+      t.text :brand_image_url
       t.float :watts
       t.string :lumenes
       t.float :precio
@@ -17,7 +17,8 @@ class CreateItems < ActiveRecord::Migration
       t.string :capacidad
       t.string :eficiencia
       t.string :disponibilidad
-      t.integer :id_category
+      t.integer :category_id
+      t.boolean :active
       t.timestamps
     end
   end

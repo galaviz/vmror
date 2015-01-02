@@ -19,7 +19,6 @@
     <%= stylesheet_link_tag "font-awesome.min" %>
     <%= stylesheet_link_tag "bootstrapValidator.min" %>
     <%= stylesheet_link_tag "style" %>
-    <%= stylesheet_link_tag "formsStyle" %>
     <!-- Web Fonts -->
     <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
 
@@ -34,63 +33,52 @@
 
   <body data-spy="scroll" data-offset="0" data-target=".portal-sidebar">
 
-    <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "states"})%>
+    <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "products"})%>
 	<div class="main-dashboard-content">
       <div class="container">
-
-		<div class="row">
-			<div class="col-md-12 col-sm-12 animated" data-animtype="flipInY"
-			data-animrepeat="0"
-			data-speed="1s"
-			data-delay="0.5s">
-				<div class="space-sep20"></div>
-				<h2 class="h2-section-title">Nuevo estado</h2>
-
-				<div class="i-section-title">
-					<i class="icon-users-outline">
-
-					</i>
-				</div>
-
-				<div class="space-sep20"></div>
-			</div>
-		</div>
-
-		<div class="row">
-
-			<div class="col-md-6 col-sm-6 centered">
-				<div class="classic-form">
-					<form class="form-horizontal" role="form" id="state-edit-form" action="/state/create">
-						
-						<div class="form-group">
-							<label for="description" class="col-sm-4 control-label">Descripci&oacute;n</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" name="description" value="" placeholder="Descripci&oacute;n" id="description" >
-							</div>
-						</div>
-
-                        <div class="form-group">
-                            <label for="country" class="col-sm-4 control-label">Pa&iacute;s</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" name="country-id" id="country-id">
-                                    <% @country_dropdown.each do |s|%>
-                                    <option value="<%=s.id%>"><%=s.description%></option>
-                                    <% end %>
-                                </select>
-                            </div>
-                        </div>
-
-						<div class="form-group text-center">
-							<a class="btn btn-theme" href="/state">Regresar</a>
-							<button type="submit" class="btn btn-theme">Guardar</button>
-						</div>
-
-					</form>
-				</div>
-			</div>
-			<div class="space-sep20"></div>
-		</div> <!-- /row -->
-
+		<table style="min-height:500px;width:100%;">
+			<tr>
+				<td valign="top">
+					<table class="table table-hover" style="height:100% !important;">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Producto</th>
+                <th>Categor&iacute;a</th>
+								<th style="width:80px;"></th>
+								<th style="width:80px;"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<% @products.each do |p|%>
+							<tr>
+								<td><%=p.id%></td>
+								<td><%=p.name%></td>
+                <td><%=p.category%></td>
+								<td><a style="float:right" href="/product/edit/<%=p.id%>">Editar</a></td>
+								<% if p.active == true%>
+								<td><a style="float:right" href="/product/deactivate/<%=p.id%>">Desactivar</a></td>
+								<% else %>
+								<td><a style="float:right; color:red;" href="/product/deactivate/<%=p.id%>">Activar</a></td>
+								<% end %>
+							</tr>
+							<% end %>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td style="height:50px;">
+					<table class="table">
+						<tr>
+							<td class="text-right">
+								<a href="/product/new" class="btn btn-theme">Nuevo producto</a>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
       </div><!--/container-->
     </div>
 
@@ -111,5 +99,45 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('body').scrollTop(0);
+		
+        $( "#resetpassword-form" ).submit(function( event ) {
+          event.preventDefault();
+          $.ajax({
+            type: "POST",
+            url: "/dashboard/post_change_password",
+            data: {
+              password_input:$("#password_input").val(),
+              password_input:$("#password_input").val(),
+              password_input_new:$("#password_input_new").val(),
+              password_input_confirm:$("#password_input_confirm").val()
+            },
+            dataType: "json",
+            beforeSend: function(){
+
+            },
+            success: function(pRespuesta) {
+              if(pRespuesta.success == 0){
+                $("#error-label").html(pRespuesta.messages);
+              }
+              else if(pRespuesta.success == 1){
+                window.location = pRespuesta.location;
+              }
+            },
+            error: function(pRespuesta) {
+              alert("error");
+            },
+            complete: function() {
+
+            }
+          });
+        });
+
+
+      });
+
+    </script>
   </body>
 </html>
