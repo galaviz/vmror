@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>Estimado <%=@user.nombre + " " + @user.apellido%> VM,</p>
+	<%if @donation_type == "1"%>
+    <p>El <%=Time.now%> se realizó una donación a través del Programa “Fundación VM”. Enseguida los detalles:</p>
+	<%elsif @donation_type == "2"%>
+	<p>El <%=Time.now%> se realizó una donación a través del Programa “Pay-It-Forward”. Enseguida los detalles:</p>
+	<%elsif @donation_type == "3"%>
+	<p>El <%=Time.now%> se realizó una inversión a través del Programa “Pay-It-Forward”. Enseguida los detalles:</p>
+	<%end%>
+	
+<strong>Nombre del donador:</strong> <%=@user.nombre%> <%=@user.apellido%><br>
+<strong>Código VM del usuario donador: </strong> <%=@user.clave_referencia%><br>
+<strong>Código VM del usuario recipiente:</strong> <%=@codigo_vm%><br>
+<strong>Créditos VM:</strong><%=@creditos_vm%><br>
+<strong>Total:</strong>$<%=@amount%>MN<br>
+
+Saludos!
+
+  </body>
+</html>
