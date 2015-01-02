@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 20141229183040) do
     t.string   "name"
     t.text     "description"
     t.text     "image_url"
-    t.string   "brand_image_url"
+    t.text     "brand_image_url"
     t.float    "watts"
     t.string   "lumenes"
     t.float    "precio"
@@ -86,7 +86,8 @@ ActiveRecord::Schema.define(version: 20141229183040) do
     t.string   "capacidad"
     t.string   "eficiencia"
     t.string   "disponibilidad"
-    t.integer  "id_category"
+    t.integer  "category_id"
+    t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

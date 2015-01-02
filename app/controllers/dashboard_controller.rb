@@ -51,7 +51,9 @@ class DashboardController < ApplicationController
         @num_items_in_cart = @num_items_in_cart + @cart[key]
         @cart_total = @cart_total +  (@cart[key] * Item.find_by_id(key).precio)
       end
-      @items = Item.all
+      @items_category1 = Item.all.where(active: true, category_id:1)
+      @items_category2 = Item.all.where(active: true, category_id:2)
+      @items_category3 = Item.all.where(active: true, category_id:3)
     else
       redirect_to :action => :index, :controller => :main
     end

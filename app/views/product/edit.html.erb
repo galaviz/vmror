@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Verde Monarca">
+    <meta name="keywords" content="energia,renovable,mexico,energetico,solar,green,energy,latino,america,latinoamerica">
+    <meta name="author" content="Maurizio Calo">
+    <link href="assets/img/favicon.png" rel="shortcut icon" >
+    <title>Verde Monarca</title>
+    <%= stylesheet_link_tag "bootstrap.min" %>
+    <%= stylesheet_link_tag "client-portal" %>
+    <%= stylesheet_link_tag "responsive" %>
+    <%= stylesheet_link_tag "animate.min" %>
+    <%= stylesheet_link_tag "colorpickr" %>
+    <%= stylesheet_link_tag "linecons" %>
+    <%= stylesheet_link_tag "social-icons" %>
+    <%= stylesheet_link_tag "font-awesome.min" %>
+    <%= stylesheet_link_tag "bootstrapValidator.min" %>
+    <%= stylesheet_link_tag "style" %>
+    <%= stylesheet_link_tag "formsStyle" %>
+    <!-- Web Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <%= javascript_include_tag "modernizr.custom" %>
+  </head>
+
+  <body data-spy="scroll" data-offset="0" data-target=".portal-sidebar">
+
+    <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "products"})%>
+	<div class="main-dashboard-content">
+      <div class="container">
+
+		<div class="row">
+			<div class="col-md-12 col-sm-12 animated" data-animtype="flipInY"
+			data-animrepeat="0"
+			data-speed="1s"
+			data-delay="0.5s">
+				<div class="space-sep20"></div>
+				<h2 class="h2-section-title">Producto <%= @product.name %></h2>
+
+				<div class="i-section-title">
+					<i class="icon-users-outline">
+
+					</i>
+				</div>
+
+				<div class="space-sep20"></div>
+			</div>
+		</div>
+
+		<div class="row">
+            
+			<div class="centered">
+				<div class="classic-form centered" style="width: 710px;">
+                    <form enctype="multipart/form-data" method="post" class="form-horizontal" role="form" id="product-edit-form" action="/product/update/<%=@product.id%>">
+                        <table>
+                            <tr>
+                                <td valign="top">
+                                    <%if @product.image_url==nil %>
+                                        <img src="/assets/products_images/sin_imagen.png" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="130px" height="auto" title="sin imagen"/>
+                                        <div><label>Foto del producto</label></div>
+                                    <%else%>
+                                        <div>
+                                            <img src="/assets/products_images/<%= @product.image_url%>" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="120px" height="auto" title="imagen del producto"/>
+                                            
+                                        </div>
+                                        <div><label>Foto del producto</label></div>
+                                    <%end%>
+                                    <%if @product.brand_image_url==nil %>
+                                        <img src="/assets/brands_images/sin_imagen.png" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="130px" height="auto" title="sin imagen"/>
+                                        <div><label>Marca</label></div>
+                                    <%else%>
+                                        <div>
+                                            <img src="/assets/brands_images/<%= @product.brand_image_url%>" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="120px" height="auto" title="imagen de la marca"/>
+                                        </div>
+                                        <div><label>Marca</label></div>
+                                    <%end%>
+                                </td>
+                                <td>
+            						<div class="form-group">
+            							<label for="name" class="col-sm-4 control-label">Nombre</label>
+            							<div class="col-sm-8">
+                                            <input type="text" class="form-control" name="name" value="<%=@product.name%>" placeholder="Nombre" id="name"/>
+            							</div>
+            						</div>
+
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-4 control-label">Descripci&oacute;n</label>
+                                        <div class="col-sm-8">
+                                            <textarea style="resize:vertical;" type="text" class="form-control" name="description" placeholder="descripci&oacute;n" id="description" rows="4" cols="50"><%=@product.description%></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="category_id" class="col-sm-4 control-label">Categor&iacute;a</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" name="category_id" id="category_id">
+                                                <% @category_dropdown.each do |c|%>
+                                                <option value="<%=c.id%>" <% if @product.category_id == c.id %>selected<% end %>><%=c.description%></option>
+                                                <% end %>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-4 control-label">Watts</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="watts" value="<%=@product.watts%>" placeholder="watts" id="watts"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-4 control-label">Lumenes</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="lumenes" value="<%=@product.lumenes%>" placeholder="lumenes" id="lumenes"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-4 control-label">Precio</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="precio" value="<%=@product.precio%>" placeholder="precio" id="precio"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-4 control-label">Vida</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="vida" value="<%=@product.vida%>" placeholder="vida" id="vida"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-4 control-label">Fase</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="fase" value="<%=@product.fase%>" placeholder="fase" id="fase"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-4 control-label">Configuraci&oacute;n</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="configuracion" value="<%=@product.configuracion%>" placeholder="configuraci&oacute;n" id="configuracion"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-4 control-label">Bobina</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="bobina" value="<%=@product.bobina%>" placeholder="bobina" id="bobina"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-4 control-label">Motor Ventilador</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="motor_ventilador" value="<%=@product.motor_ventilador%>" placeholder="motor ventilador" id="motor_ventilador"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-4 control-label">Garant&iacute;a</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="garantia" value="<%=@product.garantia%>" placeholder="garant&iacute;a" id="garantia"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-4 control-label">Capacidad</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="capacidad" value="<%=@product.capacidad%>" placeholder="capacidad" id="capacidad"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-4 control-label">Eficiencia</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="eficiencia" value="<%=@product.eficiencia%>" placeholder="eficiencia" id="eficiencia"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="disponibilidad" class="col-sm-4 control-label">Disponibilidad</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="disponibilidad" value="<%=@product.disponibilidad%>" placeholder="Disponibilidad" id="disponibilidad"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="datafile" class="col-sm-4 control-label">Imagen Producto</label>
+                                        <div class="col-sm-8">
+                                            <input type="file" name="datafile" id="datafile" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="datafile_brand" class="col-sm-4 control-label">Imagen Marca</label>
+                                        <div class="col-sm-8">
+                                            <input type="file" name="datafile_brand" id="datafile_brand" />
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <div class="form-group text-center">
+                            <a class="btn btn-theme" href="/product">Regresar</a>
+                            <button type="submit" class="btn btn-theme">Guardar</button>
+                        </div>
+					</form>
+				</div>
+			</div>
+			<div class="space-sep20"></div>
+		</div> <!-- /row -->
+
+      </div><!--/container-->
+    </div>
+
+    <%= render(:partial => "shared/footer")%>
+    <!-- jQuery  -->
+    <%= javascript_include_tag "jquery.min" %>
+    <%= javascript_include_tag "bootstrap.min" %>
+    <%= javascript_include_tag "detectmobilebrowser" %>
+    <%= javascript_include_tag "smoothscroll" %>
+    <%= javascript_include_tag "bootstrapValidator.min" %>
+    <%= javascript_include_tag "jquery.inview.min" %>
+    <%= javascript_include_tag "jquery.easing.1.3" %>
+    <%= javascript_include_tag "animations" %>
+    <%= javascript_include_tag "animations" %>
+    <%= javascript_include_tag "jquery.formatter.min" %>
+    <%= javascript_include_tag "legacy" %>
+    <%= javascript_include_tag "verdemonarca" %>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+  </body>
+</html>

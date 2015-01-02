@@ -55,11 +55,11 @@
 								<td><%=s.id%></td>
 								<td><%=s.state%></td>
 								<td><%=s.country%></td>
-								<td><a style="float:right" href="/states/edit/<%=s.id%>">Editar</a></td>
+								<td><a style="float:right" href="/state/edit/<%=s.id%>">Editar</a></td>
 								<% if s.active == true%>
-								<td><a style="float:right" href="/states/deactivate/<%=s.id%>">Desactivar</a></td>
+								<td><a style="float:right" href="/state/deactivate/<%=s.id%>">Desactivar</a></td>
 								<% else %>
-								<td><a style="float:right; color:red;" href="/states/deactivate/<%=s.id%>">Activar</a></td>
+								<td><a style="float:right; color:red;" href="/state/deactivate/<%=s.id%>">Activar</a></td>
 								<% end %>
 							</tr>
 							<% end %>
@@ -72,7 +72,7 @@
 					<table class="table">
 						<tr>
 							<td class="text-right">
-								<a href="/states/new" class="btn btn-theme">Nuevo Estado</a>
+								<a href="/state/new" class="btn btn-theme">Nuevo Estado</a>
 							</td>
 						</tr>
 					</table>
