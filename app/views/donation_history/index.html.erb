@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Verde Monarca">
+    <meta name="keywords" content="energia,renovable,mexico,energetico,solar,green,energy,latino,america,latinoamerica">
+    <meta name="author" content="Maurizio Calo">
+    <link href="assets/img/favicon.png" rel="shortcut icon" >
+    <title>Verde Monarca</title>
+    <%= stylesheet_link_tag "bootstrap.min" %>
+    <%= stylesheet_link_tag "client-portal" %>
+    <%= stylesheet_link_tag "responsive" %>
+    <%= stylesheet_link_tag "animate.min" %>
+    <%= stylesheet_link_tag "colorpickr" %>
+    <%= stylesheet_link_tag "linecons" %>
+    <%= stylesheet_link_tag "social-icons" %>
+    <%= stylesheet_link_tag "font-awesome.min" %>
+    <%= stylesheet_link_tag "bootstrapValidator.min" %>
+    <%= stylesheet_link_tag "pickadate/classic" %>
+    <%= stylesheet_link_tag "pickadate/classic.date" %>
+    <%= stylesheet_link_tag "pickadate/classic.time" %>
+    <%= stylesheet_link_tag "style" %>
+    <!-- Web Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <%= javascript_include_tag "modernizr.custom" %>
+  </head>
+
+  <body data-spy="scroll" data-offset="0" data-target=".portal-sidebar">
+
+    <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "donationHistory"})%>
+	<div class="main-dashboard-content">
+      <div class="container">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<form method="post" action="/donationHistory">
+					<input type="text" name="fromDate" id="fromDate" class="pull-left" style="cursor: pointer;">
+					<input type="text" name="toDate" id="toDate" class="pull-left" style="cursor: pointer;">
+					<input type="text" name="user" class="pull-left" placeholder="Usuario">
+					<button type="submit" class="btn btn-theme btn-sm pull-left">Buscar</button>
+				</form>
+			</div>
+		</div>
+		<table style="min-height:500px;width:100%;">
+			<tr>
+				<td valign="top">
+					<table class="table table-hover" style="height:100% !important;">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Descripci&oacute;n</th>
+								<th>Donación</th>
+								<th>Usuario</th>
+								<th>Proyecto</th>
+								<th>Monto</th>
+								<th>Creditos VM</th>
+								<th>Contrato</th>
+								<th style="width:80px;"></th>
+							</tr>
+						</thead>
+						<tbody>
+						<% @dh.each do |dh|%>
+						<tr>
+							<td><%=dh.id%></td>
+							<td><%=dh.description%></td>
+							<td><%=dh.donation_type%></td>
+							<td><%=dh.nombre + " " + dh.apellido%></td>
+							<td><%=truncate(dh.project, :length => 25)%></td>
+							<td>$<%=(dh.amount_mxn / 100)%></td>
+							<td><%=dh.credit_vm%> VM</td>
+							<td class="text-center"><a href="assets/<%=dh.contract_file_name%>.pdf" target="_blank" class="glyphicon glyphicon-download-alt"></a></td>
+							<% if dh.active%>
+							<td><a href="/page/deactivate/<%=dh.id%>">Desactivar</a></td>
+							<% else %>
+							<td><a href="/page/deactivate/<%=dh.id%>" style="color:red;">Activar</a></td>
+							<% end %>
+						</tr>
+						<% end %>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</table>
+      </div><!--/container-->
+    </div>
+
+    <%= render(:partial => "shared/footer")%>
+    <!-- jQuery  -->
+    <%= javascript_include_tag "jquery.min" %>
+    <%= javascript_include_tag "bootstrap.min" %>
+    <%= javascript_include_tag "detectmobilebrowser" %>
+    <%= javascript_include_tag "smoothscroll" %>
+    <%= javascript_include_tag "bootstrapValidator.min" %>
+    <%= javascript_include_tag "jquery.inview.min" %>
+    <%= javascript_include_tag "jquery.easing.1.3" %>
+    <%= javascript_include_tag "animations" %>
+    <%= javascript_include_tag "animations" %>
+    <%= javascript_include_tag "jquery.formatter.min" %>
+    <%= javascript_include_tag "legacy" %>
+    <%= javascript_include_tag "picker" %>
+    <%= javascript_include_tag "picker.time" %>
+    <%= javascript_include_tag "picker.date" %>
+    <%= javascript_include_tag "date" %>
+    <%= javascript_include_tag "verdemonarca" %>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('body').scrollTop(0);
+		
+        $( "#resetpassword-form" ).submit(function( event ) {
+          event.preventDefault();
+          $.ajax({
+            type: "POST",
+            url: "/dashboard/post_change_password",
+            data: {
+              password_input:$("#password_input").val(),
+              password_input:$("#password_input").val(),
+              password_input_new:$("#password_input_new").val(),
+              password_input_confirm:$("#password_input_confirm").val()
+            },
+            dataType: "json",
+            beforeSend: function(){
+
+            },
+            success: function(pRespuesta) {
+              if(pRespuesta.success == 0){
+                $("#error-label").html(pRespuesta.messages);
+              }
+              else if(pRespuesta.success == 1){
+                window.location = pRespuesta.location;
+              }
+            },
+            error: function(pRespuesta) {
+              alert("error");
+            },
+            complete: function() {
+
+            }
+          });
+        });
+
+		
+		$('#fromDate').pickadate({
+			monthsFull: ["Enero", "Febrero", "Marzo", "Abril","Mayo","Junio","Julio","Agosto","Setiembre","Octubre","Noviembre","Diciembre"],
+			weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+			showWeekdaysFull: false,
+			today: 'Hoy',
+			clear: 'Borrar',
+			close: 'Cerrar',
+			formatSubmit: 'dd-mm-yyyy',
+			hiddenName: true,
+			hiddenName: false,
+		});
+		$picker = $('#fromDate').pickadate('picker');
+		$picker.set('select', Date.today().addMonths(-1));
+		
+		$('#toDate').pickadate({
+			monthsFull: ["Enero", "Febrero", "Marzo", "Abril","Mayo","Junio","Julio","Agosto","Setiembre","Octubre","Noviembre","Diciembre"],
+			weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+			showWeekdaysFull: false,
+			today: 'Hoy',
+			clear: 'Borrar',
+			close: 'Cerrar',
+			formatSubmit: 'dd-mm-yyyy',
+			hiddenName: true,
+			hiddenName: false,
+		});
+		$picker = $('#toDate').pickadate('picker');
+		$picker.set('select', Date.today());
+      });
+
+    </script>
+  </body>
+</html>
