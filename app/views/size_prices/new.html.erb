@@ -93,99 +93,95 @@
                                     <div class="form-group">
                                         <label for="category_id" class="col-sm-4 control-label">Categor&iacute;a</label>
                                         <div class="col-sm-8">
-                                            <select class="form-control" name="category_id" id="category_id"  onchange="myFunction()">
+                                            <select class="form-control" name="category_id" id="category_id">
                                                 <% @category_dropdown.each do |c|%>
                                                 <option value="<%=c.id%>"><%=c.description%></option>
-
                                                 <% end %>
                                             </select>
                                         </div>
                                     </div>
-                                    <div id="div_iluminacion">
-                                        <div class="form-group" id="div_precio">
-                                            <label for="description" class="col-sm-4 control-label">Precio</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="precio" placeholder="precio" id="precio"/>
-                                            </div>
-                                        </div>
 
-                                        <div class="form-group" id="div_watts">
-                                            <label for="description" class="col-sm-4 control-label">Watts</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="watts" placeholder="watts" id="watts"/>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group" id="div_lumenes">
-                                            <label for="description" class="col-sm-4 control-label">Lumenes</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="lumenes" placeholder="lumenes" id="lumenes"/>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="form-group" id="div_vida">
-                                            <label for="description" class="col-sm-4 control-label">Vida</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="vida" placeholder="vida" id="vida"/>
-                                            </div>
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-4 control-label">Watts</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="watts" placeholder="watts" id="watts"/>
                                         </div>
                                     </div>
 
-                                    <div id="div_aires" style="display:none">
-                                        <div class="form-group" id="div_fase">
-                                            <label for="description" class="col-sm-4 control-label">Fase</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="fase" placeholder="fase" id="fase"/>
-                                            </div>
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-4 control-label">Lumenes</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="lumenes" placeholder="lumenes" id="lumenes"/>
                                         </div>
+                                    </div>
 
-                                        <div class="form-group" id="div_configuracion">
-                                            <label for="description" class="col-sm-4 control-label">Configuraci&oacute;n</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="configuracion" placeholder="configuraci&oacute;n" id="configuracion"/>
-                                            </div>
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-4 control-label">Precio</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="precio" placeholder="precio" id="precio"/>
                                         </div>
+                                    </div>
 
-                                        <div class="form-group" id="div_bobina">
-                                            <label for="description" class="col-sm-4 control-label">Bobina</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="bobina" placeholder="bobina" id="bobina"/>
-                                            </div>
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-4 control-label">Vida</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="vida" placeholder="vida" id="vida"/>
                                         </div>
+                                    </div>
 
-                                        <div class="form-group" id="div_ventilador">
-                                            <label for="description" class="col-sm-4 control-label">Motor Ventilador</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="motor_ventilador" placeholder="motor ventilador" id="motor_ventilador"/>
-                                            </div>
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-4 control-label">Fase</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="fase" placeholder="fase" id="fase"/>
                                         </div>
+                                    </div>
 
-                                        <div class="form-group" id="div_garantia">
-                                            <label for="description" class="col-sm-4 control-label">Garant&iacute;a</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="garantia" placeholder="garant&iacute;a" id="garantia"/>
-                                            </div>
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-4 control-label">Configuraci&oacute;n</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="configuracion" placeholder="configuraci&oacute;n" id="configuracion"/>
                                         </div>
+                                    </div>
 
-                                        <div class="form-group" id="div_capacidad">
-                                            <label for="description" class="col-sm-4 control-label">Capacidad</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="capacidad" placeholder="capacidad" id="capacidad"/>
-                                            </div>
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-4 control-label">Bobina</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="bobina" placeholder="bobina" id="bobina"/>
                                         </div>
+                                    </div>
 
-                                        <div class="form-group" id="div_eficiencia">
-                                            <label for="description" class="col-sm-4 control-label">Eficiencia</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="eficiencia" placeholder="eficiencia" id="eficiencia"/>
-                                            </div>
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-4 control-label">Motor Ventilador</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="motor_ventilador" placeholder="motor ventilador" id="motor_ventilador"/>
                                         </div>
+                                    </div>
 
-                                        <div class="form-group" id="div_disponibilidad">
-                                            <label for="disponibilidad" class="col-sm-4 control-label">Disponibilidad</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="disponibilidad" placeholder="Disponibilidad" id="disponibilidad"/>
-                                            </div>
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-4 control-label">Garant&iacute;a</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="garantia" placeholder="garant&iacute;a" id="garantia"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-4 control-label">Capacidad</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="capacidad" placeholder="capacidad" id="capacidad"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-4 control-label">Eficiencia</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="eficiencia" placeholder="eficiencia" id="eficiencia"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="disponibilidad" class="col-sm-4 control-label">Disponibilidad</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="disponibilidad" placeholder="Disponibilidad" id="disponibilidad"/>
                                         </div>
                                     </div>
 
@@ -236,20 +232,5 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/drilldown.js"></script>
-    <script>
-        $('#category_id').on('change', function(){
-            var x = $(this).val();
-            var x = document.getElementById("category_id").value;
-            if (x == 1){
-                $("#div_iluminacion").css("display", "block");
-                $("#div_aires").css("display", "none");
-            }
-            else
-            {
-                $("#div_aires").css("display", "block");
-                $("#div_iluminacion").css("display", "none");
-            }
-        });
-    </script>
   </body>
 </html>
