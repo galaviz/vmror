@@ -98,7 +98,9 @@ class DashboardController < ApplicationController
 	credit = params["pCredit"]
 	amount = params["pAmount"]
 	if credit == "" and amount == ""
-      render :json =>  { :success => 0, :messages => "¡Debes especificar la cantidad de donación!"}.to_json  
+      render :json =>  { :success => 0, :messages => "¡Debes especificar la cantidad de donación!"}.to_json
+	elsif amount > "0" and amount < "10"
+      render :json =>  { :success => 0, :messages => "¡La cantidad en efectivo debe de ser mayor de $10!"}.to_json
 	else
 		if credit.to_i > @online_user.creditos_vm.to_i
 		  render :json =>  { :success => 0, :messages => "¡No tienes los suficientes creditos para donar!"}.to_json  
