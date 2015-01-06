@@ -43,25 +43,23 @@
 						<thead>
 							<tr>
 								<th>#</th>
-								<th>Producto</th>
-								<th>Categor&iacute;a</th>
-								<th style="width:80px;"></th>
+								<th>Descripci&oacute;n</th>
+								<th>Precio</th>
 								<th style="width:80px;"></th>
 								<th style="width:80px;"></th>
 							</tr>
 						</thead>
 						<tbody>
-							<% @products.each do |p|%>
+							<% @sizes.each do |sz|%>
 							<tr>
-								<td><%=p.id%></td>
-								<td><%=p.name%></td>
-								<td><%=p.category%></td>
-								<td><a style="float:right" href="/productSize/index/<%=p.id%>">Tamaños</a></td>
-								<td><a style="float:right" href="/product/edit/<%=p.id%>">Editar</a></td>
-								<% if p.active == true%>
-								<td><a style="float:right" href="/product/deactivate/<%=p.id%>">Desactivar</a></td>
+								<td><%=sz.id%></td>
+								<td><%=sz.size_description%></td>
+								<td>$<%=number_with_precision(sz.price, :precision => 2, :delimiter => ",")%></td>
+								<td><a style="float:right" href="/productSize/edit/<%=sz.id%>">Editar</a></td>
+								<% if sz.active == true%>
+								<td><a style="float:right" href="/productSize/deactivate/<%=sz.id%>">Desactivar</a></td>
 								<% else %>
-								<td><a style="float:right; color:red;" href="/product/deactivate/<%=p.id%>">Activar</a></td>
+								<td><a style="float:right; color:red;" href="/productSize/deactivate/<%=sz.id%>">Activar</a></td>
 								<% end %>
 							</tr>
 							<% end %>
@@ -74,7 +72,11 @@
 					<table class="table">
 						<tr>
 							<td class="text-right">
-								<a href="/product/new" class="btn btn-theme">Nuevo producto</a>
+								<form method="post" action="/productSize/new">
+									<input type="hidden" name="product_id" value="<%=@product%>"/>
+									<a href="/product" class="btn btn-theme">Regresar</a>
+									<button type="submit" class="btn btn-theme">Nuevo tamaño</button>
+								</form>
 							</td>
 						</tr>
 					</table>

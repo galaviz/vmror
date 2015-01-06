@@ -49,7 +49,7 @@ class DashboardController < ApplicationController
       @cart_total = 0
       @cart.keys.each do |key|
         @num_items_in_cart = @num_items_in_cart + @cart[key]
-        @cart_total = @cart_total +  (@cart[key] * Item.find_by_id(key).precio)
+        @cart_total = @cart_total +  (@cart[key] * ProductSize.find_by_id(key).price)
       end
       @items_category1 = Item.all.where(active: true, category_id:1)
       @items_category2 = Item.all.where(active: true, category_id:2)
@@ -312,12 +312,13 @@ class DashboardController < ApplicationController
 	  @configurations = Page.select("description, command").where(menu_id: 2, active: true).order(order_by: :asc)
       @online_user = User.find_by_id(session["user_id"])
       @user_tier = @online_user.user_tier
+	  @product_size = ProductSize.where(active: true, item_id: @item_id)
       @cart = session["cart"]
       @num_items_in_cart = 0
       @cart_total = 0
       @cart.keys.each do |key|
         @num_items_in_cart = @num_items_in_cart + @cart[key]
-        @cart_total = @cart_total +  (@cart[key] * Item.find_by_id(key).precio)
+        @cart_total = @cart_total +  (@cart[key] * ProductSize.find_by_id(key).price)
       end
     else
       redirect_to :action => :index, :controller => :main
@@ -326,7 +327,7 @@ class DashboardController < ApplicationController
 
   def add_to_cart
     cart = session["cart"]
-    @item_id = params["item_id"].to_i
+    @item_id = params["product_size_id"].to_i
     @quantity = params["quantity"].to_i
     unless cart[@item_id]
       cart[@item_id] = 0

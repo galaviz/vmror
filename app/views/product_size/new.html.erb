@@ -34,72 +34,39 @@
 
   <body data-spy="scroll" data-offset="0" data-target=".portal-sidebar">
 
-    <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "pages"})%>
-	<div class="main-dashboard-content">
-      <div class="container">
+    <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "products"})%>
+	
+		<div class="main-dashboard-content">
+			<div class="container">
+				<div class="row text-center">
+					<div class="col-md-6 col-sm-6 centered">
+						<div class="classic-form">
+							<form class="form-horizontal" role="form" action="./create">
 
-		<div class="row">
-			<div class="col-md-12 col-sm-12 animated" data-animtype="flipInY"
-			data-animrepeat="0"
-			data-speed="1s"
-			data-delay="0.5s">
-				<div class="space-sep20"></div>
-				<h2 class="h2-section-title">P&aacute;gina <%= @page.description %></h2>
+								<div class="form-group">
+									<label for="description" class="col-sm-4 control-label">Descripci&oacute;n</label>
+									<div class="col-sm-8">
+										<textarea class="form-control" id="description" name="size_description" placeholder="Description" style="resize: vertical;" rows="15"></textarea>
+									</div>
+								</div>
 
-				<div class="i-section-title">
-					<i class="icon-users-outline">
+								<div class="form-group">
+									<label for="price" class="col-sm-4 control-label">Precio</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="price" name="price" placeholder="Precio" value="">
+									</div>
+								</div>
 
-					</i>
+								<input type="hidden" name="product_id" value="<%=@product%>"/>
+								<a href="/productSize/index/<%=@product%>" class="btn btn-theme">Regresar</a>
+								<button type="submit" class="btn btn-theme">Guardar</button>
+
+							</form>
+						</div>
+					</div>
 				</div>
-
-				<div class="space-sep20"></div>
-			</div>
+			</div><!--/container-->
 		</div>
-
-		<div class="row">
-
-			<div class="col-md-6 col-sm-6 centered">
-				<div class="classic-form"><form class="form-horizontal" role="form" id="page-edit-form" action="/page/update/<%=@page.id%>">
-						
-						<div class="form-group">
-							<label for="description" class="col-sm-4 control-label">Descripci&oacute;n</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" name="description" value="<%=@page.description%>" placeholder="Descripci&oacute;n" id="description" >
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label for="description" class="col-sm-4 control-label">Comando</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" name="command" value="<%=@page.command%>" placeholder="Comando" id="command" >
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label for="menu-type" class="col-sm-4 control-label">Menu</label>
-							<div class="col-sm-8">
-								<select class="form-control" name="menu-type" id="menu-type">
-									<% @menu_type.each do |mt|%>
-										<option value="<%=mt.id%>" <% if mt.id == @page.menu_id%>selected<% end %>><%=mt.description%></option>
-									<% end %>
-								<option value="0" <% if @page.menu_id == "0"%>selected<% end %>>Sin menu</option>
-								</select>
-							</div>
-						</div>
-
-						<div class="form-group text-center">
-							<a class="btn btn-theme" href="/page">Regresar</a>
-							<button type="submit" class="btn btn-theme">Guardar</button>
-						</div>
-
-					</form>
-				</div>
-			</div>
-			<div class="space-sep20"></div>
-		</div> <!-- /row -->
-
-      </div><!--/container-->
-    </div>
 
     <%= render(:partial => "shared/footer")%>
     <!-- jQuery  -->
@@ -118,5 +85,45 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('body').scrollTop(0);
+		
+        $( "#resetpassword-form" ).submit(function( event ) {
+          event.preventDefault();
+          $.ajax({
+            type: "POST",
+            url: "/dashboard/post_change_password",
+            data: {
+              password_input:$("#password_input").val(),
+              password_input:$("#password_input").val(),
+              password_input_new:$("#password_input_new").val(),
+              password_input_confirm:$("#password_input_confirm").val()
+            },
+            dataType: "json",
+            beforeSend: function(){
+
+            },
+            success: function(pRespuesta) {
+              if(pRespuesta.success == 0){
+                $("#error-label").html(pRespuesta.messages);
+              }
+              else if(pRespuesta.success == 1){
+                window.location = pRespuesta.location;
+              }
+            },
+            error: function(pRespuesta) {
+              alert("error");
+            },
+            complete: function() {
+
+            }
+          });
+        });
+
+
+      });
+
+    </script>
   </body>
 </html>
