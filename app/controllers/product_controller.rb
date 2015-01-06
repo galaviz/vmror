@@ -1,5 +1,5 @@
 class ProductController < ApplicationController
-	before_action :set_product, only: [:edit, :update, :deactivate]
+	before_action :set_product, only: [:edit, :update, :deactivate, :sizes]
 	
 	def index
 	  check_permission()
@@ -12,7 +12,6 @@ class ProductController < ApplicationController
 		items.description, 
 		items.watts,
 		items.lumenes,
-		items.precio,
 		items.vida,
 		items.fase,
 		items.configuracion,
@@ -43,7 +42,7 @@ class ProductController < ApplicationController
 	  @product.description = params["description"]
 	  @product.watts = params["watts"]
 	  @product.lumenes = params["lumenes"]
-	  @product.precio = params["precio"]
+	  # @product.precio = params["precio"]
 	  @product.vida = params["vida"]
 	  @product.fase = params["fase"]
 	  @product.configuracion = params["configuracion"]
@@ -75,7 +74,7 @@ class ProductController < ApplicationController
 	  @product.description = params["description"]
 	  @product.watts = params["watts"]
 	  @product.lumenes = params["lumenes"]
-	  @product.precio = params["precio"]
+	  # @product.precio = params["precio"]
 	  @product.vida = params["vida"]
 	  @product.fase = params["fase"]
 	  @product.configuracion = params["configuracion"]
@@ -121,7 +120,7 @@ class ProductController < ApplicationController
 		@product.save()
 		redirect_to :action => :index
 	end
-
+	
   private
 	# Use callbacks to share common setup or constraints between actions.
 	def set_product

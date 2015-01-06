@@ -188,12 +188,12 @@ class RegistrationController < ApplicationController
     else
       user = User.find_by_id(session["user_id"])
       
-      contract = user.id + "-" + user.clave_referencia + '-' + params[:contract64Name]
+      contract = user.id + "-" + user.clave_referencia + '-Contrato_Compraventa'
       File.open('app/assets/contracts/' + contract + '.pdf',"wb") do |file|
         file.write(Base64.decode64(contractPDF))
       end
       
-      power = user.id + "-" + user.nombre[0,2] + user.apellido[0,2] + '-' + params[:power64Name]
+      power = user.id + "-" + user.nombre[0,2] + user.apellido[0,2] + '-Carta_Poder'
       File.open('app/assets/contracts/' + power + '.pdf',"wb") do |file|
         file.write(Base64.decode64(powerPDF))
       end

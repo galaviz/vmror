@@ -14,11 +14,12 @@ class LoadSecurityData < ActiveRecord::Migration
 	Page.create(:description => "Paises",               :command => "country",        :order_by => 10, :menu_id => 2, :active => true)
 	Page.create(:description => "Estados",              :command => "state",          :order_by => 11, :menu_id => 2, :active => true)
 	Page.create(:description => "Municipios",           :command => "location",       :order_by => 12, :menu_id => 2, :active => true)
-	Page.create(:description => "Categorías",           :command => "category",       :order_by => 12, :menu_id => 2, :active => true)
-	Page.create(:description => "Productos",            :command => "product",        :order_by => 12, :menu_id => 2, :active => true)
-	Page.create(:description => "Proyectos",            :command => "project",        :order_by => 12, :menu_id => 2, :active => true)
-	Page.create(:description => "Rep. de donación",     :command => "donationHistory",:order_by => 13, :menu_id => 2, :active => true)
-	Page.create(:description => "Mis contratos",        :command => "myContract",     :order_by => 14, :menu_id => 0, :active => true)
+	Page.create(:description => "Categorías",           :command => "category",       :order_by => 13, :menu_id => 2, :active => true)
+	Page.create(:description => "Productos",            :command => "product",        :order_by => 14, :menu_id => 2, :active => true)
+	Page.create(:description => "Proyectos",            :command => "project",        :order_by => 15, :menu_id => 2, :active => true)
+	Page.create(:description => "Rep. de donación",     :command => "donationHistory",:order_by => 16, :menu_id => 2, :active => true)
+	Page.create(:description => "Mis contratos",        :command => "myContract",     :order_by => 17, :menu_id => 0, :active => true)
+	Page.create(:description => "Tamaño de producto",   :command => "product_size",   :order_by => 0,  :menu_id => 0, :active => true)
 
 	Profile.create(:description => "Administrador", :page_id => 7, :active => true)
 	Profile.create(:description => "Cliente",       :page_id => 2, :active => true)
@@ -43,6 +44,7 @@ class LoadSecurityData < ActiveRecord::Migration
 	Permission.create(:description => "Gestionar proyectos",          :command => "manageProjects", :active => true)
 	Permission.create(:description => "Gestionar reporte de donaión", :command => "manageDonationReport", :active => true)
 	Permission.create(:description => "Gestionar contratos",          :command => "manageContract", :active => true)
+	Permission.create(:description => "Gestionar tamaños de producto",:command => "manageProductSizes", :active => true)
 	
 	ProfilePermission.create(:profile_id => 1, :permission_id => 1, :active => true)
 	ProfilePermission.create(:profile_id => 2, :permission_id => 3, :active => true)
@@ -71,6 +73,7 @@ class LoadSecurityData < ActiveRecord::Migration
 	PagePermission.create(:page_id => 16, :permission_id => 17, :active => true)
 	PagePermission.create(:page_id => 17, :permission_id => 18, :active => true)
 	PagePermission.create(:page_id => 18, :permission_id => 19, :active => true)
+	PagePermission.create(:page_id => 19, :permission_id => 20, :active => true)
 	
   end
   
