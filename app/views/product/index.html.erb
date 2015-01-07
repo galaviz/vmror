@@ -36,51 +36,51 @@
     <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "products"})%>
 	<div class="main-dashboard-content">
       <div class="container">
-        <div class="table-responsive">
-      		<table style="min-height:500px;width:100%;">
-      			<tr>
-      				<td valign="top">
-      					<table class="table table-hover" style="height:100% !important;">
-      						<thead>
-      							<tr>
-      								<th>#</th>
-      								<th>Producto</th>
-                      <th>Categor&iacute;a</th>
-      								<th style="width:80px;"></th>
-      								<th style="width:80px;"></th>
-      							</tr>
-      						</thead>
-      						<tbody>
-      							<% @products.each do |p|%>
-      							<tr>
-      								<td><%=p.id%></td>
-      								<td><%=p.name%></td>
-                      <td><%=p.category%></td>
-      								<td><a style="float:right" href="/product/edit/<%=p.id%>">Editar</a></td>
-      								<% if p.active == true%>
-      								<td><a style="float:right" href="/product/deactivate/<%=p.id%>">Desactivar</a></td>
-      								<% else %>
-      								<td><a style="float:right; color:red;" href="/product/deactivate/<%=p.id%>">Activar</a></td>
-      								<% end %>
-      							</tr>
-      							<% end %>
-      						</tbody>
-      					</table>
-      				</td>
-      			</tr>
-      			<tr>
-      				<td style="height:50px;">
-      					<table class="table">
-      						<tr>
-      							<td class="text-right">
-      								<a href="/product/new" class="btn btn-theme">Nuevo producto</a>
-      							</td>
-      						</tr>
-      					</table>
-      				</td>
-      			</tr>
-      		</table>
-        </div>
+    		<table style="min-height:500px;width:100%;">
+    			<tr>
+    				<td valign="top">
+    					<table class="table table-hover" style="height:100% !important;">
+    						<thead>
+    							<tr>
+    								<th>#</th>
+    								<th>Producto</th>
+    								<th>Categor&iacute;a</th>
+    								<th style="width:80px;"></th>
+    								<th style="width:80px;"></th>
+    								<th style="width:80px;"></th>
+    							</tr>
+    						</thead>
+    						<tbody>
+    							<% @products.each do |p|%>
+    							<tr>
+    								<td><%=p.id%></td>
+    								<td><%=p.name%></td>
+    								<td><%=p.category%></td>
+    								<td><a style="float:right" href="/productSize/index/<%=p.id%>">Tamaños</a></td>
+    								<td><a style="float:right" href="/product/edit/<%=p.id%>">Editar</a></td>
+    								<% if p.active == true%>
+    								<td><a style="float:right" href="/product/deactivate/<%=p.id%>">Desactivar</a></td>
+    								<% else %>
+    								<td><a style="float:right; color:red;" href="/product/deactivate/<%=p.id%>">Activar</a></td>
+    								<% end %>
+    							</tr>
+    							<% end %>
+    						</tbody>
+    					</table>
+    				</td>
+    			</tr>
+    			<tr>
+    				<td style="height:50px;">
+    					<table class="table">
+    						<tr>
+    							<td class="text-right">
+    								<a href="/product/new" class="btn btn-theme">Nuevo producto</a>
+    							</td>
+    						</tr>
+    					</table>
+    				</td>
+    			</tr>
+    		</table>
       </div><!--/container-->
     </div>
 
