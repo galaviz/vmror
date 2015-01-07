@@ -58,48 +58,68 @@
     		</div>
 
     		<div class="row">
-                
-    			<div class="centered">
-    				<div class="classic-form centered" style="width: 710px;">
-                        <form enctype="multipart/form-data" method="post" class="form-horizontal" role="form" id="product-edit-form" action="/product/update/<%=@product.id%>">
-                            <table>
-                                <tr>
-                                    <td valign="top">
-                                        <%if @product.image_url==nil %>
-                                            <img src="/assets/products_images/sin_imagen.png" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="130px" height="auto" title="sin imagen"/>
-                                            <div><label>Foto del producto</label></div>
-                                        <%else%>
-                                            <div>
-                                                <img src="/assets/products_images/<%= @product.image_url%>" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="120px" height="auto" title="imagen del producto"/>
-                                                
-                                            </div>
-                                            <div><label>Foto del producto</label></div>
-                                        <%end%>
-                                        <%if @product.brand_image_url==nil %>
-                                            <img src="/assets/brands_images/sin_imagen.png" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="130px" height="auto" title="sin imagen"/>
-                                            <div><label>Marca</label></div>
-                                        <%else%>
-                                            <div>
-                                                <img src="/assets/brands_images/<%= @product.brand_image_url%>" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="120px" height="auto" title="imagen de la marca"/>
-                                            </div>
-                                            <div><label>Marca</label></div>
-                                        <%end%>
-                                    </td>
-                                    <td>
-                						<div class="form-group">
-                							<label for="name" class="col-sm-4 control-label">Nombre</label>
-                							<div class="col-sm-8">
-                                                <input type="text" class="form-control" name="name" value="<%=@product.name%>" placeholder="Nombre" id="name"/>
-                							</div>
-                						</div>
+			<div class="centered">
+				<div class="classic-form centered" style="width: 710px;">
+                    <form enctype="multipart/form-data" method="post" class="form-horizontal" role="form" id="product-edit-form" action="/product/update/<%=@product.id%>">
+                        <table>
+                            <tr>
+                                <td valign="top">
+                                    <%if @product.image_url==nil %>
+                                        <img src="/assets/products_images/sin_imagen.png" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="130px" height="auto" title="sin imagen"/>
+                                        <div><label>Foto del producto</label></div>
+                                    <%else%>
+                                        <div>
+                                            <img src="/assets/products_images/<%= @product.image_url%>" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="120px" height="auto" title="imagen del producto"/>
+                                            
+                                        </div>
+                                        <div><label>Foto del producto</label></div>
+                                    <%end%>
+                                    <%if @product.brand_image_url==nil %>
+                                        <img src="/assets/brands_images/sin_imagen.png" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="130px" height="auto" title="sin imagen"/>
+                                        <div><label>Marca</label></div>
+                                    <%else%>
+                                        <div>
+                                            <img src="/assets/brands_images/<%= @product.brand_image_url%>" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="120px" height="auto" title="imagen de la marca"/>
+                                        </div>
+                                        <div><label>Marca</label></div>
+                                    <%end%>
+                                </td>
+                                <td>
+            						<div class="form-group">
+            							<label for="name" class="col-sm-4 control-label">Nombre</label>
+            							<div class="col-sm-8">
+                                            <input type="text" class="form-control" name="name" value="<%=@product.name%>" placeholder="Nombre" id="name"/>
+            							</div>
+            						</div>
 
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-4 control-label">Descripci&oacute;n</label>
+                                        <div class="col-sm-8">
+                                            <textarea style="resize:vertical;" type="text" class="form-control" name="description" placeholder="descripci&oacute;n" id="description" rows="4" cols="50"><%=@product.description%></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="category_id" class="col-sm-4 control-label">Categor&iacute;a</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" name="category_id" id="category_id">
+                                                <% @category_dropdown.each do |c|%>
+                                                <option value="<%=c.id%>" <% if @product.category_id == c.id %>selected<% end %>><%=c.description%></option>
+                                                <% end %>
+                                            </select>
+                                        </div>
+                                    </div>
+									
+                                    <div id="div_iluminacion">
+										<!--
+>>>>>>> 689e90cf1c96540f6101abc07acd94e99287e3d2
                                         <div class="form-group">
                                             <label for="description" class="col-sm-4 control-label">Descripci&oacute;n</label>
                                             <div class="col-sm-8">
                                                 <textarea style="resize:vertical;" type="text" class="form-control" name="description" placeholder="descripci&oacute;n" id="description" rows="4" cols="50"><%=@product.description%></textarea>
                                             </div>
                                         </div>
-
+										-->
                                         <div class="form-group">
                                             <label for="category_id" class="col-sm-4 control-label">Categor&iacute;a</label>
                                             <div class="col-sm-8">
