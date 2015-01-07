@@ -57,15 +57,15 @@
                 <div class="col-sm-4">
                   <div class="item-tienda">
                     <%if item.image_url==nil %>
-                        <a href="<%=url_for controller: 'dashboard', action: 'item', id: item.id%>"><img height=180 src="/assets/products_images/sin_imagen.png" /></a><br>
+                        <a href="<%=url_for controller: "dashboard", action: "item", id: item.id%>"><img height=180 src="/assets/products_images/sin_imagen.png" /></a><br>
                     <%else%>
-                        <a href="<%=url_for controller: 'dashboard', action: 'item', id: item.id%>"><img height=180 src="/assets/products_images/<%=item.image_url%>" /></a><br>
+                        <a href="<%=url_for controller: "dashboard", action: "item", id: item.id%>"><img height=180 src="/assets/products_images/<%=item.image_url%>" /></a><br>
                     <%end%>
-                    <a href="<%=url_for controller: 'dashboard', action: 'item', id: item.id%>" class="item-name"><%=item.name%></a><br>
+                    <a href="<%=url_for controller: "dashboard", action: "item", id: item.id%>" class="item-name"><%=item.name%></a><br>
                     <strong>Watts:</strong> <%=item.watts%><br>
                     <strong>Lúmenes:</strong> <%=item.lumenes%><br>
                     <strong>Vida:</strong> <%=item.vida%><br>
-                    <strong>Precio:</strong> $<%=item.precio%>MN<br>
+                    <!--<strong>Precio:</strong> $<%=item.vida%>MN<br>-->
                     <br>
                   </div>
                 </div>
@@ -78,12 +78,12 @@
                 <%@items_category2.each do |item|%>
                 <div class="col-sm-4">
                   <div class="item-tienda">
-                    <a href="<%=url_for controller: 'dashboard', action: 'item', id: item.id%>"><img height=180 src="/assets/products_images/<%=item.image_url%>"></a><br>
-                    <a href="<%=url_for controller: 'dashboard', action: 'item', id: item.id%>" class="item-name"><%=item.name%></a><br>
+                    <a href="<%=url_for controller: "dashboard", action: "item", id: item.id%>"><img height=180 src="/assets/products_images/<%=item.image_url%>"></a><br>
+                    <a href="<%=url_for controller: "dashboard", action: "item", id: item.id%>" class="item-name"><%=item.name%></a><br>
                     <strong>Fase:</strong> <%=item.fase%><br>
                     <strong>Configuraci&oacute;n:</strong> <%=item.configuracion%><br>
                     <strong>Eficiencia:</strong> <%=item.eficiencia%><br>
-                    <strong>Precio:</strong> $<%=item.precio%>MN<br>
+                    <!--<strong>Precio:</strong> $<%=item.vida%>MN<br>-->
                     <br>
                   </div>
                 </div>
@@ -96,12 +96,12 @@
                 <%@items_category3.each do |item|%>
                 <div class="col-sm-4">
                   <div class="item-tienda">
-                    <a href="<%=url_for controller: 'dashboard', action: 'item', id: item.id%>"><img height=180 src="/assets/products_images/<%=item.image_url%>"></a><br>
-                    <a href="<%=url_for controller: 'dashboard', action: 'item', id: item.id%>" class="item-name"><%=item.name%></a><br>
+                    <a href="<%=url_for controller: "dashboard", action: "item", id: item.id%>"><img height=180 src="/assets/products_images/<%=item.image_url%>"></a><br>
+                    <a href="<%=url_for controller: "dashboard", action: "item", id: item.id%>" class="item-name"><%=item.name%></a><br>
                     <strong>Fase:</strong> <%=item.fase%><br>
                     <strong>Configuraci&oacute;n:</strong> <%=item.configuracion%><br>
                     <strong>Eficiencia:</strong> <%=item.eficiencia%><br>
-                    <strong>Precio:</strong> $<%=item.precio%>MN<br>
+                    <!--<strong>Precio:</strong> $<%=item.vida%>MN<br>-->
                     <br>
                   </div>
                 </div>
@@ -114,7 +114,7 @@
           <div class="item">
             <h4 class="text-center theme-color bold"><a href="./carrito">Carrito de Compras</a></h4>
             <h1 class="text-center theme-color bold"><a href="./carrito"><%=@num_items_in_cart%> artículo<%unless @num_items_in_cart==1%>s<%end%> </a></h1>
-            <h4 class="text-center theme-color bold"><a href="./carrito">Comprar ($<%=number_with_precision(@cart_total, :precision => 2, :delimiter => ',')%> MN)</a></h4>
+            <h4 class="text-center theme-color bold"><a href="./carrito">Comprar ($<%=number_with_precision(@cart_total, :precision => 2, :delimiter => ",")%> MN)</a></h4>
           </div>
           <div class="item">
             <h3 class="<%=@color_classes[@user_tier]%>">VM <%=@online_user.user_tier%></h3>

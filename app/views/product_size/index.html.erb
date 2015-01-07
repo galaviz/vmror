@@ -18,9 +18,6 @@
     <%= stylesheet_link_tag "social-icons" %>
     <%= stylesheet_link_tag "font-awesome.min" %>
     <%= stylesheet_link_tag "bootstrapValidator.min" %>
-    <%= stylesheet_link_tag "pickadate/classic" %>
-    <%= stylesheet_link_tag "pickadate/classic.date" %>
-    <%= stylesheet_link_tag "pickadate/classic.time" %>
     <%= stylesheet_link_tag "style" %>
     <!-- Web Fonts -->
     <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
@@ -36,44 +33,56 @@
 
   <body data-spy="scroll" data-offset="0" data-target=".portal-sidebar">
 
-    <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "myContract"})%>
+    <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "products"})%>
 	<div class="main-dashboard-content">
       <div class="container">
-        <div class="table-responsive">
-      		<table style="min-height:500px;width:100%;">
-      			<tr>
-      				<td valign="top">
-      					<table class="table table-hover" style="height:100% !important;">
-      						<thead>
-      							<tr>
-      								<th>Donación</th>
-      								<th>Proyecto</th>
-      								<th>Monto</th>
-      								<th>Creditos VM</th>
-      								<th>Contrato</th>
-      							</tr>
-      						</thead>
-      						<tbody>
-      						<% @dh.each do |dh|%>
-      						<tr>
-      							<td><%=dh.donation_type%></td>
-      							<td><%=truncate(dh.project, :length => 45)%></td>
-      							<td>$<%=(dh.amount_mxn / 100)%></td>
-      							<td><%=dh.credit_vm%> VM</td>
-      							<td class="text-center"><a href="/assets/<%=dh.contract_file_name%>.pdf" target="_blank" class="glyphicon glyphicon-download-alt"></a></td>
-      						</tr>
-      						<% end %>
-      						</tbody>
-      					</table>
-      				</td>
-      			</tr>
-      			<tr>
-      				<td>
-      				<%=@sql%>
-      				<td>
-      			</tr>
-      		</table>
-        </div>
+		<table style="min-height:500px;width:100%;">
+			<tr>
+				<td valign="top">
+					<table class="table table-hover" style="height:100% !important;">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Descripci&oacute;n</th>
+								<th>Precio</th>
+								<th style="width:80px;"></th>
+								<th style="width:80px;"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<% @sizes.each do |sz|%>
+							<tr>
+								<td><%=sz.id%></td>
+								<td><%=sz.size_description%></td>
+								<td>$<%=number_with_precision(sz.price, :precision => 2, :delimiter => ",")%></td>
+								<td><a style="float:right" href="/productSize/edit/<%=sz.id%>">Editar</a></td>
+								<% if sz.active == true%>
+								<td><a style="float:right" href="/productSize/deactivate/<%=sz.id%>">Desactivar</a></td>
+								<% else %>
+								<td><a style="float:right; color:red;" href="/productSize/deactivate/<%=sz.id%>">Activar</a></td>
+								<% end %>
+							</tr>
+							<% end %>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td style="height:50px;">
+					<table class="table">
+						<tr>
+							<td class="text-right">
+								<form method="post" action="/productSize/new">
+									<input type="hidden" name="product_id" value="<%=@product%>"/>
+									<a href="/product" class="btn btn-theme">Regresar</a>
+									<button type="submit" class="btn btn-theme">Nuevo tamaño</button>
+								</form>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
       </div><!--/container-->
     </div>
 
@@ -90,10 +99,6 @@
     <%= javascript_include_tag "animations" %>
     <%= javascript_include_tag "jquery.formatter.min" %>
     <%= javascript_include_tag "legacy" %>
-    <%= javascript_include_tag "picker" %>
-    <%= javascript_include_tag "picker.time" %>
-    <%= javascript_include_tag "picker.date" %>
-    <%= javascript_include_tag "date" %>
     <%= javascript_include_tag "verdemonarca" %>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
@@ -133,7 +138,9 @@
             }
           });
         });
-	});
+
+
+      });
 
     </script>
   </body>

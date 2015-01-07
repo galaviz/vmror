@@ -7,7 +7,7 @@ class CreateItems < ActiveRecord::Migration
       t.text :brand_image_url
       t.float :watts
       t.string :lumenes
-      t.float :precio
+      # t.float :precio
       t.string :vida
       t.string :fase
       t.string :configuracion
