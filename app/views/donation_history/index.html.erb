@@ -39,56 +39,58 @@
     <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "donationHistory"})%>
 	<div class="main-dashboard-content">
       <div class="container">
-		<div class="panel panel-default">
-			<div class="panel-body">
-				<form method="post" action="/donationHistory">
-					<input type="text" name="fromDate" id="fromDate" class="pull-left" style="cursor: pointer;">
-					<input type="text" name="toDate" id="toDate" class="pull-left" style="cursor: pointer;">
-					<input type="text" name="user" class="pull-left" placeholder="Usuario">
-					<button type="submit" class="btn btn-theme btn-sm pull-left">Buscar</button>
-				</form>
-			</div>
-		</div>
-		<table style="min-height:500px;width:100%;">
-			<tr>
-				<td valign="top">
-					<table class="table table-hover" style="height:100% !important;">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>Descripci&oacute;n</th>
-								<th>Donación</th>
-								<th>Usuario</th>
-								<th>Proyecto</th>
-								<th>Monto</th>
-								<th>Creditos VM</th>
-								<th>Contrato</th>
-								<th style="width:80px;"></th>
-							</tr>
-						</thead>
-						<tbody>
-						<% @dh.each do |dh|%>
-						<tr>
-							<td><%=dh.id%></td>
-							<td><%=dh.description%></td>
-							<td><%=dh.donation_type%></td>
-							<td><%=dh.nombre + " " + dh.apellido%></td>
-							<td><%=truncate(dh.project, :length => 25)%></td>
-							<td>$<%=(dh.amount_mxn / 100)%></td>
-							<td><%=dh.credit_vm%> VM</td>
-							<td class="text-center"><a href="assets/<%=dh.contract_file_name%>.pdf" target="_blank" class="glyphicon glyphicon-download-alt"></a></td>
-							<% if dh.active%>
-							<td><a href="/page/deactivate/<%=dh.id%>">Desactivar</a></td>
-							<% else %>
-							<td><a href="/page/deactivate/<%=dh.id%>" style="color:red;">Activar</a></td>
-							<% end %>
-						</tr>
-						<% end %>
-						</tbody>
-					</table>
-				</td>
-			</tr>
-		</table>
+        <div class="table-responsive">
+      		<div class="panel panel-default">
+      			<div class="panel-body">
+      				<form method="post" action="/donationHistory">
+      					<input type="text" name="fromDate" id="fromDate" class="pull-left" style="cursor: pointer;">
+      					<input type="text" name="toDate" id="toDate" class="pull-left" style="cursor: pointer;">
+      					<input type="text" name="user" class="pull-left" placeholder="Usuario">
+      					<button type="submit" class="btn btn-theme btn-sm pull-left">Buscar</button>
+      				</form>
+      			</div>
+      		</div>
+      		<table style="min-height:500px;width:100%;">
+      			<tr>
+      				<td valign="top">
+      					<table class="table table-hover" style="height:100% !important;">
+      						<thead>
+      							<tr>
+      								<th>#</th>
+      								<th>Descripci&oacute;n</th>
+      								<th>Donación</th>
+      								<th>Usuario</th>
+      								<th>Proyecto</th>
+      								<th>Monto</th>
+      								<th>Creditos VM</th>
+      								<th>Contrato</th>
+      								<th style="width:80px;"></th>
+      							</tr>
+      						</thead>
+      						<tbody>
+      						<% @dh.each do |dh|%>
+      						<tr>
+      							<td><%=dh.id%></td>
+      							<td><%=dh.description%></td>
+      							<td><%=dh.donation_type%></td>
+      							<td><%=dh.nombre + " " + dh.apellido%></td>
+      							<td><%=truncate(dh.project, :length => 25)%></td>
+      							<td>$<%=(dh.amount_mxn / 100)%></td>
+      							<td><%=dh.credit_vm%> VM</td>
+      							<td class="text-center"><a href="assets/<%=dh.contract_file_name%>.pdf" target="_blank" class="glyphicon glyphicon-download-alt"></a></td>
+      							<% if dh.active%>
+      							<td><a href="/page/deactivate/<%=dh.id%>">Desactivar</a></td>
+      							<% else %>
+      							<td><a href="/page/deactivate/<%=dh.id%>" style="color:red;">Activar</a></td>
+      							<% end %>
+      						</tr>
+      						<% end %>
+      						</tbody>
+      					</table>
+      				</td>
+      			</tr>
+      		</table>
+        </div>
       </div><!--/container-->
     </div>
 

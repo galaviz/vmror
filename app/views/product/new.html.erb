@@ -37,184 +37,186 @@
     <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "products"})%>
 	<div class="main-dashboard-content">
       <div class="container">
+        <div class="table-responsive">
 
-		<div class="row">
-			<div class="col-md-12 col-sm-12 animated" data-animtype="flipInY"
-			data-animrepeat="0"
-			data-speed="1s"
-			data-delay="0.5s">
-				<div class="space-sep20"></div>
-				<h2 class="h2-section-title">Nuevo producto</h2>
+    		<div class="row">
+    			<div class="col-md-12 col-sm-12 animated" data-animtype="flipInY"
+    			data-animrepeat="0"
+    			data-speed="1s"
+    			data-delay="0.5s">
+    				<div class="space-sep20"></div>
+    				<h2 class="h2-section-title">Nuevo producto</h2>
 
-				<div class="i-section-title">
-					<i class="icon-users-outline">
+    				<div class="i-section-title">
+    					<i class="icon-users-outline">
 
-					</i>
-				</div>
+    					</i>
+    				</div>
 
-				<div class="space-sep20"></div>
-			</div>
-		</div>
+    				<div class="space-sep20"></div>
+    			</div>
+    		</div>
 
-		<div class="row">
+    		<div class="row">
 
-			<div class="centered">
-				<div class="classic-form centered" style="width: 710px;">
-					<form enctype="multipart/form-data" method="post" class="form-horizontal" role="form" id="product-edit-form" action="/product/create">
-					   <table>
-                            <tr>
-                                <td valign="top">
-                                    <div>
-                                        <img src="/assets/products_images/sin_imagen.png" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="130px" height="auto" title="sin imagen"/>
-                                    </div>
-                                    <div><label>Foto del producto</label></div>
-
-                                    <div>
-                                         <img src="/assets/brands_images/sin_imagen.png" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="130px" height="auto" title="sin imagen"/>
-                                    </div>
-                                    <div><label>Marca</label></div>
-                                        
-                                </td>
-                                <td>	
-            						<div class="form-group">
-                                        <label for="name" class="col-sm-4 control-label">Nombre</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="name" placeholder="Nombre" id="name"/>
+    			<div class="centered">
+    				<div class="classic-form centered" style="width: 710px;">
+    					<form enctype="multipart/form-data" method="post" class="form-horizontal" role="form" id="product-edit-form" action="/product/create">
+    					   <table>
+                                <tr>
+                                    <td valign="top">
+                                        <div>
+                                            <img src="/assets/products_images/sin_imagen.png" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="130px" height="auto" title="sin imagen"/>
                                         </div>
-                                    </div>
+                                        <div><label>Foto del producto</label></div>
 
-                                    <div class="form-group">
-                                        <label for="description" class="col-sm-4 control-label">Descripci&oacute;n</label>
-                                        <div class="col-sm-8">
-                                            <textarea style="resize:vertical;" type="text" class="form-control" name="description" placeholder="descripci&oacute;n" id="description" rows="4" cols="50"></textarea>
+                                        <div>
+                                             <img src="/assets/brands_images/sin_imagen.png" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="130px" height="auto" title="sin imagen"/>
                                         </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="category_id" class="col-sm-4 control-label">Categor&iacute;a</label>
-                                        <div class="col-sm-8">
-                                            <select class="form-control" name="category_id" id="category_id"  onchange="myFunction()">
-                                                <% @category_dropdown.each do |c|%>
-                                                <option value="<%=c.id%>"><%=c.description%></option>
-
-                                                <% end %>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div id="div_iluminacion">
-                                        <div class="form-group" id="div_precio">
-                                            <label for="description" class="col-sm-4 control-label">Precio</label>
+                                        <div><label>Marca</label></div>
+                                            
+                                    </td>
+                                    <td>	
+                						<div class="form-group">
+                                            <label for="name" class="col-sm-4 control-label">Nombre</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="precio" placeholder="precio" id="precio"/>
+                                                <input type="text" class="form-control" name="name" placeholder="Nombre" id="name"/>
                                             </div>
                                         </div>
 
-                                        <div class="form-group" id="div_watts">
-                                            <label for="description" class="col-sm-4 control-label">Watts</label>
+                                        <div class="form-group">
+                                            <label for="description" class="col-sm-4 control-label">Descripci&oacute;n</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="watts" placeholder="watts" id="watts"/>
+                                                <textarea style="resize:vertical;" type="text" class="form-control" name="description" placeholder="descripci&oacute;n" id="description" rows="4" cols="50"></textarea>
                                             </div>
                                         </div>
 
-                                        <div class="form-group" id="div_lumenes">
-                                            <label for="description" class="col-sm-4 control-label">Lumenes</label>
+                                        <div class="form-group">
+                                            <label for="category_id" class="col-sm-4 control-label">Categor&iacute;a</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="lumenes" placeholder="lumenes" id="lumenes"/>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="form-group" id="div_vida">
-                                            <label for="description" class="col-sm-4 control-label">Vida</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="vida" placeholder="vida" id="vida"/>
-                                            </div>
-                                        </div>
-                                    </div>
+                                                <select class="form-control" name="category_id" id="category_id"  onchange="myFunction()">
+                                                    <% @category_dropdown.each do |c|%>
+                                                    <option value="<%=c.id%>"><%=c.description%></option>
 
-                                    <div id="div_aires" style="display:none">
-                                        <div class="form-group" id="div_fase">
-                                            <label for="description" class="col-sm-4 control-label">Fase</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="fase" placeholder="fase" id="fase"/>
+                                                    <% end %>
+                                                </select>
                                             </div>
                                         </div>
-
-                                        <div class="form-group" id="div_configuracion">
-                                            <label for="description" class="col-sm-4 control-label">Configuraci&oacute;n</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="configuracion" placeholder="configuraci&oacute;n" id="configuracion"/>
+                                        <div id="div_iluminacion">
+                                            <div class="form-group" id="div_precio">
+                                                <label for="description" class="col-sm-4 control-label">Precio</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="precio" placeholder="precio" id="precio"/>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="form-group" id="div_bobina">
-                                            <label for="description" class="col-sm-4 control-label">Bobina</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="bobina" placeholder="bobina" id="bobina"/>
+                                            <div class="form-group" id="div_watts">
+                                                <label for="description" class="col-sm-4 control-label">Watts</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="watts" placeholder="watts" id="watts"/>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="form-group" id="div_ventilador">
-                                            <label for="description" class="col-sm-4 control-label">Motor Ventilador</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="motor_ventilador" placeholder="motor ventilador" id="motor_ventilador"/>
+                                            <div class="form-group" id="div_lumenes">
+                                                <label for="description" class="col-sm-4 control-label">Lumenes</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="lumenes" placeholder="lumenes" id="lumenes"/>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group" id="div_vida">
+                                                <label for="description" class="col-sm-4 control-label">Vida</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="vida" placeholder="vida" id="vida"/>
+                                                </div>
                                             </div>
                                         </div>
 
-                                        <div class="form-group" id="div_garantia">
-                                            <label for="description" class="col-sm-4 control-label">Garant&iacute;a</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="garantia" placeholder="garant&iacute;a" id="garantia"/>
+                                        <div id="div_aires" style="display:none">
+                                            <div class="form-group" id="div_fase">
+                                                <label for="description" class="col-sm-4 control-label">Fase</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="fase" placeholder="fase" id="fase"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" id="div_configuracion">
+                                                <label for="description" class="col-sm-4 control-label">Configuraci&oacute;n</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="configuracion" placeholder="configuraci&oacute;n" id="configuracion"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" id="div_bobina">
+                                                <label for="description" class="col-sm-4 control-label">Bobina</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="bobina" placeholder="bobina" id="bobina"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" id="div_ventilador">
+                                                <label for="description" class="col-sm-4 control-label">Motor Ventilador</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="motor_ventilador" placeholder="motor ventilador" id="motor_ventilador"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" id="div_garantia">
+                                                <label for="description" class="col-sm-4 control-label">Garant&iacute;a</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="garantia" placeholder="garant&iacute;a" id="garantia"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" id="div_capacidad">
+                                                <label for="description" class="col-sm-4 control-label">Capacidad</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="capacidad" placeholder="capacidad" id="capacidad"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" id="div_eficiencia">
+                                                <label for="description" class="col-sm-4 control-label">Eficiencia</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="eficiencia" placeholder="eficiencia" id="eficiencia"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" id="div_disponibilidad">
+                                                <label for="disponibilidad" class="col-sm-4 control-label">Disponibilidad</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="disponibilidad" placeholder="Disponibilidad" id="disponibilidad"/>
+                                                </div>
                                             </div>
                                         </div>
 
-                                        <div class="form-group" id="div_capacidad">
-                                            <label for="description" class="col-sm-4 control-label">Capacidad</label>
+                                        <div class="form-group">
+                                            <label for="datafile" class="col-sm-4 control-label">Imagen Producto</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="capacidad" placeholder="capacidad" id="capacidad"/>
+                                                <input type="file" name="datafile" id="datafile" />
                                             </div>
                                         </div>
 
-                                        <div class="form-group" id="div_eficiencia">
-                                            <label for="description" class="col-sm-4 control-label">Eficiencia</label>
+                                        <div class="form-group">
+                                            <label for="datafile_brand" class="col-sm-4 control-label">Imagen Marca</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="eficiencia" placeholder="eficiencia" id="eficiencia"/>
+                                                <input type="file" name="datafile_brand" id="datafile_brand" />
                                             </div>
                                         </div>
-
-                                        <div class="form-group" id="div_disponibilidad">
-                                            <label for="disponibilidad" class="col-sm-4 control-label">Disponibilidad</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="disponibilidad" placeholder="Disponibilidad" id="disponibilidad"/>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="datafile" class="col-sm-4 control-label">Imagen Producto</label>
-                                        <div class="col-sm-8">
-                                            <input type="file" name="datafile" id="datafile" />
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="datafile_brand" class="col-sm-4 control-label">Imagen Marca</label>
-                                        <div class="col-sm-8">
-                                            <input type="file" name="datafile_brand" id="datafile_brand" />
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                        <br/>
-                        <div class="form-group text-center">
-                            <a class="btn btn-theme" href="/product">Regresar</a>
-                            <button type="submit" class="btn btn-theme">Guardar</button>
-                        </div>
-					</form>
-				</div>
-			</div>
-			<div class="space-sep20"></div>
-		</div> <!-- /row -->
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <div class="form-group text-center">
+                                <a class="btn btn-theme" href="/product">Regresar</a>
+                                <button type="submit" class="btn btn-theme">Guardar</button>
+                            </div>
+    					</form>
+    				</div>
+    			</div>
+    			<div class="space-sep20"></div>
+    		</div> <!-- /row -->
+        </div>
 
       </div><!--/container-->
     </div>

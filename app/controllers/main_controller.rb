@@ -56,7 +56,12 @@ class MainController < ApplicationController
     end
   end
 
-  
+  def send_contact
+  	success = 1
+	messages = ""
+  	UserMailer.send_contact(params["contact_name"], params["contact_email"], params["contact_message"]).deliver
+  	render :json =>  { :success => 1, :messages => "¡Correo enviado!"}.to_json
+  end  
 
 end
 

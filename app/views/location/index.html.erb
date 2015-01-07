@@ -36,49 +36,51 @@
     <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "states"})%>
 	<div class="main-dashboard-content">
       <div class="container">
-		<table style="min-height:500px;width:100%;">
-			<tr>
-				<td valign="top">
-					<table class="table table-hover" style="height:100%;">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>Descripci&oacute;n</th>
-								<th>Estado</th>
-								<th style="width:80px;"></th>
-								<th style="width:80px;"></th>
-							</tr>
-						</thead>
-						<tbody>
-							<% @locations.each do |l|%>
-							<tr>
-								<td><%=l.id%></td>
-								<td><%=l.location%></td>
-								<td><%=l.state%></td>
-								<td><a style="float:right" href="/location/edit/<%=l.id%>">Editar</a></td>
-								<% if l.active == true%>
-								<td><a style="float:right" href="/location/deactivate/<%=l.id%>">Desactivar</a></td>
-								<% else %>
-								<td><a style="float:right; color:red;" href="/location/deactivate/<%=l.id%>">Activar</a></td>
-								<% end %>
-							</tr>
-							<% end %>
-						</tbody>
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td style="height:50px;">
-					<table class="table">
-						<tr>
-							<td class="text-right">
-								<a href="/location/new" class="btn btn-theme">Nuevo Municipio</a>
-							</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-		</table>
+        <div class="table-responsive">
+      		<table style="min-height:500px;width:100%;">
+      			<tr>
+      				<td valign="top">
+      					<table class="table table-hover" style="height:100%;">
+      						<thead>
+      							<tr>
+      								<th>#</th>
+      								<th>Descripci&oacute;n</th>
+      								<th>Estado</th>
+      								<th style="width:80px;"></th>
+      								<th style="width:80px;"></th>
+      							</tr>
+      						</thead>
+      						<tbody>
+      							<% @locations.each do |l|%>
+      							<tr>
+      								<td><%=l.id%></td>
+      								<td><%=l.location%></td>
+      								<td><%=l.state%></td>
+      								<td><a style="float:right" href="/location/edit/<%=l.id%>">Editar</a></td>
+      								<% if l.active == true%>
+      								<td><a style="float:right" href="/location/deactivate/<%=l.id%>">Desactivar</a></td>
+      								<% else %>
+      								<td><a style="float:right; color:red;" href="/location/deactivate/<%=l.id%>">Activar</a></td>
+      								<% end %>
+      							</tr>
+      							<% end %>
+      						</tbody>
+      					</table>
+      				</td>
+      			</tr>
+      			<tr>
+      				<td style="height:50px;">
+      					<table class="table">
+      						<tr>
+      							<td class="text-right">
+      								<a href="/location/new" class="btn btn-theme">Nuevo Municipio</a>
+      							</td>
+      						</tr>
+      					</table>
+      				</td>
+      			</tr>
+      		</table>
+        </div>
       </div><!--/container-->
     </div>
 

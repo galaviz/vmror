@@ -36,92 +36,94 @@
     <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "profiles"})%>
 	<div class="main-dashboard-content">
       <div class="container">
-		<div class="row">
-			<div class="col-md-12 col-sm-12 animated text-center" data-animtype="flipInY"
-			data-animrepeat="0"
-			data-speed="1s"
-			data-delay="0.5s">
-				<div class="space-sep20"></div>
-				<h2 class="h2-section-title">Perfil: <%=@profile.description%></h2>
-				<div class="space-sep20"></div>
-			</div>
-		</div>
-	  
-		<!-- Available Permissions -->
-		<div class="row">
-			<div class="col-md-12 col-sm-12 animated" data-animtype="flipInY"
-			data-animrepeat="0"
-			data-speed="1s"
-			data-delay="0.5s">
-				<div class="space-sep20"></div>
-				<h2 class="h2-section-title">Permisos disponibles</h2>
-
-				<div class="i-section-title">
-					<i class="icon-users-outline">
-
-					</i>
+      	<div class="table-responsive">
+			<div class="row">
+				<div class="col-md-12 col-sm-12 animated text-center" data-animtype="flipInY"
+				data-animrepeat="0"
+				data-speed="1s"
+				data-delay="0.5s">
+					<div class="space-sep20"></div>
+					<h2 class="h2-section-title">Perfil: <%=@profile.description%></h2>
+					<div class="space-sep20"></div>
 				</div>
-
-				<div class="space-sep20"></div>
 			</div>
-		</div>
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th>Permiso</th>
-					<th style="width:80px;"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<% @available_permissions.each do |ap|%>
-				<tr>
-					<td><%=ap.description%></td>
-					<td><a href="/profile/assign_permission?pe=<%=ap.id%>&pr=<%=@profile.id%>">Asignar</a></td>
-				</tr>
-				<% end %>
-			</tbody>
-		</table>
-		
-		<!-- Assigned Permissions -->
-		<div class="row">
-			<div class="col-md-12 col-sm-12 animated" data-animtype="flipInY"
-			data-animrepeat="0"
-			data-speed="1s"
-			data-delay="0.5s">
-				<div class="space-sep20"></div>
-				<h2 class="h2-section-title">Permisos asignados</h2>
+		  
+			<!-- Available Permissions -->
+			<div class="row">
+				<div class="col-md-12 col-sm-12 animated" data-animtype="flipInY"
+				data-animrepeat="0"
+				data-speed="1s"
+				data-delay="0.5s">
+					<div class="space-sep20"></div>
+					<h2 class="h2-section-title">Permisos disponibles</h2>
 
-				<div class="i-section-title">
-					<i class="icon-users-outline">
+					<div class="i-section-title">
+						<i class="icon-users-outline">
 
-					</i>
+						</i>
+					</div>
+
+					<div class="space-sep20"></div>
 				</div>
-
-				<div class="space-sep20"></div>
 			</div>
-		</div>
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th>Permiso</th>
-					<th style="width:80px;"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<% @assigned_permissions.each do |ap|%>
-				<tr>
-					<td><%=ap.description%></td>
-					<td><a href="/profile/remove_permission?pe=<%=ap.id%>&pr=<%=@profile.id%>">Quitar</a></td>
-				</tr>
-				<% end %>
-			</tbody>
-		</table>
-		
-		<div class="form-group text-center">
-			<a class="btn btn-theme" href="/profile">Regresar</a>
-		</div>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Permiso</th>
+						<th style="width:80px;"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @available_permissions.each do |ap|%>
+					<tr>
+						<td><%=ap.description%></td>
+						<td><a href="/profile/assign_permission?pe=<%=ap.id%>&pr=<%=@profile.id%>">Asignar</a></td>
+					</tr>
+					<% end %>
+				</tbody>
+			</table>
+			
+			<!-- Assigned Permissions -->
+			<div class="row">
+				<div class="col-md-12 col-sm-12 animated" data-animtype="flipInY"
+				data-animrepeat="0"
+				data-speed="1s"
+				data-delay="0.5s">
+					<div class="space-sep20"></div>
+					<h2 class="h2-section-title">Permisos asignados</h2>
 
-      </div><!--/container-->
+					<div class="i-section-title">
+						<i class="icon-users-outline">
+
+						</i>
+					</div>
+
+					<div class="space-sep20"></div>
+				</div>
+			</div>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Permiso</th>
+						<th style="width:80px;"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @assigned_permissions.each do |ap|%>
+					<tr>
+						<td><%=ap.description%></td>
+						<td><a href="/profile/remove_permission?pe=<%=ap.id%>&pr=<%=@profile.id%>">Quitar</a></td>
+					</tr>
+					<% end %>
+				</tbody>
+			</table>
+			
+			<div class="form-group text-center">
+				<a class="btn btn-theme" href="/profile">Regresar</a>
+			</div>
+
+	      </div>
+	  </div><!--/container-->
     </div>
 
     <%= render(:partial => "shared/footer")%>

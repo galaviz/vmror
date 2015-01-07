@@ -10,7 +10,7 @@ class UserMailer < ActionMailer::Base
     @state = State.find_by_id(@user.state_id)
     @location = Location.find_by_id(@user.location_id)
     @propuesta= @user.crear_propuesta()
-    mail(to: @user.email, subject: 'Registro de verdemonarca')
+    mail(to: @user.email, subject: 'Bienvenido a Verde Monarca')
   end
 
   def send_donation_confirmation_email_to_admin(user, amount, creditos_vm, codigo_vm, donation_type)
@@ -60,6 +60,17 @@ class UserMailer < ActionMailer::Base
   def password_reset(user)
     @user = user
     mail :to => user.email, :subject => "Recuperación de Contraseña"
+  end
+
+  def send_contact(name, email, message)
+    @name = name
+    @email = email
+    @message = message
+    mail(to: "lgalaviz@keepmoving.com.mx", subject: 'Forma de Contacto')
+  end
+
+  def send_registration
+    mail(to: "lgalaviz@keepmoving.com.mx", subject: 'Registro de Verde Monarca')
   end
 
 end

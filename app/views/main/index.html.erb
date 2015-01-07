@@ -69,6 +69,72 @@
       </div><!-- /container -->
     </div><!-- /fixed-navbar -->
 
+    <!-- contact -->
+    <div class="modal fade bs-modal-sm" id="contact" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <br>
+          <div class="modal-header">
+            Forma de Cont&aacute;cto
+          </div>
+          <div class="modal-body">
+            <div id="myTabContent" class="tab-content">
+              <!-- contact Form -->
+              <div class="tab-pane fade active in" id="signin">
+                <form class="form-horizontal" action="<%=url_for controller: 'main', action: 'send_contact'%>" method="post" id="frmContact">
+                  <fieldset>
+                    <!-- Text input-->
+                    <div class="control-group">
+                      <label class="control-label" for="name">Nombre:</label>
+                      <div class="controls">
+                        <input type="text" id="contact_name" name="contact_name" class="form-control" placeholder="Nombre" class="input-large" required>
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <label class="control-label" for="Email">Email:</label>
+                      <div class="controls">
+                        <input type="email" id="contact_email" name="contact_email" class="form-control" placeholder="email" class="input-large" required>
+                      </div>
+                    </div>
+
+                    <!-- menssage input-->
+                    <div class="control-group">
+                      <label class="control-label" for="passwordinput">Mensaje:</label>
+                      <div class="controls">
+                        <textarea id="contact_message" name="contact_message" style="resize:vertical;" placeholder="Mensaje" rows="4" cols="33"></textarea>
+                      </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="control-group">
+                      <label class="control-label" for="send_contact"></label>
+                      <div class="controls">
+                        <button id="send_contact" class="btn btn-theme btn-block">Enviar</button>
+                      </div>
+                    </div>
+                    <div class="control-group" style="color:red;">
+                      <center>
+                        <label class="control-label" id="error-label"></label>
+                      </center>
+                    </div>
+
+                  </fieldset>
+                </form>
+              </div><!-- /contact -->
+
+            </div><!-- /tab-content -->
+          </div><!-- /modal-body -->
+
+          <div class="modal-footer">
+            <center>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </center>
+          </div>
+
+        </div><!-- /modal-content -->
+      </div><!-- /modal-dialog -->
+    </div><!-- /modal -->
 
     <!-- Sign In / Sign Up Modal -->
     <div class="modal fade bs-modal-sm" id="registration-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -153,7 +219,7 @@
             <h1 class="headline">Energía Solar. Para Todos.</h1>
             <br></br>
             <br></br>
-            <a href="./registration/tipo_de_cliente" class="smoothScroll"><button id="signup-button-main" class="btn btn-xl btn-theme smoothScroll">&Uacute;nete Hoy A Verde Monarca</button></a>
+            <a data-target="#contact" data-toggle="modal" class="smoothScroll"><button id="signup-button-main" class="btn btn-xl btn-theme smoothScroll">&Uacute;nete Hoy A Verde Monarca</button></a>
             <br></br>
             <br></br>
           </div>
@@ -261,7 +327,7 @@
               <p>Interesado en ahorros de hasta el 90% en tu recibo de luz y retornos de inversión (TIR) arriba del 20%? <a href="./registration/begin_registration?is_residential=true"> Únete </a> a Verde Monarca. Te tomará menos de 15 minutos.</p>
               <br>
               <p>Los sistemas solares residenciales (3-10 kWp) representan una atractiva y segura oportunidad para reducir tu recibo de luz, sobre todo para aquellos con tarifa Doméstica de Alto Consumo (DAC). Con sistemas desde $80,000 MN pesos podrás recuperar tu inversión en un promedio de 3 años y disfrutarás de energía más barata y 100% renovable por más de 25 años.</p>
-              <a href="./registration/begin_registration?is_residential=true" type="button" class="btn btn-lg btn-theme smoothScroll">Registrarse</a>
+              <a data-target="#contact" data-toggle="modal" type="button" class="btn btn-lg btn-theme smoothScroll">Registrarse</a>
 
           </div>
         </div><!-- /row -->
@@ -283,7 +349,7 @@
             <p>Interesado en ahorros de hasta el 80% en tu recibo de luz y retornos de inversión (TIR) arriba del 15%? <a href="./registration/begin_registration?is_residential=false"> Únete </a> a Verde Monarca. Te tomará menos de 15 minutos.</p>
             <br>
             <p>Los sistemas solares comerciales (10-500 kWp) representan una atractiva y segura inversión, deducible hasta en un 100% en el primer año, la cual además de resultar en ahorros significativos en el recibo de luz de tu empresa también impulsarán tu imagen ante tus clientes al demostrar tu responsabilidad ambiental. De manera visiblemente cautivadora, atraerás a más clientes!</p>
-            <a href="./registration/begin_registration?is_residential=false" type="button" class="btn btn-lg btn-theme smoothScroll">Registrarse</a>
+            <a data-target="#contact" data-toggle="modal" type="button" class="btn btn-lg btn-theme smoothScroll">Registrarse</a>
 
           </div>
           <div class="col-md-6">
@@ -302,7 +368,7 @@
     <div class="divider02">
       <div class="container text-center">
         <h3>&Uacute;nete Hoy a Verde Monarca</h3>
-        <a href="./registration/tipo_de_cliente" type="button" class="btn btn-lg btn-theme2 smoothScroll">Registrarse</a>
+        <a data-target="#contact" data-toggle="modal" type="button" class="btn btn-lg btn-theme2 smoothScroll">Registrarse</a>
       </div>
     </div><!-- /divider02 -->
 
@@ -331,6 +397,37 @@
             data: {
               email:$("#sign-in-mail").val(),
               passwordinput:$("#passwordinput").val()
+            },
+            dataType: "json",
+            beforeSend: function(){
+
+            },
+            success: function(pResponse) {
+              if(pResponse.success == 0){
+                $("#error-label").html(pResponse.messages);
+              }
+              else if(pResponse.success == 1){
+                window.location = pResponse.location;
+              }
+            },
+            error: function(pResponse) {
+              alert("error");
+            },
+            complete: function() {
+
+            }
+          });
+        });
+
+        $( "#frmContact" ).submit(function( event ) {
+          event.preventDefault();
+          $.ajax({
+            type: "POST",
+            url: "/main/send_contact",
+            data: {
+              contact_name:$("#contact_name").val(),
+              contact_email:$("#contact_email").val(),
+              contact_message:$("#contact_message").val()
             },
             dataType: "json",
             beforeSend: function(){

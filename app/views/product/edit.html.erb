@@ -37,193 +37,195 @@
     <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "products"})%>
 	<div class="main-dashboard-content">
       <div class="container">
+        <div class="table-responsive">
 
-		<div class="row">
-			<div class="col-md-12 col-sm-12 animated" data-animtype="flipInY"
-			data-animrepeat="0"
-			data-speed="1s"
-			data-delay="0.5s">
-				<div class="space-sep20"></div>
-				<h2 class="h2-section-title">Producto <%= @product.name %></h2>
+    		<div class="row">
+    			<div class="col-md-12 col-sm-12 animated" data-animtype="flipInY"
+    			data-animrepeat="0"
+    			data-speed="1s"
+    			data-delay="0.5s">
+    				<div class="space-sep20"></div>
+    				<h2 class="h2-section-title">Producto <%= @product.name %></h2>
 
-				<div class="i-section-title">
-					<i class="icon-users-outline">
+    				<div class="i-section-title">
+    					<i class="icon-users-outline">
 
-					</i>
-				</div>
+    					</i>
+    				</div>
 
-				<div class="space-sep20"></div>
-			</div>
-		</div>
+    				<div class="space-sep20"></div>
+    			</div>
+    		</div>
 
-		<div class="row">
-            
-			<div class="centered">
-				<div class="classic-form centered" style="width: 710px;">
-                    <form enctype="multipart/form-data" method="post" class="form-horizontal" role="form" id="product-edit-form" action="/product/update/<%=@product.id%>">
-                        <table>
-                            <tr>
-                                <td valign="top">
-                                    <%if @product.image_url==nil %>
-                                        <img src="/assets/products_images/sin_imagen.png" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="130px" height="auto" title="sin imagen"/>
-                                        <div><label>Foto del producto</label></div>
-                                    <%else%>
-                                        <div>
-                                            <img src="/assets/products_images/<%= @product.image_url%>" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="120px" height="auto" title="imagen del producto"/>
-                                            
-                                        </div>
-                                        <div><label>Foto del producto</label></div>
-                                    <%end%>
-                                    <%if @product.brand_image_url==nil %>
-                                        <img src="/assets/brands_images/sin_imagen.png" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="130px" height="auto" title="sin imagen"/>
-                                        <div><label>Marca</label></div>
-                                    <%else%>
-                                        <div>
-                                            <img src="/assets/brands_images/<%= @product.brand_image_url%>" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="120px" height="auto" title="imagen de la marca"/>
-                                        </div>
-                                        <div><label>Marca</label></div>
-                                    <%end%>
-                                </td>
-                                <td>
-            						<div class="form-group">
-            							<label for="name" class="col-sm-4 control-label">Nombre</label>
-            							<div class="col-sm-8">
-                                            <input type="text" class="form-control" name="name" value="<%=@product.name%>" placeholder="Nombre" id="name"/>
-            							</div>
-            						</div>
+    		<div class="row">
+                
+    			<div class="centered">
+    				<div class="classic-form centered" style="width: 710px;">
+                        <form enctype="multipart/form-data" method="post" class="form-horizontal" role="form" id="product-edit-form" action="/product/update/<%=@product.id%>">
+                            <table>
+                                <tr>
+                                    <td valign="top">
+                                        <%if @product.image_url==nil %>
+                                            <img src="/assets/products_images/sin_imagen.png" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="130px" height="auto" title="sin imagen"/>
+                                            <div><label>Foto del producto</label></div>
+                                        <%else%>
+                                            <div>
+                                                <img src="/assets/products_images/<%= @product.image_url%>" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="120px" height="auto" title="imagen del producto"/>
+                                                
+                                            </div>
+                                            <div><label>Foto del producto</label></div>
+                                        <%end%>
+                                        <%if @product.brand_image_url==nil %>
+                                            <img src="/assets/brands_images/sin_imagen.png" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="130px" height="auto" title="sin imagen"/>
+                                            <div><label>Marca</label></div>
+                                        <%else%>
+                                            <div>
+                                                <img src="/assets/brands_images/<%= @product.brand_image_url%>" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.37);" width="120px" height="auto" title="imagen de la marca"/>
+                                            </div>
+                                            <div><label>Marca</label></div>
+                                        <%end%>
+                                    </td>
+                                    <td>
+                						<div class="form-group">
+                							<label for="name" class="col-sm-4 control-label">Nombre</label>
+                							<div class="col-sm-8">
+                                                <input type="text" class="form-control" name="name" value="<%=@product.name%>" placeholder="Nombre" id="name"/>
+                							</div>
+                						</div>
 
-                                    <div class="form-group">
-                                        <label for="description" class="col-sm-4 control-label">Descripci&oacute;n</label>
-                                        <div class="col-sm-8">
-                                            <textarea style="resize:vertical;" type="text" class="form-control" name="description" placeholder="descripci&oacute;n" id="description" rows="4" cols="50"><%=@product.description%></textarea>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="category_id" class="col-sm-4 control-label">Categor&iacute;a</label>
-                                        <div class="col-sm-8">
-                                            <select class="form-control" name="category_id" id="category_id">
-                                                <% @category_dropdown.each do |c|%>
-                                                <option value="<%=c.id%>" <% if @product.category_id == c.id %>selected<% end %>><%=c.description%></option>
-                                                <% end %>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div id="div_iluminacion">
                                         <div class="form-group">
-                                            <label for="description" class="col-sm-4 control-label">Precio</label>
+                                            <label for="description" class="col-sm-4 control-label">Descripci&oacute;n</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="precio" value="<%=@product.precio%>" placeholder="precio" id="precio"/>
+                                                <textarea style="resize:vertical;" type="text" class="form-control" name="description" placeholder="descripci&oacute;n" id="description" rows="4" cols="50"><%=@product.description%></textarea>
                                             </div>
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="description" class="col-sm-4 control-label">Watts</label>
+                                            <label for="category_id" class="col-sm-4 control-label">Categor&iacute;a</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="watts" value="<%=@product.watts%>" placeholder="watts" id="watts"/>
+                                                <select class="form-control" name="category_id" id="category_id">
+                                                    <% @category_dropdown.each do |c|%>
+                                                    <option value="<%=c.id%>" <% if @product.category_id == c.id %>selected<% end %>><%=c.description%></option>
+                                                    <% end %>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div id="div_iluminacion">
+                                            <div class="form-group">
+                                                <label for="description" class="col-sm-4 control-label">Precio</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="precio" value="<%=@product.precio%>" placeholder="precio" id="precio"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="description" class="col-sm-4 control-label">Watts</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="watts" value="<%=@product.watts%>" placeholder="watts" id="watts"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="description" class="col-sm-4 control-label">Lumenes</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="lumenes" value="<%=@product.lumenes%>" placeholder="lumenes" id="lumenes"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="description" class="col-sm-4 control-label">Vida</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="vida" value="<%=@product.vida%>" placeholder="vida" id="vida"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="div_aires" style="display:none">
+                                            <div class="form-group">
+                                                <label for="description" class="col-sm-4 control-label">Fase</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="fase" value="<%=@product.fase%>" placeholder="fase" id="fase"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="description" class="col-sm-4 control-label">Configuraci&oacute;n</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="configuracion" value="<%=@product.configuracion%>" placeholder="configuraci&oacute;n" id="configuracion"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="description" class="col-sm-4 control-label">Bobina</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="bobina" value="<%=@product.bobina%>" placeholder="bobina" id="bobina"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="description" class="col-sm-4 control-label">Motor Ventilador</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="motor_ventilador" value="<%=@product.motor_ventilador%>" placeholder="motor ventilador" id="motor_ventilador"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="description" class="col-sm-4 control-label">Garant&iacute;a</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="garantia" value="<%=@product.garantia%>" placeholder="garant&iacute;a" id="garantia"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="description" class="col-sm-4 control-label">Capacidad</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="capacidad" value="<%=@product.capacidad%>" placeholder="capacidad" id="capacidad"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="description" class="col-sm-4 control-label">Eficiencia</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="eficiencia" value="<%=@product.eficiencia%>" placeholder="eficiencia" id="eficiencia"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="disponibilidad" class="col-sm-4 control-label">Disponibilidad</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="disponibilidad" value="<%=@product.disponibilidad%>" placeholder="Disponibilidad" id="disponibilidad"/>
+                                                </div>
                                             </div>
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="description" class="col-sm-4 control-label">Lumenes</label>
+                                            <label for="datafile" class="col-sm-4 control-label">Imagen Producto</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="lumenes" value="<%=@product.lumenes%>" placeholder="lumenes" id="lumenes"/>
+                                                <input type="file" name="datafile" id="datafile" />
                                             </div>
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="description" class="col-sm-4 control-label">Vida</label>
+                                            <label for="datafile_brand" class="col-sm-4 control-label">Imagen Marca</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="vida" value="<%=@product.vida%>" placeholder="vida" id="vida"/>
+                                                <input type="file" name="datafile_brand" id="datafile_brand" />
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div id="div_aires" style="display:none">
-                                        <div class="form-group">
-                                            <label for="description" class="col-sm-4 control-label">Fase</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="fase" value="<%=@product.fase%>" placeholder="fase" id="fase"/>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="description" class="col-sm-4 control-label">Configuraci&oacute;n</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="configuracion" value="<%=@product.configuracion%>" placeholder="configuraci&oacute;n" id="configuracion"/>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="description" class="col-sm-4 control-label">Bobina</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="bobina" value="<%=@product.bobina%>" placeholder="bobina" id="bobina"/>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="description" class="col-sm-4 control-label">Motor Ventilador</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="motor_ventilador" value="<%=@product.motor_ventilador%>" placeholder="motor ventilador" id="motor_ventilador"/>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="description" class="col-sm-4 control-label">Garant&iacute;a</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="garantia" value="<%=@product.garantia%>" placeholder="garant&iacute;a" id="garantia"/>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="description" class="col-sm-4 control-label">Capacidad</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="capacidad" value="<%=@product.capacidad%>" placeholder="capacidad" id="capacidad"/>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="description" class="col-sm-4 control-label">Eficiencia</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="eficiencia" value="<%=@product.eficiencia%>" placeholder="eficiencia" id="eficiencia"/>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="disponibilidad" class="col-sm-4 control-label">Disponibilidad</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="disponibilidad" value="<%=@product.disponibilidad%>" placeholder="Disponibilidad" id="disponibilidad"/>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="datafile" class="col-sm-4 control-label">Imagen Producto</label>
-                                        <div class="col-sm-8">
-                                            <input type="file" name="datafile" id="datafile" />
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="datafile_brand" class="col-sm-4 control-label">Imagen Marca</label>
-                                        <div class="col-sm-8">
-                                            <input type="file" name="datafile_brand" id="datafile_brand" />
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                        <br/>
-                        <div class="form-group text-center">
-                            <a class="btn btn-theme" href="/product">Regresar</a>
-                            <button type="submit" class="btn btn-theme">Guardar</button>
-                        </div>
-					</form>
-				</div>
-			</div>
-			<div class="space-sep20"></div>
-		</div> <!-- /row -->
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <div class="form-group text-center">
+                                <a class="btn btn-theme" href="/product">Regresar</a>
+                                <button type="submit" class="btn btn-theme">Guardar</button>
+                            </div>
+    					</form>
+    				</div>
+    			</div>
+    			<div class="space-sep20"></div>
+    		</div> <!-- /row -->
+        </div>
 
       </div><!--/container-->
     </div>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Verde Monarca">
+    <meta name="keywords" content="energia,renovable,mexico,energetico,solar,green,energy,latino,america,latinoamerica">
+    <meta name="author" content="Maurizio Calo">
+    <link href="assets/img/favicon.png" rel="shortcut icon" >
+    <title>Verde Monarca</title>
+    <%= stylesheet_link_tag "bootstrap.min" %>
+    <%= stylesheet_link_tag "client-portal" %>
+    <%= stylesheet_link_tag "responsive" %>
+    <%= stylesheet_link_tag "animate.min" %>
+    <%= stylesheet_link_tag "colorpickr" %>
+    <%= stylesheet_link_tag "linecons" %>
+    <%= stylesheet_link_tag "social-icons" %>
+    <%= stylesheet_link_tag "font-awesome.min" %>
+    <%= stylesheet_link_tag "bootstrapValidator.min" %>
+    <%= stylesheet_link_tag "style" %>
+    <!-- Web Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <%= javascript_include_tag "modernizr.custom" %>
+  </head>
+  <body data-spy="scroll" data-offset="0" data-target=".portal-sidebar">
+    <%= render(:partial => "shared/dashboard_navbar", :locals => {:active_tab => "users"})%>
+    <!-- Form Part 1: User Info !-->
+    <div class="item active">
+      <div class="main-dashboard-content" >
+          <div class="container" style="text-align:center">
+              <div class="row">
+                  <div class="col-md-12 col-sm-12 animated" data-animtype="flipInY"
+                       data-animrepeat="0"
+                       data-speed="1s"
+                       data-delay="0.5s">
+                      <h2 class="h2-section-title">Información del Usuario (
+                        <%=if @is_residential==true then "Residencial" else "Comercial" end%>
+                        )</h2>
+
+                      <div class="i-section-title">
+                          <i class="icon-users-outline">
+
+                          </i>
+                      </div>
+
+                      <div class="space-sep20"></div>
+                  </div>
+              </div>
+
+              <div class="row">
+
+                  <div>
+                      <div class="classic-form" style="margin-left: auto; margin-right: auto; width: 70%">
+                          <form class="form-horizontal" role="form" action="<%=url_for controller: 'user', action: 'post_user_info'%>" method="post" id="frmRegistration">
+                            <% if @is_residential==false%>
+                            <div class="form-group">
+                              <label for="empresa" class="col-sm-4 control-label">Empresa</label>
+                              <div class="col-sm-8">
+                                <input type="text" class="form-control" name="empresa" value=
+                                "<%=@user.empresa%>" placeholder="Empresa">
+                              </div>
+                            </div>
+                            <%end%>
+                            <div class="form-group">
+                              <label for="nombre" class="col-sm-4 control-label">Nombre</label>
+                              <div class="col-sm-8">
+                                <input type="text" class="form-control require" name="nombre" value=
+                                "<%=@user.nombre%>" placeholder="Nombre" id="first-name" >
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label for="apellido" class="col-sm-4 control-label">Apellido</label>
+                              <div class="col-sm-8">
+                                <input type="text" class="form-control require" name="apellido" value=
+                                "<%=@user.apellido%>" placeholder="Apellido" id="last-name" >
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+
+                              <label for="email" class="col-sm-4 control-label">Email</label>
+                              <div class="col-sm-8">
+                                <input 
+                                  type="email" 
+                                  name="email" 
+                                  id="email" 
+                                  class="form-control require" 
+                                  value="<%=@user.email%>" 
+                                  placeholder="Email"
+                                  data-toggle="popover" 
+    							  data-placement="bottom"
+                                  data-trigger="manual" 
+                                  title="" 
+                                  data-content=""
+                                />
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label for="telefono" class="col-sm-4 control-label">Teléfono</label>
+                              <div class="col-sm-8">
+                                <input type="text" class="form-control"name="telefono" id="telefono" value="<%=@user.telefono%>" placeholder="Teléfono">
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label for="celular" class="col-sm-4 control-label">Celular</label>
+                              <div class="col-sm-8">
+                                <input type="text" class="form-control" name="celular" id="celular" value="<%=@user.celular%>" placeholder="Celular">
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label for="pais" class="col-sm-4 control-label">País</label>
+                              <div class="col-sm-8">
+                                <select class="form-control require" name="pais">
+                                  <% @country.each do |c|%>
+                                    <option value="<%=c.id%>"><%=c.description%></option>
+                                  <%end%>
+                                </select>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label for="estado" class="col-sm-4 control-label">Estado</label>
+                              <div class="col-sm-8">
+                                <select class="form-control require" name="estado">
+                                  <% @state.each do |s|%>
+                                    <option value="<%=s.id%>" <%if s.id == 19%>selected<%end%>><%=s.description%></option>
+                                  <%end%>
+                                </select>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label for="municipio" class="col-sm-4 control-label">Municipio</label>
+                              <div class="col-sm-8">
+                                <select class="form-control require" name="municipio">
+                                  <% @location.each do |l|%>
+                                    <option value="<%=l.id%>"><%=l.description%></option>
+                                  <%end%>
+                                </select>  
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label for="calle" class="col-sm-4 control-label">Calle</label>
+                              <div class="col-sm-8">
+                                <input type="text" class="form-control" name="calle" placeholder="Calle" value="<%=@user.calle%>">
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label for="numero" class="col-sm-4 control-label">Número</label>
+                              <div class="col-sm-8">
+                                <input type="text" class="form-control" name="numero" placeholder="Número" value="<%=@user.numero_direccion%>">
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label for="colonia" class="col-sm-4 control-label">Colonia</label>
+                              <div class="col-sm-8">
+                                <input type="text" class="form-control" name="colonia" placeholder="Colonia" value="<%=@user.colonia%>">
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label for="codigo-postal" class="col-sm-4 control-label">Código Postal</label>
+                              <div class="col-sm-8">
+                                <input type="text" class="form-control" id="codigo-postal" name="codigo-postal" placeholder="Código Postal" value="<%=@user.codigo_postal%>">
+                              </div>
+                            </div>
+
+                            <button type="submit" id="send_registration" class="btn btn-theme">Guardar</button>
+                          </form>
+                      </div>
+                  </div>
+
+              </div> <!-- /row -->
+          </div> <!-- /container -->
+      </div> <!-- /wrapper-->
+    </div>
+    <!--/User-info-->
+    <%= render(:partial => "shared/footer")%>
+    <!-- jQuery  -->
+    <%= javascript_include_tag "jquery.min" %>
+    <%= javascript_include_tag "bootstrap.min" %>
+    <%= javascript_include_tag "detectmobilebrowser" %>
+    <%= javascript_include_tag "smoothscroll" %>
+    <%= javascript_include_tag "bootstrapValidator.min" %>
+    <%= javascript_include_tag "jquery.inview.min" %>
+    <%= javascript_include_tag "jquery.easing.1.3" %>
+    <%= javascript_include_tag "animations" %>
+    <%= javascript_include_tag "animations" %>
+    <%= javascript_include_tag "jquery.formatter.min" %>
+    <%= javascript_include_tag "legacy" %>
+    <%= javascript_include_tag "verdemonarca" %>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('body').scrollTop(0);
+    
+        $( "#resetpassword-form" ).submit(function( event ) {
+          event.preventDefault();
+
+          $.ajax({
+            type: "POST",
+            url: "/dashboard/post_change_password",
+            data: {
+            },
+            dataType: "json",
+            beforeSend: function(){
+
+            },
+            success: function(pRespuesta) {
+              if(pRespuesta.success == 0){
+                $("#error-label").html(pRespuesta.messages);
+              }
+              else if(pRespuesta.success == 1){
+                window.location = pRespuesta.location;
+              }
+            },
+            error: function(pRespuesta) {
+              alert("error");
+            },
+            complete: function() {
+
+            }
+          });
+        });
+
+        $( "#frmRegistration" ).submit(function( event ) {
+          event.preventDefault();
+          var pRequestO = new Object();
+          pRequestO.empresa= $('[name="empresa"]').val();
+          pRequestO.nombre= $('[name="nombre"]').val();
+          pRequestO.apellido= $('[name="apellido"]').val();
+          pRequestO.email= $('[name="email"]').val();
+          pRequestO.telefono= $('[name="telefono"]').val();
+          pRequestO.celular= $('[name="celular"]').val();
+          pRequestO.pais= $('[name="pais"]').val();
+          pRequestO.estado= $('[name="estado"]').val();
+          pRequestO.municipio= $('[name="municipio"]').val();
+          pRequestO.calle= $('[name="calle"]').val();
+          pRequestO.numero= $('[name="numero"]').val();
+          pRequestO.colonia= $('[name="colonia"]').val();
+          pRequestO.codigoPostal= $('[name="codigo-postal"]').val();
+
+          Ajax(
+              pRequestO,
+              "/user/post_user_info",
+              function(pResponse){ window.location = pResponse.location; },
+              function(pResponse){ alert(pResponse.messages)//($("#error-label").html(pResponse.messages); 
+            }
+            )
+
+        });
+
+
+      });
+
+    </script>
+  </body>
+</html>

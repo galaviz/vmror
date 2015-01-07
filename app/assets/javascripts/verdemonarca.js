@@ -57,20 +57,19 @@ function Ajax(thisData, thisLocation,thisSuccess, thisError){
           data: thisData,
           dataType: "json",
           beforeSend: function(){
-	    
           },
           success: function(pResponse) {
-			  if (pResponse.success === 1) {
+			  if (pResponse.success == 1) {
 				thisSuccess(pResponse);                                                            
 			  } else {
 				thisError(pResponse);
 			  }
 		  },
-          error: function() {
-	    
-          },
+          error: function(xhr, status, error) {
+              var err = eval("(" + xhr.responseText + ")");
+              alert(err.Message);
+            },
           complete: function() {
-	    
           }
     });
 }
