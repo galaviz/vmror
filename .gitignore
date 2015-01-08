@@ -14,3 +14,6 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+*.pdf
+*.pdf
+app/assets/contracts/1-PGON1-Contrato_Donación_Fundación_VM-001.pdf
